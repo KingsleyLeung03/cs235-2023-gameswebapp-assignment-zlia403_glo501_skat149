@@ -1,30 +1,86 @@
+<!-- gameDescription.html -->
+{{% extends "template.html" %}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Game Description</title>
-    <link
-      rel="stylesheet" href="../static/css/main.css"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/fonts.css">
+    <link rel="stylesheet" href="./styles/common-style.css">
+    <link rel="stylesheet" href="./styles/gameDescription.css">
+    <title>CS235 Game Library - gameTitle</title>
 </head>
 <body>
-
-      <header id="header">
-              <h1>CS235 2023: My Game Library</h1>
-              <div class="copyright">&copy; UPI1 | UPI2 | UPI3 (Write your full names or UPIs)</div>
-            </header>
-            <div id="container">
-              <main id="main">
-                <div class="description">
-                  <br>
-                    <h2>{{ game.title }}</h2>
-                    <p><i>Release Date:</i> {{ game.release_date }} </p>
-                    <p><i>Price:</i> {{ game.price }}</p>
-                    <p><i>About:</i> {{ game.description }} </p>
-                    <p><i>Image URL: </i><img src="{{ game.image_url }}" alt="game image"> </p>
-                </div>
-              </main>
+    <header>
+        <div class="page_title">
+            <h1>CS235 Game Library</h1>
+            <p>By Shinnosuke Kataoka</p>
+        </div>
+        <!-- old nav list -->
+        <!-- <nav>
+            <ul class="nav_list">
+                <li><a href="./layout.html">Home</a></li>
+                <li><a href="./games.html">List of Games</a></li>
+                <li><a href="">Wish List</a></li>
+            </ul>
+        </nav> -->
+    </header>
+    <aside>
+        <ul class="nav_list">
+            <li><a href="./layout.html">Home</a></li>
+            <li><a href="./games.html">List of Games</a></li>
+            <li><a href="">Wish List</a></li>
+        </ul>
+    </aside>
+    <main>
+        <section>
+            <div class="section_title">
+                <h1>Galactic Bowling</h1>
             </div>
+        </section>
+        <section>
+            <div class="game_info">
+                <div class="info_left">
+                    <div class="game_img">
+                        <img src="https://cdn.akamai.steamstatic.com/steam/apps/20200/0000005994.1920x1080.jpg" alt="">
+                    </div>
+                </div>
+                <div class="right">
+                    <div class="game_detail">
+                        <dl>
+                            <dt>Release Date</dt>
+                            <dd>Oct 21, 2008</dd>
+
+                            <dt>Price</dt>
+                            <dd>NZ$ 19.99</dd>
+
+                            <dt>something</dt>
+                            <dd>somedata</dd>
+
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="game_description"> 
+            <div>
+                <p>
+                    ABOUT THE GAME Play as a hacker who has arranged a deal with a gangster. That’s how the protagonist, Jack, is assigned a mission that should be accomplished in a specific timeframe, which he will find out soon enough. THE GAME’S FEATURES Spy on 4 senior managers within an organization to find out about their personalities. Manage the recruitment process in the organization to improve the work climate. Hack the candidates who want to get into the organization to make your job easier. Try to avoid having your physical health impacted negatively in the process. All of this while you enjoy an interesting story full of humor and action that evolves along with the game.
+                </p>
+            </div>
+        </section>
+        <section class="right">
+            <div class="related">
+
+            </div>
+        </section>
+        
+    </main>
+
+    <footer>
+        <p class="copyright">🄫Shinnosuke Kataoka 2023: skat149</p>
+    </footer>
+
 
 </body>
 </html>
