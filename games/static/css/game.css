@@ -1,0 +1,51 @@
+div.games_holder {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+div.game {
+    width: 360px;
+    height: 200px;
+    display: table;
+    margin: 10px 15px;
+    /* border-radius: 20px; */
+    background-color: rgb(16, 36, 94);
+    box-shadow: 0 0 20px rgba(206, 206, 206, 0.753);
+}
+
+div.game_img {
+    height: 168px;
+}
+
+div.game_img img {
+    width: 360px;
+    overflow: none;
+}
+
+div.game_data {
+    padding-block: 4px;
+    color: black;
+}
+
+div.game_title {
+    display:  inline;
+    margin-left: 25px;
+    font-size: 18px;
+    font-family: "Myriad Pro","Open Sans",Arial,Helvetica,sans-serif;
+    color: white;
+}
+
+div.game_price {
+    padding: 1px 4px;
+    display:  inline;
+    float: right;
+    /* font-size: 15px; */
+    font-family: "Myriad Pro","Open Sans",Arial,Helvetica,sans-serif;
+    margin-top: 1px;
+    margin-right: 13px;
+    border-radius: 5px;
+    background-color: rgb(8, 15, 37);
+    color: white;
+
+}

@@ -1,0 +1,46 @@
+
+div.game_info {
+    /* height: 400px; */
+    background-color: rgb(14, 30, 77);
+}
+
+div.game_info .info_left {
+    width: 60%;
+    display: inline-block;
+    /* height: 400px; */
+    /* background-color: aliceblue; */
+}
+div.game_img img {
+    height: 380px;
+    margin: 20px 30px;
+}
+
+
+div.game_info .right {
+    vertical-align: top;
+    float: right;
+    margin: 10px 20px;
+    padding: 20px 20px;
+    width: 200px;
+    height: 370px;
+    /* height: 100px; */
+    background-color: rgb(30, 41, 73);
+}
+
+div.game_detail dl {
+    padding-left: 30px;
+}
+
+div.game_detail dl dt{
+    padding-top: 10px;
+}
+
+
+section.game_description {
+    display: inline-block;
+    width: 60%;
+}
+
+
+
+

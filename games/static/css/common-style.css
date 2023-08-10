@@ -1,0 +1,153 @@
+/* reset tag style  */
+    div {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+    }
+/* 
+    input:focus {
+        border: none;
+        outline: none;
+    } */
+
+
+body {
+    background-color: rgb(23, 30, 84);
+    color: white;
+    /* min-width: 800px; */
+    /* min-height: 10000px; */
+    padding: 0px;
+    margin: 0px;
+}
+
+
+
+header, main {
+    /* background-image: url(../images/background.png); */
+    padding-inline: 10%;
+    min-width: 800px;
+
+}
+
+
+/* header */
+header {
+
+    height: 150px;
+}
+div.page_title {
+    display: inline-block;
+    vertical-align: top;
+}
+
+div.page_title {
+    margin-left: 10%;
+    width: 30%;
+}
+div.page_title h1 {
+    margin-bottom: 0px;
+}
+
+/* nav sidebar */
+aside {
+    width: 150px; /* width of sidebar must same as margin ofset of main element */
+    background-color: rgb(14, 30, 77);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding: 20px;
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+}
+
+ul.nav_list {
+    padding: 0;
+    text-align: left;
+}
+
+ul.nav_list li {
+    margin: 10px 0;
+    font-size: large;
+    font-family: "SFProDisplay";
+}
+
+ul.nav_list li a {
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+
+
+/* old style */
+/* nav {
+    float: right;
+    display: inline;
+    vertical-align: middle;
+}
+nav ul.nav_list {
+    list-style: None;
+    padding: 0%;
+    text-align: center;
+
+}
+ul.nav_list li {
+    margin-block: 10px;
+    font-size: large;
+    font-family: "SFProDisplay";
+}
+ul.nav_list li a{
+    text-decoration: none;
+    color: white;
+} */
+
+
+
+main {
+    vertical-align: middle;
+    margin-left: 150px; /* offset for sidebar */
+    min-width: 800px;
+    max-width: 1700px;
+}
+
+div.section_title {
+    width: 100%;
+    height: 80px;
+    padding: 65px 0px;
+    text-align: center;
+    font-family: "Myriad Pro","Open Sans",Arial,Helvetica,sans-serif;
+}
+div.section_title h1 {
+    margin: 0px;
+    color: white;
+    font-size: 40px;
+
+}
+
+
+footer {
+    background-color: rgb(14, 30, 77);
+    margin: 0px;
+    width: 100%;
+}
+
+footer p.copyright {
+    text-align: center;
+    width: 100%;
+    margin: 0px;
+    padding-block: 5px;
+
+}
+
+
+
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{% block head %}}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/fonts.css">
+    <link rel="stylesheet" href="./styles/common-style.css">
+    <title>CS235 Game Library</title>
+    {{% endblock }}
+</head>
+<body>
+    <header>
+
+        <!-- include part from extarnal file -->
+        {{% include "header.html" %}}
+
+    </header>
+    <aside>
+
+        <!-- include sidebar from external file -->
+        {{% include "sidebar.html" %}}
+
+    </aside>
+    <main>
+        <section>
+            <div class="section_title">
+                <h1>Section title</h1>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+
+        <!-- include footer from external file -->
+        {{% include "footer.html" %}}
+        
+    </footer>
+
+
+</body>
+</html>
