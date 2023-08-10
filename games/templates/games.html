@@ -1,5 +1,5 @@
-<!-- gameDescription.html -->
-{% extends "games.html" %}
+<!-- games.html -->
+{% extends "template.html" %}
 
 {% block head %}
     {{ super() }}
@@ -17,19 +17,20 @@
         <div class="games_holder">
 
             <!-- for each game in the given game list -->
-            {{% for game in games %}}
+            {% for game in games %}
                 <div class="game">
                     <a href="./gameDescription.html?={{ game.title }}">
                         <div class="game_img">
-                            <img src="{{ game.title }}" alt="">
+                            <img src="{{ game.image_url }}" alt="">
                         </div>
                         <div class="game_data">
                             <div class="game_title">{{ game.title }}</div>
-                            <div class="game_price">NZ$ {{ game.title }}</div>
+                            <div class="game_price">NZ$ {{ game.price }}</div>
                         </div>
                     </a>
                 </div>
-            {{% endfor %}}
+            {% endfor %}
+
 
         </div>
     </section>

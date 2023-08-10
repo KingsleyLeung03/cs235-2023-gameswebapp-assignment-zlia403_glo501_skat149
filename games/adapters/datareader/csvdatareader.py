@@ -19,24 +19,48 @@ class GameFileCSVReader:
             reader = csv.DictReader(file)
             for row in reader:
                 try:
-                    game_id = int(row["AppID"])
-                    title = row["Name"]
-                    game = Game(game_id, title)
-                    game.release_date = row["Release date"]
-                    game.price = float(row["Price"])
-                    game.description = row["About the game"]
+                    #game obj
+                    game = Game(int(row['AppID']), row['Name'])
+                    game.price = float(row['Price'])
+                    game.release_date = row['Release date']
+                    game.description = row['About the game']
+                    game.image_url = row['Header image']
+                    game.website_url = row['Website']
+                    #game.reviews = row
 
-                    publisher = Publisher(row["Publishers"])
-                    self.__dataset_of_publishers.add(publisher)
+                    #publsher obj
+                    publisher = Publisher(row['Publishers'])
+                    self.dataset_of_publishers.add(publisher)
                     game.publisher = publisher
 
-                    genre_names = row["Genres"].split(",")
-                    for genre_name in genre_names:
-                        genre = Genre(genre_name.strip())
-                        self.__dataset_of_genres.add(genre)
-                        game.add_genre(genre)
+                    #genre objs
+                    genres = row['Genres'].split(",")
+                    for genre in genres:
+                        genre_obj = Genre(genre)
+                        self.__dataset_of_genres.add(genre_obj)
+                        game.add_genre(genre_obj)
 
                     self.__dataset_of_games.append(game)
+                    
+                    
+                    # game_id = int(row["AppID"])
+                    # title = row["Name"]
+                    # game = Game(game_id, title)
+                    # game.release_date = row["Release date"]
+                    # game.price = float(row["Price"])
+                    # game.description = row["About the game"]
+
+                    # publisher = Publisher(row["Publishers"])
+                    # self.__dataset_of_publishers.add(publisher)
+                    # game.publisher = publisher
+
+                    # genre_names = row["Genres"].split(",")
+                    # for genre_name in genre_names:
+                    #     genre = Genre(genre_name.strip())
+                    #     self.__dataset_of_genres.add(genre)
+                    #     game.add_genre(genre)
+
+                    # self.__dataset_of_games.append(game)
 
                 except ValueError as e:
                     print(f"Skipping row due to invalid data: {e}")
