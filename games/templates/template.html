@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {{% block head %}}
+    {% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/fonts.css">
     <link rel="stylesheet" href="../static/css/common-style.css">
     <title>CS235 Game Library</title>
-    {{% endblock }}
+    {% endblock %}
 </head>
 <body>
     <header>
 
         <!-- include part from extarnal file -->
-        {{% include "header.html" %}}
+        {% include "header.html" %}
 
     </header>
     <aside>
 
         <!-- include sidebar from external file -->
-        {{% include "sidebar.html" %}}
+        {% include "sidebar.html" %}
 
     </aside>
     <main>
-        {{% block main %}}
+        {% block main %}
+        
         <section>
             <div class="section_title">
                 <h1>Section title</h1>
             </div>
         </section>
-        {{% endblock %}}
+        
+        {% endblock %}
     </main>
 
     <footer>
 
         <!-- include footer from external file -->
-        {{% include "footer.html" %}}
+        {% include "footer.html" %}
         
     </footer>
 
