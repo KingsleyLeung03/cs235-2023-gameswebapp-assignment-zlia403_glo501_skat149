@@ -1,14 +1,19 @@
 """Initialize Flask app."""
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 # TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
 #  stay here!
 from games.domainmodel.model import Game
+from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
 
 # TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
 #  stay here!
+
+csvData = GameFileCSVReader("games/adapters/data/games.csv")
+csvData.read_csv_file()
+
 def create_some_game():
     some_game = Game(1, "Call of Duty® 4: Modern Warfare®")
     some_game.release_date = "Nov 12, 2007"
@@ -17,6 +22,7 @@ def create_some_game():
                             "the Call of Duty® series, delivers the most intense and cinematic action experience ever. "
     some_game.image_url = "https://cdn.akamai.steamstatic.com/steam/apps/7940/header.jpg?t=1646762118"
     return some_game
+
 
 
 def create_app():
@@ -30,5 +36,23 @@ def create_app():
         some_game = create_some_game()
         # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
         return render_template('gameDescription.html', game=some_game)
+    
+        # game_id = request.args.get("game_id")
+        
+        # try:
+        #     game_id = int(game_id)
+        # except:
+        #     return "agument error"
+            
+        # found_object = next((obj for obj in csvData.dataset_of_games if obj.id == game_id), None)
+
+        # return str(found_object)
+    
+    
+    
+    @app.route('/games')
+    def show_listof_games():
+        return render_template("games.html", games=csvData.dataset_of_games)
+
 
     return app
