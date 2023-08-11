@@ -50,7 +50,7 @@ def create_app():
             if game.game_id == game_id:
                 # return str(game_id)
                 return render_template('gameDescription.html', game=game)
-        return (game_id, "not found")
+        return render_template("notFound.html", message=f"game id: {game_id} is not found.")
         
     
     @app.route("/test")
