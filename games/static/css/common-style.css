@@ -30,16 +30,19 @@ body {
 
 
 header, main {
-    /* background-image: url(../images/background.png); */
+    /* background-image: url(../images/background.png);
     padding-inline: 10%;
     min-width: 800px;
 
+    */
+    margin-left: 150px;
+    float: left;
+    
 }
 
 
 /* header */
 header {
-
     height: 150px;
 }
 div.page_title {
@@ -58,6 +61,8 @@ div.page_title h1 {
 /* nav sidebar */
 aside {
     width: 150px; /* width of sidebar must same as margin ofset of main element */
+    
+    /* justify-content: center; 
     background-color: rgb(14, 30, 77);
     position: fixed;
     top: 0;
@@ -67,7 +72,16 @@ aside {
     padding-top: 100px;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    */
+    background-color: rgb(14, 30, 77);
+    
+
+    float: left;
+    height: 100%;
+    overflow-x: hidden;
+    position: fixed;
+    text-align: center;
+    
 }
 
 ul.nav_list {
@@ -115,8 +129,7 @@ ul.nav_list li a{
 main {
     vertical-align: middle;
     margin-left: 150px; /* offset for sidebar */
-    min-width: 800px;
-    max-width: 1700px;
+    float: left;
 }
 
 div.section_title {
@@ -138,6 +151,8 @@ footer {
     background-color: rgb(14, 30, 77);
     margin: 0px;
     width: 100%;
+    position: fixed;
+    bottom: 0;
 }
 
 footer p.copyright {
