@@ -34,6 +34,7 @@ div.game_title {
     font-size: 18px;
     font-family: "Myriad Pro","Open Sans",Arial,Helvetica,sans-serif;
     color: white;
+    overflow: hidden;
 }
 
 div.game_price {

@@ -35,18 +35,28 @@ def create_app():
     def home():
         some_game = create_some_game()
         # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
-        return render_template('gameDescription.html', game=some_game)
+        return render_template('layout.html')
     
+    @app.route("/gameDescription/<game_id>", methods=["GET"])
+    def game_description(game_id):
         # game_id = request.args.get("game_id")
+        # check that recived value is integer
+        try:
+            game_id = int(game_id)
+        except:
+            return "agument error"
         
-        # try:
-        #     game_id = int(game_id)
-        # except:
-        #     return "agument error"
-            
-        # found_object = next((obj for obj in csvData.dataset_of_games if obj.id == game_id), None)
+        for game in csvData.dataset_of_games:
+            if game.game_id == game_id:
+                # return str(game_id)
+                return render_template('gameDescription.html', game=game)
+        return (game_id, "not found")
+        
+    
+    @app.route("/test")
+    def test_page():
+        return "test page"
 
-        # return str(found_object)
     
     
     
