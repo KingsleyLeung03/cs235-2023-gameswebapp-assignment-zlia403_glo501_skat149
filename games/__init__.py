@@ -63,6 +63,12 @@ def create_app():
     @app.route('/games')
     def show_listof_games():
         return render_template("games.html", games=csvData.dataset_of_games)
+    
+
+    @app.route('/search')
+    def search_games():
+
+        return render_template("games.html", games=csvData.dataset_of_games)
 
 
     return app
