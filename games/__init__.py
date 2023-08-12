@@ -52,7 +52,11 @@ def create_app():
                 return render_template('gameDescription.html', game=game)
         return (game_id, "not found")
         
-    
+    @app.route("/layout")
+    def layout_page():
+        return render_template("layout.html")
+
+
     @app.route("/test")
     def test_page():
         return "test page"
@@ -67,8 +71,17 @@ def create_app():
 
     @app.route('/search')
     def search_games():
+        target = "the".lower()
+        result = []
+        for game in csvData.dataset_of_games:
+            if str(target) in game.title.lower() or str(target) in game.publisher.publisher_name.lower() or str(target) in str(game.description).lower():
+                if game not in result:
+                    result.append(game)
+            for genre in game.genres:
+                if str(target) in genre.genre_name.lower() and game not in result:
+                    result.append(game)
 
-        return render_template("games.html", games=csvData.dataset_of_games)
+        return render_template("games.html", games=result)
 
 
     return app
