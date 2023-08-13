@@ -69,9 +69,15 @@ def create_app():
         return render_template("games.html", games=csvData.dataset_of_games)
     
 
-    @app.route('/search')
-    def search_games():
-        target = "the".lower()
+    @app.route('/search/<target>', methods=["GET"])
+    def search_games(target):
+        try:
+            target = str(target).lower()
+        except:
+            target = ""
+            ###None error 
+            #return a new page with soem game
+        print(target)
         result = []
         for game in csvData.dataset_of_games:
             if str(target) in game.title.lower() or str(target) in game.publisher.publisher_name.lower() or str(target) in str(game.description).lower():
@@ -80,7 +86,6 @@ def create_app():
             for genre in game.genres:
                 if str(target) in genre.genre_name.lower() and game not in result:
                     result.append(game)
-
         return render_template("games.html", games=result)
 
 
