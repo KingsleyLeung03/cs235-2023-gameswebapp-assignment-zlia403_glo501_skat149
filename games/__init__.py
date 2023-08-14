@@ -7,6 +7,7 @@ from flask import Flask, render_template, request
 from games.domainmodel.model import Game
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
+from games.search import search_games
 
 # TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
 #  stay here!
@@ -75,8 +76,6 @@ def create_app():
             target = str(target).lower()
         except:
             target = ""
-            ###None error 
-            #return a new page with soem game
         print(target)
         result = []
         for game in csvData.dataset_of_games:
@@ -86,7 +85,12 @@ def create_app():
             for genre in game.genres:
                 if str(target) in genre.genre_name.lower() and game not in result:
                     result.append(game)
-        return render_template("games.html", games=result)
+        if len(result)!=0 :
+            return render_template("games.html", games=result)
+        else:
+            suggest = csvData.dataset_of_games[1:10]
+
+            return render_template("games.html", games=suggest)
 
 
     return app
