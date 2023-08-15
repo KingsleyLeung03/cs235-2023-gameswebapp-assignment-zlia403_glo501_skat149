@@ -37,7 +37,11 @@ def create_app():
         some_game = create_some_game()
         # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
         return render_template('layout.html')
-    
+
+    @app.route("/layout")
+    def layout_page():
+        return render_template("layout.html")
+
     @app.route("/gameDescription/<game_id>", methods=["GET"])
     def game_description(game_id):
         # game_id = request.args.get("game_id")

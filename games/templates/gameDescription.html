@@ -37,9 +37,20 @@
                         <dt>Reviews</dt>
                         <dd>{{ game.reviews.rating }}</dd>
 
-                        <dt>Website</dt>
-                        <dd>{{ game.website }}</dd>                        
+                        {% if game.website_url is not none %}
+                            <dt>Website</dt>
+                            <dd>
+                                <a href = {{ game.website_url }}>{{ game.website_url }}</a>
+                            </dd>
+                        {% endif %}
 
+                        <dt>Genres</dt>
+                        {% for genre in game.genres %}
+                            <dd>
+                                <a href = "" class = "genre_link">{{ genre.genre_name }}</a>
+                                <br>
+                            </dd>
+                        {% endfor %}
                     </dl>
                 </div>
             </div>
