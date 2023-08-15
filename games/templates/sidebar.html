@@ -1,9 +1,14 @@
 <ul class="nav_list">
-    <li><a href="./layout">Home</a></li>
-    <li><a href="./games">List of Games</a></li>
+    <li><a href="/layout">Home</a></li>
+    <li><a href="/games">List of Games</a></li>
     <li><a href="">Wish List</a></li>
 
+    
+    <li><input type="text" id="target" placeholder="Search.."></li>
+    <!--<li><a href="/search/tet">Search</a></li>-->
+    
     <!-- game Genre -->
+    <li><a onclick="search_f()">Search</a></li>
     <li>
         <!-- {% for genre in genres %}
         <select name="example">
@@ -11,6 +16,16 @@
         </select>
         
         {% endfor %} -->
-
+        
     </li>
 </ul>
+
+<script>
+    function search_f() {
+      var target = document.getElementById("target").value;
+      if(target == ""){
+        target = None
+      }
+      window.open("/search/"+target, "_parent");      
+    }
+</script>
