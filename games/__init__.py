@@ -7,7 +7,6 @@ from flask import Flask, render_template, request
 from games.domainmodel.model import Game
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
-from games.search import search_games
 
 # TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
 #  stay here!
@@ -56,15 +55,11 @@ def create_app():
                 # return str(game_id)
                 return render_template('gameDescription.html', game=game)
         return render_template("notFound.html", message=f"game id: {game_id} is not found.")
-        
-    @app.route("/layout")
-    def layout_page():
-        return render_template("layout.html")
 
 
-    @app.route("/test")
-    def test_page():
-        return "test page"
+    #@app.route("/test")
+    #def test_page():
+    #    return "test page"
 
     
     
