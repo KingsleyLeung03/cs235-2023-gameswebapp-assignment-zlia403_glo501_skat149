@@ -29,12 +29,28 @@
                         <dd>{{ game.release_date }}</dd>
 
                         <dt>Price</dt>
-                        <dd>NZ$ {{ game.price }}</dd>
+                            {% if game.price == 0 %}
+                                <dd>Free</dd>
+                            {% else %}
+                                <dd>NZ$ {{ game.price }}</dd>
+                            {% endif %}
 
                         <dt>Publisher</dt>
-                        <dd>{{ game.publisher.publisher_name }}</dd>
+                        <dd>
+                            <a href="#{{ game.publisher.publisher_name }}">{{ game.publisher.publisher_name }}</a></dd>
 
-                        <dt>Reviews</dt>
+                        <dt>Average rating</dt>
+                            {% set num_game_reviews = game.reviews|length %}
+                            {% if num_game_reviews == 0 %}
+                                <dd>No customer review yet</dd>
+                            {% else %}
+                                {% set total = 0 %}
+                                {% for review in game.reviews %}
+                                    {% set total = total + review.rating %}
+                                {% endfor %}
+                                {% set average = total / len(game.reviews) %}
+                                <dd>{{ average | format("%.1f") }}</dd>
+                            {% endif %}
                         <dd>{{ game.reviews.rating }}</dd>
 
                         {% if game.website_url is not none %}
@@ -47,7 +63,7 @@
                         <dt>Genres</dt>
                         {% for genre in game.genres %}
                             <dd>
-                                <a href = "" class = "genre_link">{{ genre.genre_name }}</a>
+                                <a href = "#{{ genre.genre_name }}" class = "genre_link">{{ genre.genre_name }}</a>
                                 <br>
                             </dd>
                         {% endfor %}
@@ -56,17 +72,50 @@
             </div>
         </div>
     </section>
-    <section class="game_description"> 
-        <div>
-            <p>
+    <section class="game_awards"> <!-- Showing the game reviews from the CSV file. Can't import now due to Model. -->
+        <h3>Game Awards</h3>
+            <p class="game_awards_content">No data</p> <!-- Can't import now due to the limit of Model. -->
+    </section>
+    <section class="game_description">
+        <h3>About this game</h3>
+            <p class="game_description_content">
                 {{ game.description }}
             </p>
-        </div>
     </section>
     <section class="right">
         <div class="related">
 
         </div>
+    </section>
+
+    <section class="game_all_user_reviews"> <!-- This section shows all user reviews. No data for now. -->
+        <h3>Customer reviews</h3>
+        {% if num_game_reviews == 0 %}
+            <p class="game_user_review_zero_notice">No customer review yet</p>
+        {% else %}
+            <h4>Average rating: {{ average | format("%.1f") }}</h4>
+            {% for review in game.reviews %} <!-- Show all reviews iteratively -->
+                <div class="game_user_review"> <!-- Each review's main class -->
+                    <div class="game_user_review_name">
+                        <h4>{{ review.user }}</h4>
+                    </div>
+                    <div class="game_user_review_num"> <!-- The number of reviews from this user -->
+                        {% set num_user_reviews = review.user.reviews|length %}
+                        {% if num_user_reviews == 1 %}
+                            <p>{{ num_user_reviews }} review</p>
+                        {% else %}
+                            <p>{{ num_user_reviews }} reviews</p>
+                        {% endif %}
+                    </div>
+                    <div class="game_user_review_rating">
+                        <p>Rating: {{ review.rating }}/5</p>
+                    </div>
+                    <div class="game_user_review_comment">
+                        <p>{{ review.comment }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
     </section>
 
 {% endblock %}
