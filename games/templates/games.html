@@ -37,9 +37,9 @@
     </section>
 
     <section class="page_nav">
-        <div class="">
+        <div>
             <ul>
-                {% for page in range(0, pages+1) %}
+                {% for page in pages %}
                 <li>
                     <a href="/games?page={{ page }}">{{ page }}</a>
                 </li>
