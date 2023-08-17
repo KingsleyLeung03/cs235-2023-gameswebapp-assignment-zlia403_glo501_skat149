@@ -32,22 +32,22 @@
                         <dd>NZ$ {{ game.price }}</dd>
 
                         <dt>Publisher</dt>
-                        <dd>{{ game.publisher.publisher_name }}</dd>
+                        <dd>{{ game.publisher_name }}</dd>
 
                         <dt>Reviews</dt>
-                        <dd>{{ game.reviews.rating }}</dd>
+                        <dd>{{ game.rating }}</dd>
 
                         {% if game.website_url is not none %}
                             <dt>Website</dt>
                             <dd>
-                                <a href = {{ game.website_url }}>{{ game.website_url }}</a>
+                                <a href ="{{ game.website_url }}">{{ game.website_url }}</a>
                             </dd>
                         {% endif %}
 
                         <dt>Genres</dt>
                         {% for genre in game.genres %}
                             <dd>
-                                <a href = "" class = "genre_link">{{ genre.genre_name }}</a>
+                                <a href = "" class = "genre_link">{{ genre }}</a>
                                 <br>
                             </dd>
                         {% endfor %}
