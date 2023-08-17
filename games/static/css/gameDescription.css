@@ -1,46 +1,52 @@
 
-div.game_info {
+.game_info {
     /* height: 400px; */
     background-color: rgb(14, 30, 77);
+    display: flex;
+    gap: 10px;
 }
 
-div.game_info .info_left {
-    width: 60%;
-    display: inline-block;
-    /* height: 400px; */
-    /* background-color: aliceblue; */
-}
-div.game_img img {
-    height: 380px;
-    margin: 20px 30px;
+.info_left {
+    width: 75%;
+    margin: 0 auto;
 }
 
-
-div.game_info .right {
-    vertical-align: top;
-    float: right;
-    margin: 10px 20px;
-    padding: 20px 20px;
-    width: 200px;
-    height: 370px;
-    /* height: 100px; */
-    background-color: rgb(30, 41, 73);
+.game_img img {
+    width: 100%;
+    height: auto;
 }
 
-div.game_detail dl {
-    padding-left: 30px;
+.right {
+    flex: 1;
+    margin-right: 10px;
+}
+.right a:Link, .right a:visited{
+    color: #66C0F4
 }
 
-div.game_detail dl dt{
-    padding-top: 10px;
+.right a:hover, .right a:focus, .right a:active {
+    color: #FFFFFF
 }
 
-
-section.game_description {
-    display: inline-block;
-    width: 60%;
+.game_awards_content, .game_description_content, .game_user_review_zero_notice, .game_user_review_name, .game_user_review_num {
+    color: #B1B1B1
 }
 
-
-
-
+@media (max-width: 1200px) {
+    .game_info {
+        flex-direction: column;
+        text-align: center;
+    }
+    .info_left {
+        width: 100%;
+        margin: 0 auto;
+    }
+    .game_img img {
+        width: 100%;
+        height: auto;
+    }
+    .right {
+        text-align: left;
+        margin: 10px;
+    }
+}
