@@ -66,3 +66,16 @@ class MemoryRepository(AbstractRepository):
     def get_game_reviews(self, game_obj: Game) -> List[Review]:
         return game_obj.reviews
         
+# add all game data to the memory repo obj using datareader
+def populate(repo: AbstractRepository):
+    dir_name = os.path.dirname(os.path.abspath(__file__))
+    games_file_name = os.path.join(dir_name, "data/games.csv")
+    reader = GameFileCSVReader(games_file_name)
+
+    reader.read_csv_file()
+
+    games = reader.dataset_of_games
+
+    # Add games to the repo
+    for game in games:
+        repo.add_game(game)

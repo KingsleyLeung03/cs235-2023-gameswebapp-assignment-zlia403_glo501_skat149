@@ -5,14 +5,18 @@ from flask import Flask, render_template, request
 # TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
 #  stay here!
 from games.domainmodel.model import Game
-from games.adapters.datareader.csvdatareader import GameFileCSVReader
+# from games.adapters.datareader.csvdatareader import GameFileCSVReader
+
+import games.adapters.repository as repo
+from games.adapters.memory_repository import populate
+from games.adapters.memory_repository import MemoryRepository
 
 
 # TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
 #  stay here!
 
-csvData = GameFileCSVReader("games/adapters/data/games.csv")
-csvData.read_csv_file()
+# csvData = GameFileCSVReader("games/adapters/data/games.csv")
+# csvData.read_csv_file()
 
 def create_some_game():
     some_game = Game(1, "Call of Duty® 4: Modern Warfare®")
@@ -30,6 +34,12 @@ def create_app():
 
     # Create the Flask app object.
     app = Flask(__name__)
+    
+    
+    # Create the MemoryRepository implementation for a memory-based repository.
+    repo.repo_instance = MemoryRepository()
+    # fill the repository from the provided CSV file
+    populate(repo.repo_instance)
 
     @app.route('/')
     def home():
