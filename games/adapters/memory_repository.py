@@ -13,9 +13,14 @@ class GameNotFoundException(Exception):
 
 # reop class
 class MemoryRepository(AbstractRepository):
+    # about Game object
+    
     def __init__(self) -> None:
         super().__init__()
         self.__games: List[Game] = list()
+        self.__genres: List[Genre] = list()
+        self.__publishers: List[Publisher] = list()
+        # self.__reviews: List[Review] = list()
         
     def add_game(self, game: Game):
         if isinstance(game, Game):
@@ -65,7 +70,57 @@ class MemoryRepository(AbstractRepository):
         
     def get_game_reviews(self, game_obj: Game) -> List[Review]:
         return game_obj.reviews
+    
+    def get_games_by_genre(self, genre: Genre) -> List[Game]:
+        if isinstance(genre, Genre):
+            game_list: List[Game] = list()
+            
+            # look for the games that have the genre from arg
+            for game in self.__games:
+                if genre in game.genres:
+                    insort_left(game_list, game)
+                    
+            return game_list
         
+    def get_games_by_publisher(self, publisher: Publisher) -> List[Game]:
+        if isinstance(publisher, Publisher):
+            game_list: List[Game] = list()
+            
+            # look for games that have same publisher form arg
+            for game in self.__games:
+                if publisher == game.publisher:
+                    insort_left(game_list, game)
+            
+            return game_list
+        
+            
+    # about Genre class
+
+    def add_genre(self, genre: Genre):
+        if isinstance(genre, Genre):
+            insort_left(self.__genres, genre)
+            
+    def get_genre_list(self) -> List[Game]:
+        return self.__genres
+
+    def get_number_of_genres(self) -> int:
+        return len(self.__genres)
+    
+    
+    # about Publisher class
+    
+
+    def add_publisher(self, publisher: Publisher):
+        if isinstance(publisher, Publisher):
+            insort_left(self.__publishers, publisher)
+
+    def get_number_of_publisher(self) -> int:
+        return len(self.__publishers)
+    
+    def get_publisher_list(self) -> List[Game]:
+        return self.__publishers
+            
+    
 # add all game data to the memory repo obj using datareader
 def populate(repo: AbstractRepository):
     dir_name = os.path.dirname(os.path.abspath(__file__))
@@ -75,7 +130,17 @@ def populate(repo: AbstractRepository):
     reader.read_csv_file()
 
     games = reader.dataset_of_games
+    genres = reader.dataset_of_genres
+    publishers = reader.dataset_of_publishers
+    # reviews = reader.dataset
 
     # Add games to the repo
     for game in games:
         repo.add_game(game)
+        
+    for genre in genres:
+        repo.add_genre(genre)
+        
+    for publisher in publishers:
+        repo.add_publisher(publisher)
+        
