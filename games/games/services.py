@@ -32,10 +32,16 @@ def get_games(repo: AbstractRepository, range: int,  pagenum: int):
         game_dicts.append(game_dict)
     
     return game_dicts
+  
+def get_max_page_num(number_of_games: int, games_per_page: int) -> int:
+    if isinstance(number_of_games, int) and isinstance(games_per_page, int):    
+        # max page number is #of games/ game par page if divisible, if not +1 
+        maxpage = number_of_games//games_per_page 
+        if not number_of_games % games_per_page == 0:
+            maxpage += 1
+        return maxpage
     
-
     
-
 
 
 def get_number_of_games(repo: AbstractRepository) -> int:

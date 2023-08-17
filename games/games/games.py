@@ -26,6 +26,7 @@ def show_games():
     # this must be replaced by data from momery repo
     num_games = services.get_number_of_games(repo.repo_instance)
     games = services.get_games(repo.repo_instance, games_per_page, pagenum)
+    maxpage = services.get_max_page_num(num_games, games_per_page)
     
-    return render_template("games.html", games=games)
+    return render_template("games.html", games=games, num_game=num_games, pagenum=pagenum, pages=maxpage)
 

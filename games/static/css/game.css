@@ -50,3 +50,32 @@ div.game_price {
     color: white;
 
 }
+
+
+/* page nav bar */
+
+section.page_nav div ul{
+    margin: 0 0 10px;
+    padding: 10px 10px 5px;
+    text-align: center;
+}
+section.page_nav div ul li{
+    display: inline;
+    margin: 0 2px;
+    padding: 0;
+}
+
+section.page_nav div ul li a{
+    display: inline-block;
+    margin-bottom: 5px;
+    padding: 5px 13px;
+    background: #eeeff7;
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+section.page_nav div ul li a:hover{
+	color: #000;
+	background: #ccf;
+	border-color: #00f
+}

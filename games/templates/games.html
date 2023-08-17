@@ -13,6 +13,7 @@
         <div class="section_title">
             <h1>Game Liblary</h1>
         </div>
+        <p>page - {{ pagenum }}</p>
 
         <div class="games_holder">
 
@@ -32,6 +33,18 @@
             {% endfor %}
 
 
+        </div>
+    </section>
+
+    <section class="page_nav">
+        <div class="">
+            <ul>
+                {% for page in range(0, pages+1) %}
+                <li>
+                    <a href="/games?page={{ page }}">{{ page }}</a>
+                </li>
+                {% endfor %}
+            </ul>
         </div>
     </section>
 
