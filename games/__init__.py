@@ -5,7 +5,9 @@ from flask import Flask, render_template, request
 # TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
 #  stay here!
 from games.domainmodel.model import Game
-# from games.adapters.datareader.csvdatareader import GameFileCSVReader
+
+# this line must be deleted
+from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
 import games.adapters.repository as repo
 from games.adapters.memory_repository import populate
@@ -15,8 +17,9 @@ from games.adapters.memory_repository import MemoryRepository
 # TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
 #  stay here!
 
-# csvData = GameFileCSVReader("games/adapters/data/games.csv")
-# csvData.read_csv_file()
+# this lines must be removed
+csvData = GameFileCSVReader("games/adapters/data/games.csv")
+csvData.read_csv_file()
 
 def create_some_game():
     some_game = Game(1, "Call of Duty® 4: Modern Warfare®")
@@ -43,7 +46,7 @@ def create_app():
 
     @app.route('/')
     def home():
-        some_game = create_some_game()
+        # some_game = create_some_game()
         # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
         return render_template('layout.html')
 
@@ -65,18 +68,13 @@ def create_app():
                 # return str(game_id)
                 return render_template('gameDescription.html', game=game)
         return render_template("notFound.html", message=f"game id: {game_id} is not found.")
-
-
-    #@app.route("/test")
-    #def test_page():
-    #    return "test page"
-
     
     
     
-    @app.route('/games')
-    def show_listof_games():
-        return render_template("games.html", games=csvData.dataset_of_games)
+    with app.app_context():
+        # Register the browse blueprint to the app instance.
+        from .games import games
+        app.register_blueprint(games.games_blueprint)
     
 
     @app.route('/search/<target>', methods=["GET"])
