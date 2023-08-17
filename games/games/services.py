@@ -42,6 +42,17 @@ def get_max_page_num(number_of_games: int, games_per_page: int) -> int:
         return maxpage
     
     
+def generate_page_list(current_page, max_page):
+    page_list = []
+
+    for n in range(-3, 4):
+        new_page = current_page + n
+
+        if 1 <= new_page <= max_page:
+            page_list.append(new_page)
+
+    return page_list
+    
 
 
 def get_number_of_games(repo: AbstractRepository) -> int:
