@@ -97,17 +97,66 @@ class AbstractRepository(abc.ABC):
         """" get list of game by genre. """
         raise NotImplementedError
     
-    @abc.abstractmethod
-    def get_games_by_review(self, review: Review) -> List[Game]:
-        """" get list of game by review. """
-        raise NotImplementedError
+    # @abc.abstractmethod
+    # def get_games_by_review(self, review: Review) -> List[Game]:
+    #     """" get list of game by review. """
+    #     raise NotImplementedError
+    
     
     
     # about genres class
     
+    @abc.abstractmethod
+    def add_genre(self, genre: Genre):
+        """ Add a genre to the repository list of genres. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_number_of_genres(self) -> int:
+        """ Returns a number of genres exist in the repository. """
+        raise NotImplementedError
+    
+    @abc.abstractmethod
+    def get_genre_list(self) -> List[Game]:
+        """" Returns the list of genres. """
+        raise NotImplementedError
+    
+    
     # about Publisher class
     
+    @abc.abstractmethod
+    def add_publisher(self, publisher: Publisher):
+        """ Add a publisher to the repository list of publishers. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_number_of_publisher(self) -> int:
+        """ Returns a number of publishers exist in the repository. """
+        raise NotImplementedError
+    
+    @abc.abstractmethod
+    def get_publisher_list(self) -> List[Game]:
+        """" Returns the list of publishers. """
+        raise NotImplementedError
+    
+    
+    
     # about Review class 
+    
+    # @abc.abstractmethod
+    # def add_review(self, review: Review):
+    #     """ Add a review to the repository list of reviews. """
+    #     raise NotImplementedError
+
+    # @abc.abstractmethod
+    # def get_number_of_review(self) -> int:
+    #     """ Returns a number of reviews exist in the repository. """
+    #     raise NotImplementedError
+    
+    # @abc.abstractmethod
+    # def get_review_list(self) -> List[Game]:
+    #     """" Returns the list of reviews. """
+    #     raise NotImplementedError
     
 
     
