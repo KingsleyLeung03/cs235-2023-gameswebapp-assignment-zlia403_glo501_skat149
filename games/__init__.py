@@ -53,26 +53,14 @@ def create_app():
     @app.route("/layout")
     def layout_page():
         return render_template("layout.html")
-
-    @app.route("/gameDescription/<game_id>", methods=["GET"])
-    def game_description(game_id):
-        # game_id = request.args.get("game_id")
-        # check that recived value is integer
-        try:
-            game_id = int(game_id)
-        except:
-            return "agument error"
-        
-        for game in csvData.dataset_of_games:
-            if game.game_id == game_id:
-                # return str(game_id)
-                return render_template('gameDescription.html', game=game)
-        return render_template("notFound.html", message=f"game id: {game_id} is not found.")
-    
     
     
     with app.app_context():
-        # Register the browse blueprint to the app instance.
+        # Register the game_desc blueprint to the app instance.
+        from .game_desc import game_desc
+        app.register_blueprint(game_desc.game_desc_blueprint)
+        
+        # Register the games blueprint to the app instance.
         from .games import games
         app.register_blueprint(games.games_blueprint)
     

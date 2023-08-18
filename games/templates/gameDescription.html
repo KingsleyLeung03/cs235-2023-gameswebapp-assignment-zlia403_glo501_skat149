@@ -32,22 +32,26 @@
                         <dd>NZ$ {{ game.price }}</dd>
 
                         <dt>Publisher</dt>
-                        <dd>{{ game.publisher.publisher_name }}</dd>
+                        <dd>{{ game.publisher_name }}</dd>
 
-                        <dt>Reviews</dt>
-                        <dd>{{ game.reviews.rating }}</dd>
+                        <dt>Average rating</dt>
+                        {% if game.num_game_reviews == 0 %}
+                            <dd>No customer review yet</dd>
+                        {% else %}
+                            <dd>{{ game.game_reviews_average_rating }}</dd>
+                        {% endif %}
 
                         {% if game.website_url is not none %}
                             <dt>Website</dt>
                             <dd>
-                                <a href = {{ game.website_url }}>{{ game.website_url }}</a>
+                                <a href ="{{ game.website_url }}">{{ game.website_url }}</a>
                             </dd>
                         {% endif %}
 
                         <dt>Genres</dt>
                         {% for genre in game.genres %}
                             <dd>
-                                <a href = "" class = "genre_link">{{ genre.genre_name }}</a>
+                                <a href = "" class = "genre_link">{{ genre }}</a>
                                 <br>
                             </dd>
                         {% endfor %}
@@ -56,17 +60,27 @@
             </div>
         </div>
     </section>
-    <section class="game_description"> 
-        <div>
-            <p>
-                {{ game.description }}
-            </p>
-        </div>
+    <section class="game_awards"> <!-- Showing the game reviews from the CSV file. Can't import now due to Model. -->
+        <h3>Game Awards</h3>
+            <p class="game_awards_content">No data</p> <!-- Can't import now due to the limit of Model. -->
+    </section>
+    <section class="game_description">
+        <h3>About this game</h3>
+        <p class="game_description_content">
+            {{ game.description }}
+        </p>
     </section>
     <section class="right">
         <div class="related">
 
         </div>
     </section>
+
+    <section class="game_all_user_reviews"> <!-- This section shows all user reviews. No data for now. -->
+        <h3>Customer reviews</h3>
+            <p class="game_user_review_zero_notice">No customer review yet</p>
+    </section>
+
+
 
 {% endblock %}
