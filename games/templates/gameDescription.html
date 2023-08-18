@@ -34,8 +34,12 @@
                         <dt>Publisher</dt>
                         <dd>{{ game.publisher_name }}</dd>
 
-                        <dt>Reviews</dt>
-                        <dd>{{ game.rating }}</dd>
+                        <dt>Average rating</dt>
+                        {% if game.num_game_reviews == 0 %}
+                            <dd>No customer review yet</dd>
+                        {% else %}
+                            <dd>{{ game.game_reviews_average_rating }}</dd>
+                        {% endif %}
 
                         {% if game.website_url is not none %}
                             <dt>Website</dt>
@@ -56,17 +60,52 @@
             </div>
         </div>
     </section>
-    <section class="game_description"> 
-        <div>
-            <p>
-                {{ game.description }}
-            </p>
-        </div>
+    <section class="game_awards"> <!-- Showing the game reviews from the CSV file. Can't import now due to Model. -->
+        <h3>Game Awards</h3>
+            <p class="game_awards_content">No data</p> <!-- Can't import now due to the limit of Model. -->
+    </section>
+    <section class="game_description">
+        <h3>About this game</h3>
+        <p class="game_description_content">
+            {{ game.description }}
+        </p>
     </section>
     <section class="right">
         <div class="related">
 
         </div>
     </section>
+
+    <section class="game_all_user_reviews"> <!-- This section shows all user reviews. No data for now. -->
+        <h3>Customer reviews</h3>
+        {% if game.num_game_reviews == 0 %}
+            <p class="game_user_review_zero_notice">No customer review yet</p>
+        {% else %}
+            <h4>Average rating: {{ game.game_reviews_average_rating }}</h4>
+            {% for review in game.game_reviews %} <!-- Show all reviews iteratively -->
+                <div class="game_user_review"> <!-- Each review's main class -->
+                    <div class="game_user_review_name">
+                        <h4>{{ review.user }}</h4>
+                    </div>
+                    <div class="game_user_review_num"> <!-- The number of reviews from this user -->
+                        {% set num_user_reviews = review.user.reviews|length %} <!-- Might further optimise -->
+                        {% if num_user_reviews == 1 %}
+                            <p>{{ num_user_reviews }} review</p>
+                        {% else %}
+                            <p>{{ num_user_reviews }} reviews</p>
+                        {% endif %}
+                    </div>
+                    <div class="game_user_review_rating">
+                        <p>Rating: {{ review.rating }}/5</p>
+                    </div>
+                    <div class="game_user_review_comment">
+                        <p>{{ review.comment }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </section>
+
+
 
 {% endblock %}
