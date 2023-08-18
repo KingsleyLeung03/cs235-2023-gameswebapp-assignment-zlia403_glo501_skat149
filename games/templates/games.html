@@ -13,7 +13,22 @@
         <div class="section_title">
             <h1>Game Liblary</h1>
         </div>
-        <p>page - {{ pagenum }}</p>
+
+        <div class="order_selection">
+            <h3>Order games by:</h3>
+            <!-- for each option of ordering of the games -->
+            {% for option in order_options %}
+            
+            <div class="orders">
+                <a href="/games?page={{ page_info.current_page }}&order={{ option }}">{{ option }}</a>
+            </div>
+            {% endfor %}
+
+        </div>
+        <div class="current_page">
+            <h3>page - {{ page_info.current_page }}: Displaying {{ page_info.current_display[0] }} - {{ page_info.current_display[1] }} of {{ page_info.number_of_games }}</h3>
+        </div>
+        
 
         <div class="games_holder">
 
@@ -41,7 +56,7 @@
             <ul>
                 {% for page in pages %}
                 <li>
-                    <a href="/games?page={{ page }}">{{ page }}</a>
+                    <a href="/games?page={{ page }}&order={{ page_info.current_order }}">{{ page }}</a>
                 </li>
                 {% endfor %}
             </ul>

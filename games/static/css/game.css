@@ -1,3 +1,30 @@
+div.order_selection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+.order_selection div.orders {
+    margin: 7px 10px;
+    padding: 3px 9px;
+    background-color: rgb(8, 15, 37);
+    border-radius: 5px;
+    box-shadow: #000;   
+}
+.order_selection div.orders a {
+    font-family: "Myriad Pro","Open Sans",Arial,Helvetica,sans-serif;
+    color: whitesmoke;
+}
+.order_selection div.orders a:hover {
+    font-family: "Myriad Pro","Open Sans",Arial,Helvetica,sans-serif;
+    color: lightblue;
+    text-decoration: underline;
+}
+.order_selection h3 {
+    margin-block: 6px;
+}
+
+
 div.games_holder {
     display: flex;
     flex-wrap: wrap;
@@ -52,7 +79,7 @@ div.game_price {
 }
 
 
-/* page nav bar */
+/* page nav bar at bottom of the page*/
 
 section.page_nav div ul{
     margin: 0 0 10px;

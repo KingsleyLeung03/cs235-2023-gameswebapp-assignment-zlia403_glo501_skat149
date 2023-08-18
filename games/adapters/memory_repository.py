@@ -56,6 +56,8 @@ class MemoryRepository(AbstractRepository):
                 gamelist.sort(key=lambda game: game.publisher.publisher_name)
             elif order == "release_date":
                 gamelist.sort(key=lambda game: game.release_date)
+            elif order == "price":
+                gamelist.sort(key=lambda game: game.price)
             else: 
                 gamelist.sort(key= lambda game: game.game_id)
             
