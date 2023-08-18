@@ -33,6 +33,13 @@ class AbstractRepository(abc.ABC):
         """" Returns the list of games. """
         raise NotImplementedError
     
+    @abc.abstractmethod
+    def get_range_of_game_list(self, start: int, end: int, order: str = "game_id") -> List[Game]:
+        """" Returns the list of games. """
+        raise NotImplementedError
+    
+
+
     # game atritbutes 
     
     @abc.abstractmethod
