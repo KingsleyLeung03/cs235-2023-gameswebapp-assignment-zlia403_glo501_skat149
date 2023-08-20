@@ -63,29 +63,13 @@ def create_app():
         # Register the games blueprint to the app instance.
         from .games import games
         app.register_blueprint(games.games_blueprint)
+
+        # Register the search blueprint to the app instance.
+        from .search import search
+        app.register_blueprint(search.search_blueprint)
     
 
-    @app.route('/search/<target>', methods=["GET"])
-    def search_games(target):
-        try:
-            target = str(target).lower()
-        except:
-            target = ""
-        print(target)
-        result = []
-        for game in csvData.dataset_of_games:
-            if str(target) in game.title.lower() or str(target) in game.publisher.publisher_name.lower() or str(target) in str(game.description).lower():
-                if game not in result:
-                    result.append(game)
-            for genre in game.genres:
-                if str(target) in genre.genre_name.lower() and game not in result:
-                    result.append(game)
-        if len(result)!=0 :
-            return render_template("games.html", games=result)
-        else:
-            suggest = csvData.dataset_of_games[1:10]
 
-            return render_template("games.html", games=suggest)
 
 
     return app
