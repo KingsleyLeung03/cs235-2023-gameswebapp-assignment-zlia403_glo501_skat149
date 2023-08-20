@@ -2,6 +2,7 @@
     <li><a href="/layout">Home</a></li>
     <li><a href="/games">List of Games</a></li>
     <li><a href="">Wish List</a></li>
+    
 
     
     <li><input type="text" id="target" placeholder="Search.."></li>
@@ -16,7 +17,26 @@
         </select>
         
         {% endfor %} -->
-        
+        <div class="dropdown">
+          <a class="dropbtn">Genre</a>
+          <div class="dropdown-content">
+            <!--this should be jinja for loop and call servace layer -->
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </div>
+    </li>
+    <li>
+        <div class="dropdown">
+          <a class="dropbtn">Publisher</a>
+          <div class="dropdown-content">
+            <!--this should be jinja for loop and call servace layer -->
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </div>
     </li>
 </ul>
 
