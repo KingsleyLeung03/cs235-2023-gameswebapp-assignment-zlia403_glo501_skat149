@@ -146,7 +146,10 @@ class AbstractRepository(abc.ABC):
         """" Returns the list of publishers. """
         raise NotImplementedError
     
-    
+    @abc.abstractmethod
+    def get_number_of_search_games(self,target: str) -> int:
+        """" Returns the list of publishers. """
+        raise NotImplementedError
     
     # about Review class 
     

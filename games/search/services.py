@@ -73,3 +73,31 @@ def get_genre_list(repo: AbstractRepository) -> list:
 
 def get_publisher_list(repo: AbstractRepository) -> list:
     return repo.get_publisher_list()
+
+
+def search_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, order: str, target:str):
+    if not isinstance(games_per_page, int) or not isinstance(pagenum, int) or pagenum<1:
+        raise UnknownPageException
+    
+    start_index = games_per_page*(pagenum-1)
+    end_index = games_per_page*pagenum
+    
+    if end_index > get_number_of_search_games(repo,target) -1:
+        end_index = get_number_of_search_games(repo,target) -1
+         
+    # games = repo.get_game_list()[start_index: end_index]
+    games = repo.get_range_of_search_game_list(start_index, end_index, order, target)
+    game_dicts = []
+    for game in games:
+        game_dict = {
+            "game_id": game.game_id,
+            "title": game.title,
+            "image_url": game.image_url,
+            "price": game.price
+        }
+        game_dicts.append(game_dict)
+    
+    return game_dicts
+
+def get_number_of_search_games(repo: AbstractRepository, target: str) -> int:
+    return repo.get_number_of_search_games(target)

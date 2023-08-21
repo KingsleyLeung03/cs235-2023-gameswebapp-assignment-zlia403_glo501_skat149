@@ -21,6 +21,9 @@ class MemoryRepository(AbstractRepository):
         self.__genres: List[Genre] = list()
         self.__publishers: List[Publisher] = list()
         # self.__reviews: List[Review] = list()
+        self.__games_search: List[Game] = list()
+        self.__genres_filter: List[Genre] = list()
+        self.__publishers_filter: List[Publisher] = list()
         
     def add_game(self, game: Game):
         if isinstance(game, Game):
@@ -144,6 +147,9 @@ class MemoryRepository(AbstractRepository):
     
     def get_publisher_list(self) -> List[Game]:
         return self.__publishers
+    
+    def get_number_of_search_games(self, target: str) -> int:
+        return len(self.__games)
             
     
 # add all game data to the memory repo obj using datareader
