@@ -48,11 +48,16 @@ def create_app():
     def home():
         # some_game = create_some_game()
         # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
-        return render_template('layout.html')
+        publisher_list = repo.repo_instance.get_publisher_list()
+        geners_list = repo.repo_instance.get_genre_list()
+        return render_template("layout.html",genres=geners_list,publishers=publisher_list)
 
     @app.route("/layout")
     def layout_page():
-        return render_template("layout.html")
+
+        publisher_list = repo.repo_instance.get_publisher_list()
+        geners_list = repo.repo_instance.get_genre_list()
+        return render_template("layout.html",genres=geners_list,publishers=publisher_list)
     
     
     with app.app_context():
@@ -67,8 +72,14 @@ def create_app():
         # Register the search blueprint to the app instance.
         from .search import search
         app.register_blueprint(search.search_blueprint)
-    
 
+        # Register the genre_bases blueprint to the app instance.
+        from .genre_bases import genre_bases
+        app.register_blueprint(genre_bases.genre_bases_blueprint)
+    
+        # Register the genre_bases blueprint to the app instance.
+        from .publisher_bases import publisher_bases
+        app.register_blueprint(publisher_bases.publisher_bases_blueprint)
 
 
 

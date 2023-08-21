@@ -21,9 +21,11 @@
           <a class="dropbtn">Genre</a>
           <div class="dropdown-content">
             <!--this should be jinja for loop and call servace layer -->
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+            {% for genre in genres %}
+            <div class="Genre">
+                <a href="/genre/{{ genre.genre_name }}">{{ genre.genre_name }}</a>
+            </div>
+            {% endfor %}
           </div>
         </div>
     </li>
@@ -32,9 +34,11 @@
           <a class="dropbtn">Publisher</a>
           <div class="dropdown-content">
             <!--this should be jinja for loop and call servace layer -->
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+            {% for publisher in publishers %}
+            <div class="Genre">
+                <a href="/publisher">{{ publisher.publisher_name }}</a>
+            </div>
+            {% endfor %}
           </div>
         </div>
     </li>

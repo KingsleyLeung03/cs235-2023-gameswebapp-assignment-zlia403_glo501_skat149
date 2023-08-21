@@ -31,6 +31,8 @@ def show_games(target):
     maxpage = services.get_max_page_num(num_games, games_per_page)
     pages = services.generate_page_list(pagenum, maxpage)
     option_of_order = ["game_id", "title", "publisher", "release_date", "price"]
+    geners_list = services.get_genre_list(repo.repo_instance)
+    publisher_list = services.get_publisher_list(repo.repo_instance)
     
     page_info = {
         "number_of_games": num_games,
@@ -40,5 +42,5 @@ def show_games(target):
         "current_order": order
     }
     
-    return render_template("games.html", games=games, num_game=num_games, page_info=page_info, pages=pages, order_options=option_of_order)
+    return render_template("games.html", games=games, num_game=num_games, page_info=page_info, pages=pages, order_options=option_of_order,genres=geners_list,publishers=publisher_list)
 

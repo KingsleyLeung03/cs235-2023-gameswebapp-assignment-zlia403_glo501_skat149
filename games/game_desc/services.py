@@ -40,3 +40,8 @@ def get_game(repo: AbstractRepository, game_id: int):
     
     return game
     
+def get_genre_list(repo: AbstractRepository) -> list:
+    return repo.get_genre_list()
+
+def get_publisher_list(repo: AbstractRepository) -> list:
+    return repo.get_publisher_list()

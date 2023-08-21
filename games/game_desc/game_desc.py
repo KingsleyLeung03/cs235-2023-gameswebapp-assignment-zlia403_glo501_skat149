@@ -15,10 +15,15 @@ def game_description(game_id):
         except:
             return render_template("notFound.html", message=f"Invalid game ID!")
         game = None
+
+            
+        geners_list = services.get_genre_list(repo.repo_instance)
+        publisher_list = services.get_publisher_list(repo.repo_instance)
+
         try:
             game = services.get_game(repo.repo_instance, game_id)
         except: # if game not found
-            return render_template("notFound.html", message=f"game id: {game_id} is not found.")
+            return render_template("notFound.html", message=f"game id: {game_id} is not found.",genres=geners_list,publishers=publisher_list)
         else: # if not error 
-            return render_template('gameDescription.html', game=game)
+            return render_template('gameDescription.html', game=game,genres=geners_list,publishers=publisher_list)
         

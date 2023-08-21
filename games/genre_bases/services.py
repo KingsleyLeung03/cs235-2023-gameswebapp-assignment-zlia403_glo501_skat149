@@ -73,3 +73,4 @@ def get_genre_list(repo: AbstractRepository) -> list:
 
 def get_publisher_list(repo: AbstractRepository) -> list:
     return repo.get_publisher_list()
+

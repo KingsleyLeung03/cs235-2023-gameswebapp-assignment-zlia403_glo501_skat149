@@ -68,4 +68,8 @@ def get_current_display(num_of_games:int, games_per_page:int, current_page: int)
 def get_number_of_games(repo: AbstractRepository) -> int:
     return repo.get_number_of_games()
 
+def get_genre_list(repo: AbstractRepository) -> list:
+    return repo.get_genre_list()
 
+def get_publisher_list(repo: AbstractRepository) -> list:
+    return repo.get_publisher_list()

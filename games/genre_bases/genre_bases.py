@@ -2,15 +2,15 @@ from flask import Blueprint, render_template, request
 # from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
 import games.adapters.repository as repo
-import games.games.services as services
-games_blueprint = Blueprint("games_bp", __name__)
+import games.genre_bases.services as services
+genre_bases_blueprint = Blueprint("genre_bases_bp", __name__)
 
 games_per_page = 30
 
 
 
-@games_blueprint.route('/games')
-def show_games():
+@genre_bases_blueprint.route('/genre/<target>', methods=["GET"])
+def show_games(target):
     pagenum = request.args.get("page")
     order = request.args.get("order")
     
