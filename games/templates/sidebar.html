@@ -3,13 +3,6 @@
     <li><a href="/games">List of Games</a></li>
     <li><a href="">Wish List</a></li>
     
-
-    
-    <li><input type="text" id="target" placeholder="Search.."></li>
-    <!--<li><a href="/search/tet">Search</a></li>-->
-    
-    <!-- game Genre -->
-    <li><a onclick="search_f()">Search</a></li>
     <li>
         <!-- {% for genre in genres %}
         <select name="example">
@@ -29,27 +22,45 @@
           </div>
         </div>
     </li>
+    <br>
+    <li><input type="text" id="target" placeholder="Search.."></li>
+    <!--<li><a href="/search/tet">Search</a></li>-->
+    
+    <li><a id="search_b" onclick="search_f()">Search</a></li>
+    <!-- game Genre -->
     <li>
         <div class="dropdown">
-          <a class="dropbtn">Publisher</a>
+          <a class="dropbtn" id="type" onclick="search_f()">Search Type</a>
           <div class="dropdown-content">
             <!--this should be jinja for loop and call servace layer -->
-            {% for publisher in publishers %}
             <div class="Genre">
-                <a href="/publisher">{{ publisher.publisher_name }}</a>
-            </div>
-            {% endfor %}
+              <a onclick="search_genre()">Genre</a>
+              <a onclick="search_publisher()">Publisher</a>
+              <a onclick="search_title()">Title</a>
+          </div>
           </div>
         </div>
     </li>
 </ul>
 
 <script>
+  var type = "title";
     function search_f() {
       var target = document.getElementById("target").value;
-      if(target == ""){
-        target = None
-      }
-      window.open("/search/"+target, "_parent");      
+      if(target != ""){
+      window.open("/search/"+type+"/"+target, "_parent");
+    }}
+
+    function search_title() {
+      document.getElementById("search_b").innerHTML = "Search by Title";
+      type = "title";
+    }
+    function search_genre() {
+      document.getElementById("search_b").innerHTML = "Search by Genre";
+      type = "genre";
+    }
+    function search_publisher() {
+      document.getElementById("search_b").innerHTML = "Search by Publisher";
+      type = "publisher";
     }
 </script>

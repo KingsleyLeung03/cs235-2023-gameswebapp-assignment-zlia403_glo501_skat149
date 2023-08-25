@@ -8,8 +8,8 @@ games_per_page = 30
 
 
 
-@search_blueprint.route('/search/<target>', methods=["GET"])
-def show_games(target):
+@search_blueprint.route('/search/<target>/<type>', methods=["GET"])
+def show_games(target,type):
     pagenum = request.args.get("page")
     order = request.args.get("order")
     
