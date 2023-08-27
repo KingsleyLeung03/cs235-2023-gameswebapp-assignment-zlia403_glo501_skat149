@@ -90,6 +90,6 @@ def show_games_trial(target):
         "current_order": order
     }
     
-    return render_template("genre.html", games=games, num_game=num_games, page_info=page_info, pages=pages, order_options=option_of_order,genres=genres_list,publishers=publisher_list)
+    return render_template("genre.html", games=games, num_game=num_games, page_info=page_info, pages=pages, order_options=option_of_order,genres=genres_list,publishers=publisher_list,genre=genre)
 
 
