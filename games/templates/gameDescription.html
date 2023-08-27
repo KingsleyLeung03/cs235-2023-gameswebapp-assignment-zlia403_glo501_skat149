@@ -3,7 +3,7 @@
 
 {% block head %}
     {{ super() }}
-    <link rel="stylesheet" href="../static/css/gameDescription.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gameDescription.css') }}">
     <title>CS235 Game Library - {{ game.title }}</title>
 {% endblock %}
 
