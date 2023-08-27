@@ -11,7 +11,7 @@ games_per_page = 30
 
 
 #@genre_bases_blueprint.route('/genre/<target>', methods=["GET"])
-def show_games(target):
+def show_games_trial(target):
     pagenum = request.args.get("page")
     order = request.args.get("order")
     
@@ -48,7 +48,7 @@ def show_games(target):
     return render_template("games.html", games=games, num_game=num_games, page_info=page_info, pages=pages, order_options=option_of_order,genres=geners_list,publishers=publisher_list)
 
 @genre_bases_blueprint.route('/genre/<target>', methods=["GET"])
-def show_games_trial(target):
+def show_games(target):
     ##
     pagenum = request.args.get("page")
     order = request.args.get("order")

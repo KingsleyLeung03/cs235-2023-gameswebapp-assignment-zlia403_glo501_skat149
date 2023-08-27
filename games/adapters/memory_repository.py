@@ -3,7 +3,7 @@ from typing import List
 import os
 
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game, Genre, Publisher, Review
+from games.domainmodel.model import *
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
 # errors
@@ -21,10 +21,6 @@ class MemoryRepository(AbstractRepository):
         self.__genres: List[Genre] = list()
         self.__publishers: List[Publisher] = list()
         #self.__reviews: List[Review] = list()
-
-        self.__games_search: List[Game] = list()
-        self.__genres_filter: List[Genre] = list()
-        self.__publishers_filter: List[Publisher] = list()
         
         self.__game_list: List[Game] = list()
         
@@ -112,7 +108,6 @@ class MemoryRepository(AbstractRepository):
                     insort_left(game_list, game)
                     
             self.__game_list = game_list
-            print(self.__game_list)
             return self.__game_list
         
     def get_games_by_publisher(self, publisher: Publisher) -> List[Game]:
@@ -127,7 +122,42 @@ class MemoryRepository(AbstractRepository):
             self.__game_list = game_list
             return game_list
         
-
+    def get_games_by_genre_str(self, genre: str) -> List[Game]:
+        
+            game_list: List[Game] = list()
+            
+            # look for the games that have the genre from arg
+            for game in self.__games:
+                for gen in game.genres:
+                    if genre.lower() in gen.genre_name.lower():
+                        insort_left(game_list, game)
+                        break
+                    
+            self.__game_list = game_list
+            return self.__game_list
+    
+    def get_games_by_publisher_str(self, publisher: str) -> List[Game]:
+            game_list: List[Game] = list()
+            
+            # look for games that have same publisher form arg
+            for game in self.__games:
+                if publisher.lower() in game.publisher.publisher_name.lower():
+                    insort_left(game_list, game)
+            
+            self.__game_list = game_list
+            return game_list
+        
+    def get_games_by_title_str(self, title: str) -> List[Game]:
+            game_list: List[Game] = list()
+            
+            # look for games that have same publisher form arg
+            for game in self.__games:
+                if title.lower() in game.title.lower():
+                    insort_left(game_list, game)
+            
+            self.__game_list = game_list
+            return game_list
+        
      # about Search Function
 
     def get_game_search_list(self) -> List[Game]:
@@ -152,7 +182,6 @@ class MemoryRepository(AbstractRepository):
                 gamelist.sort(key=lambda game: game.price)
             else: 
                 gamelist.sort(key= lambda game: game.game_id)
-            
             
             gamelist = gamelist[start:end]
             return gamelist

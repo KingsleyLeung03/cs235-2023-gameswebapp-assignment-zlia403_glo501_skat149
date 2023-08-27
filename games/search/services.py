@@ -18,10 +18,10 @@ def get_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, orde
     end_index = games_per_page*pagenum
     
     if end_index > get_number_of_games(repo) -1:
-        end_index = get_number_of_games(repo) -1
+        end_index = get_number_of_games(repo) 
          
     # games = repo.get_game_list()[start_index: end_index]
-    games = repo.get_range_of_game_list(start_index, end_index, order)
+    games = repo.get_range_of_search_game_list(start_index, end_index, order)
     game_dicts = []
     for game in games:
         game_dict = {
@@ -66,7 +66,8 @@ def get_current_display(num_of_games:int, games_per_page:int, current_page: int)
 
 
 def get_number_of_games(repo: AbstractRepository) -> int:
-    return repo.get_number_of_games()
+    return repo.get_number_of_search_games()
+    #return repo.get_number_of_games()
 
 def get_genre_list(repo: AbstractRepository) -> list:
     return repo.get_genre_list()
@@ -74,30 +75,16 @@ def get_genre_list(repo: AbstractRepository) -> list:
 def get_publisher_list(repo: AbstractRepository) -> list:
     return repo.get_publisher_list()
 
+def get_number_of_search_games(repo: AbstractRepository) -> int:
+    return repo.get_number_of_search_games()
 
-def search_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, order: str, target:str):
-    if not isinstance(games_per_page, int) or not isinstance(pagenum, int) or pagenum<1:
-        raise UnknownPageException
-    
-    start_index = games_per_page*(pagenum-1)
-    end_index = games_per_page*pagenum
-    
-    if end_index > get_number_of_search_games(repo,target) -1:
-        end_index = get_number_of_search_games(repo,target) -1
-         
-    # games = repo.get_game_list()[start_index: end_index]
-    games = repo.get_range_of_search_game_list(start_index, end_index, order, target)
-    game_dicts = []
-    for game in games:
-        game_dict = {
-            "game_id": game.game_id,
-            "title": game.title,
-            "image_url": game.image_url,
-            "price": game.price
-        }
-        game_dicts.append(game_dict)
-    
-    return game_dicts
+# the scearch should base on str
+def get_games_by_genre(repo: AbstractRepository, target: str) -> list:
+    return repo.get_games_by_genre_str(target)
 
-def get_number_of_search_games(repo: AbstractRepository, target: str) -> int:
-    return repo.get_number_of_search_games(target)
+def get_games_by_publisher(repo: AbstractRepository, target: str) -> list:
+    return repo.get_games_by_publisher_str(target)
+
+def get_games_by_title(repo: AbstractRepository, target: str) -> list:
+    return repo.get_games_by_title_str(target)
+

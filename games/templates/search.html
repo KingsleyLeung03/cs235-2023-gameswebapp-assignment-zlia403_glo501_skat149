@@ -1,0 +1,66 @@
+<!-- games.html -->
+{% extends "template.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="../static/css/game.css">
+    <title>CS235 Game Library - game riblary</title>
+{% endblock %}
+
+{% block main %}
+
+    <section>
+        <div class="section_title">
+            <h1>Game Liblary</h1>
+        </div>
+
+        <div class="order_selection">
+            <h3>Order games by:</h3>
+            <!-- for each option of ordering of the games -->
+            {% for option in order_options %}
+            
+            <div class="orders">
+                <a href="/games?page={{ page_info.current_page }}&order={{ option }}">{{ option }}</a>
+            </div>
+            {% endfor %}
+
+        </div>
+        <div class="current_page">
+            <h3>page - {{ page_info.current_page }}: Displaying {{ page_info.current_display[0] }} - {{ page_info.current_display[1] }} of {{ page_info.number_of_games }}</h3>
+        </div>
+        
+
+        <div class="games_holder">
+
+            <!-- for each game in the given game list -->
+            {% for game in games %}
+                <div class="game">
+                    <a href="/gameDescription/{{ game.game_id }}">
+                        <div class="game_img">
+                            <img src="{{ game.image_url }}" alt="">
+                        </div>
+                        <div class="game_data">
+                            <div class="game_title">{{ game.title }}</div>
+                            <div class="game_price">NZ$ {{ game.price }}</div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+
+
+        </div>
+    </section>
+
+    <section class="page_nav">
+        <div>
+            <ul>
+                {% for page in pages %}
+                <li>
+                    <a href="/search/{{target}}/{{type}}?page={{ page }}&order={{ page_info.current_order }}">{{ page }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+{% endblock %}
