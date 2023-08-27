@@ -20,10 +20,13 @@ class MemoryRepository(AbstractRepository):
         self.__games: List[Game] = list()
         self.__genres: List[Genre] = list()
         self.__publishers: List[Publisher] = list()
-        # self.__reviews: List[Review] = list()
+        #self.__reviews: List[Review] = list()
+
         self.__games_search: List[Game] = list()
         self.__genres_filter: List[Genre] = list()
         self.__publishers_filter: List[Publisher] = list()
+        
+        self.__game_list: List[Game] = list()
         
     def add_game(self, game: Game):
         if isinstance(game, Game):
@@ -108,7 +111,9 @@ class MemoryRepository(AbstractRepository):
                 if genre in game.genres:
                     insort_left(game_list, game)
                     
-            return game_list
+            self.__game_list = game_list
+            print(self.__game_list)
+            return self.__game_list
         
     def get_games_by_publisher(self, publisher: Publisher) -> List[Game]:
         if isinstance(publisher, Publisher):
@@ -119,7 +124,41 @@ class MemoryRepository(AbstractRepository):
                 if publisher == game.publisher:
                     insort_left(game_list, game)
             
+            self.__game_list = game_list
             return game_list
+        
+
+     # about Search Function
+
+    def get_game_search_list(self) -> List[Game]:
+        return self.__game_list
+
+    def get_number_of_search_games(self):
+        return len(self.__game_list)
+    
+    def get_range_of_search_game_list(self, start: int, end: int, order: str = "game_id") -> List[Game]:
+        if isinstance(start, int) and isinstance(end, int) and isinstance(order, str):
+            gamelist = self.get_game_search_list()
+            
+            if order == "game_id":
+                gamelist.sort(key= lambda game: game.game_id)
+            elif order == "title":
+                gamelist.sort(key=lambda game: game.title)
+            elif order == "publisher":
+                gamelist.sort(key=lambda game: game.publisher.publisher_name)
+            elif order == "release_date":
+                gamelist.sort(key=lambda game: game.release_date)
+            elif order == "price":
+                gamelist.sort(key=lambda game: game.price)
+            else: 
+                gamelist.sort(key= lambda game: game.game_id)
+            
+            
+            gamelist = gamelist[start:end]
+            return gamelist
+            
+        else:
+            raise TypeError
         
             
     # about Genre class
@@ -148,9 +187,8 @@ class MemoryRepository(AbstractRepository):
     def get_publisher_list(self) -> List[Game]:
         return self.__publishers
     
-    def get_number_of_search_games(self, target: str) -> int:
-        return len(self.__games)
-            
+
+
     
 # add all game data to the memory repo obj using datareader
 def populate(repo: AbstractRepository):
