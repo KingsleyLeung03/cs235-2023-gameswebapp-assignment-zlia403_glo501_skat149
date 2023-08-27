@@ -20,7 +20,7 @@
             {% for option in order_options %}
             
             <div class="orders">
-                <a href="/games?page={{ page_info.current_page }}&order={{ option }}">{{ option }}</a>
+                <a href="/genre/{{genre.genre_name}}?page={{ page_info.current_page }}&order={{ option }}">{{ option }}</a>
             </div>
             {% endfor %}
 

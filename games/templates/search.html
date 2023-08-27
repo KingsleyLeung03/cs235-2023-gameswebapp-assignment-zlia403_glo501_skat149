@@ -3,7 +3,7 @@
 
 {% block head %}
     {{ super() }}
-    <link rel="stylesheet" href="../static/css/game.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/game.css') }}">
     <title>CS235 Game Library - game riblary</title>
 {% endblock %}
 
@@ -20,7 +20,7 @@
             {% for option in order_options %}
             
             <div class="orders">
-                <a href="/games?page={{ page_info.current_page }}&order={{ option }}">{{ option }}</a>
+                <a href="/search/{{target}}/{{type}}?page={{ page_info.current_page }}&order={{ option }}">{{ option }}</a>
             </div>
             {% endfor %}
 
