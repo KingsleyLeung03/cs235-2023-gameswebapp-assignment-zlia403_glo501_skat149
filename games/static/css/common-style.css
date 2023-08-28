@@ -125,7 +125,7 @@ ul.nav_list li a{
 main {
     vertical-align: middle;
     margin-left: 150px; /* offset for sidebar */
-    float: left;
+    /* float: left; I dont know why this thing set for but this caoursing dysplay issue when #of game display is less than two so commented this out*/ 
     margin-bottom: 50px;
 }
 
