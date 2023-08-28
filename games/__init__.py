@@ -43,24 +43,12 @@ def create_app():
     repo.repo_instance = MemoryRepository()
     # fill the repository from the provided CSV file
     populate(repo.repo_instance)
-
-    @app.route('/')
-    def home():
-        # some_game = create_some_game()
-        # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
-        publisher_list = repo.repo_instance.get_publisher_list()
-        geners_list = repo.repo_instance.get_genre_list()
-        return render_template("layout.html",genres=geners_list,publishers=publisher_list)
-
-    @app.route("/layout")
-    def layout_page():
-
-        publisher_list = repo.repo_instance.get_publisher_list()
-        geners_list = repo.repo_instance.get_genre_list()
-        return render_template("layout.html",genres=geners_list,publishers=publisher_list)
-    
     
     with app.app_context():
+        # Register the layout blueprint to the app instance.
+        from .layout import layout
+        app.register_blueprint(layout.layout_blueprint)
+
         # Register the game_desc blueprint to the app instance.
         from .game_desc import game_desc
         app.register_blueprint(game_desc.game_desc_blueprint)
