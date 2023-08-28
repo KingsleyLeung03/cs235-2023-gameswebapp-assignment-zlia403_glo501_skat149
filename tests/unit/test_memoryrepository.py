@@ -3,31 +3,44 @@ import pytest
 from games.domainmodel.model import Game, Genre, Publisher
 
 
+# Test repository can add a game object
 def test_repo_can_add_a_game(in_memory_repo):
+    # Set the new game, and add it into the repo
     game = Game(897220, 'Summer Pockets')
     in_memory_repo.add_game(game)
 
+    # Check if the repo includes the new game
     assert in_memory_repo.get_game_by_id(897220) is game
 
 
+# Test repository can retrieve a game object
 def test_repo_can_retrieve_a_game(in_memory_repo):
+    # Get the game we need
     game = in_memory_repo.get_game_by_id(1002510)
 
+    # Check if this is the game we want
     assert game == Game(1002510, "The Spell - A Kinetic Novel")
 
 
+# Test repository retrieves correct number of game objects
 def test_repo_retrieves_correct_num_of_game(in_memory_repo):
+    # Get the total num of games in the repo
     game_num = in_memory_repo.get_number_of_games()
 
+    # Check if the total num is matched
     assert game_num == 877
 
 
+# Test the number of unique genres in the dataset
 def test_repo_num_of_unique_genre(in_memory_repo):
+    # Get the total num of genres in the repo
     genre_num = in_memory_repo.get_number_of_genres()
 
+    # Check if the total num is matched
     assert genre_num == 24
 
 
+# Test repository adds a new genre, and the count of genres increases by 1
 def test_repo_add_new_genre_and_increase_count(in_memory_repo):
     # Get the origin num of genres
     genre_num = in_memory_repo.get_number_of_genres()
@@ -43,6 +56,7 @@ def test_repo_add_new_genre_and_increase_count(in_memory_repo):
     assert genre_num + 1 == in_memory_repo.get_number_of_genres()
 
 
+# Test repository search games by title
 def test_repo_search_game_by_title(in_memory_repo):
     # Search all games with a title that includes "dragon"
     search_result = in_memory_repo.get_games_by_title_str("dragon")
@@ -52,6 +66,7 @@ def test_repo_search_game_by_title(in_memory_repo):
         assert "dragon" in game.title.lower()
 
 
+# Test repository search games by publisher
 def test_repo_search_game_by_publisher(in_memory_repo):
     # Set the publisher
     publisher = Publisher("Boogygames Studios")
@@ -67,6 +82,7 @@ def test_repo_search_game_by_publisher(in_memory_repo):
         assert game.publisher == publisher
 
 
+# Test repository search games by genre
 def test_repo_search_game_by_genre(in_memory_repo):
     # Set the genre
     genre = Genre("Indie")
@@ -82,6 +98,7 @@ def test_repo_search_game_by_genre(in_memory_repo):
         assert genre in game.genres
 
 
+# Test repository search games by genre name
 def test_repo_search_game_by_genre_name(in_memory_repo):
     # Set the potential genre, for checking
     genre = Genre("Racing")
