@@ -30,14 +30,10 @@ body {
 
 
 header, main {
-    /* background-image: url(../images/background.png);
+    /* background-image: url(../images/background.png); */
     padding-inline: 10%;
     min-width: 800px;
 
-    */
-    margin-left: 150px;
-    float: left;
-    
 }
 
 
