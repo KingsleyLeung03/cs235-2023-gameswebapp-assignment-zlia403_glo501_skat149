@@ -51,31 +51,33 @@ div.game_img img {
 }
 
 div.game_data {
-    padding-block: 4px;
+    height: 34px;
     color: black;
 }
 
 div.game_title {
-    display:  inline;
+    width: 240px;
+    display:  inline-block;
     margin-left: 25px;
+    margin-block: 4px;
+    white-space: nowrap;
     font-size: 18px;
     font-family: "Myriad Pro","Open Sans",Arial,Helvetica,sans-serif;
     color: white;
+
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 div.game_price {
     padding: 1px 4px;
-    display:  inline;
-    float: right;
-    /* font-size: 15px; */
+    display: inline-block;
     font-family: "Myriad Pro","Open Sans",Arial,Helvetica,sans-serif;
-    margin-top: 1px;
-    margin-right: 13px;
+    margin-top: 6px;
     border-radius: 5px;
     background-color: rgb(8, 15, 37);
     color: white;
-
+    vertical-align: top;
 }
 
 
