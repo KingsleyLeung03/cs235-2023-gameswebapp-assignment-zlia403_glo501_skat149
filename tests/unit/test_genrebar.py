@@ -22,9 +22,9 @@ def test_repo_get_current_display(in_memory_repo):
     assert services.get_current_display(380,30,1) == (1,30)
 
 def test_repo_get_genre_list(in_memory_repo):
-    assert len(services.get_genre_list(repo.repo_instance)) == 24
+    assert len(services.get_genre_list(in_memory_repo)) == 24
 
 def test_repo_get_games(in_memory_repo):
     genre = Genre("Action")
     in_memory_repo.get_games_by_genre(genre)
-    assert len(services.get_games(repo.repo_instance,30,1,"")) == 30
+    assert len(services.get_games(in_memory_repo,30,1,"")) == 30
