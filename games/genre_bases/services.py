@@ -24,6 +24,7 @@ def get_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, orde
     games = repo.get_range_of_search_game_list(start_index, end_index, order)
     game_dicts = []
     for game in games:
+        #print(game.genres)
         game_dict = {
             "game_id": game.game_id,
             "title": game.title,

@@ -104,7 +104,7 @@ class MemoryRepository(AbstractRepository):
             
             # look for the games that have the genre from arg
             for game in self.__games:
-                if genre in game.genres:
+                if genre in game.genres and genre not in game_list:
                     insort_left(game_list, game)
                     
             self.__game_list = game_list
