@@ -1,10 +1,10 @@
 import pytest
 
+from typing import List, Iterable
 from games.domainmodel.model import *
 import games.adapters.repository as repo
 import games.genre_bases.services as services
-from typing import List, Iterable
-from games.adapters.repository import AbstractRepository
+
 
 
 def test_repo_num_of_search_genre(in_memory_repo):
@@ -22,7 +22,7 @@ def test_repo_get_current_display(in_memory_repo):
     assert services.get_current_display(380,30,1) == (1,30)
 
 def test_repo_get_genre_list(in_memory_repo):
-    assert len(services.get_genre_list(repo.repo_instance)) == 23
+    assert len(services.get_genre_list(repo.repo_instance)) == 24
 
 def test_repo_get_games(in_memory_repo):
     genre = Genre("Action")
