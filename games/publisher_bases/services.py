@@ -10,7 +10,7 @@ class UnknownPageException(Exception):
     pass
 
 
-def get_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, order: str):
+def get_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, order: str = ""):
     if not isinstance(games_per_page, int) or not isinstance(pagenum, int) or pagenum<1:
         raise UnknownPageException
     
