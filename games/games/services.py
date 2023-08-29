@@ -10,7 +10,7 @@ class UnknownPageException(Exception):
     pass
 
 
-def get_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, order: str):
+def get_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, order: str = ""):
     if not isinstance(games_per_page, int) or not isinstance(pagenum, int) or pagenum<1:
         raise UnknownPageException
     
@@ -31,7 +31,6 @@ def get_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, orde
             "price": game.price
         }
         game_dicts.append(game_dict)
-    
     return game_dicts
   
 def get_max_page_num(number_of_games: int, games_per_page: int) -> int:
@@ -54,7 +53,7 @@ def generate_page_list(current_page, max_page):
 
     return page_list
 
-def get_current_display(num_of_games:int, games_per_page:int, current_page: int):
+def get_current_display(num_of_games:int, games_per_page:int, current_page: int): #return what game is the page sohowing in sence of total number of games might be display
     if isinstance(num_of_games, int) and isinstance(games_per_page, int) and isinstance(current_page, int):
         start = games_per_page*(current_page-1) +1
         end = games_per_page*current_page
