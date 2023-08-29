@@ -18,7 +18,7 @@ def get_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, orde
     end_index = games_per_page*pagenum
     
     if end_index > get_number_of_games(repo) -1:
-        end_index = get_number_of_games(repo) -1
+        end_index = get_number_of_games(repo)
          
     # games = repo.get_game_list()[start_index: end_index]
     games = repo.get_range_of_game_list(start_index, end_index, order)
