@@ -41,8 +41,6 @@ def show_games_trial(target):
     option_of_order = ["game_id", "title", "publisher", "release_date", "price"]
     publisher_list = services.get_publisher_list(repo.repo_instance)
 
-    print(games_per_page, pagenum, order,maxpage,num_games,pages)
-
     page_info = {
         "number_of_games": num_games,
         "maxpage": maxpage,
