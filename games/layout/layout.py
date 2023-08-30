@@ -4,8 +4,8 @@ import games.adapters.repository as repo
 layout_blueprint = Blueprint("layout_bp", __name__)
 
 
-@layout_blueprint.route('/')
-@layout_blueprint.route("/layout")
+@layout_blueprint.route('/', methods=['GET'])
+@layout_blueprint.route("/layout", methods=['GET'])
 def layout():
     # some_game = create_some_game()
     # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
