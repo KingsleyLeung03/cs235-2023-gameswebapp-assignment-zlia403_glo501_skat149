@@ -13,7 +13,7 @@
         <div class="dropdown">
           <a class="dropbtn">Genre</a>
           <div class="dropdown-content">
-            <!--this should be jinja for loop and call servace layer -->
+            <!--this should be jinja for loop and call service layer -->
             {% for genre in genres %}
             <div class="Genre">
                 <a href="/genre/{{ genre.genre_name }}">{{ genre.genre_name }}</a>
@@ -33,7 +33,7 @@
         <div class="dropdown">
           <a class="dropbtn" id="type" onclick="search_f()">Search Type</a>
           <div class="dropdown-content">
-            <!--this should be jinja for loop and call servace layer -->
+            <!--this should be jinja for loop and call service layer -->
             <div class="Genre">
               <a onclick="search_genre()">Genre</a>
               <a onclick="search_publisher()">Publisher</a>
