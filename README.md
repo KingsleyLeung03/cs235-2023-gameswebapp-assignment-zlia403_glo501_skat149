@@ -3,7 +3,7 @@ By zlia403 | glo501 | skat149
 
 ## Description
 
-A Web application that demonstrates use of Python's Flask framework. The application makes use of libraries such as the Jinja templating library. Architectural design patterns and principles including Repository, Dependency Inversion and Single Responsibility have been used to design the application. The application uses Flask Blueprints to maintain a separation of concerns between application functions. Testing includes unit and end-to-end testing using the pytest tool.
+This Web application showcases the utilization of Python's Flask framework. It leverages libraries like the Jinja templating library. The design of the application incorporates architectural design patterns and principles, including Repository, Dependency Inversion, and Single Responsibility. To ensure a well-structured architecture, Flask Blueprints are employed, effectively separating various application functions. The comprehensive testing strategy encompasses both unit and end-to-end testing, facilitated by the pytest tool.
 
 <!-- This repository contains an implementation of the domain model from Assignment 1. It contains unit tests which can be run through pytest. It also contains a simple Flask application that renders content of a Game object instance from our domain model on a blank HTML page. 
 
