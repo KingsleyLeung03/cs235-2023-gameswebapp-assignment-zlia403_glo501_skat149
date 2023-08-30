@@ -9,7 +9,7 @@ games_per_page = 30
 
 
 
-@publisher_bases_blueprint.route('/publisher')
+@publisher_bases_blueprint.route('/publisher', methods=['GET'])
 def show_games():
     pagenum = request.args.get("page")
     order = request.args.get("order")

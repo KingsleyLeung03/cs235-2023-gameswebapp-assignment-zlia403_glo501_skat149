@@ -9,7 +9,7 @@ games_per_page = 30
 
 
 
-@games_blueprint.route('/games')
+@games_blueprint.route('/games', methods=['GET'])
 def show_games():
     pagenum = request.args.get("page")
     order = request.args.get("order")
