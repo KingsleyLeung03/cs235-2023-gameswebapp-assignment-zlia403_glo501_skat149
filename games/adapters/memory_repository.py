@@ -3,7 +3,7 @@ from typing import List
 import os
 
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game, Genre, Publisher, Review
+from games.domainmodel.model import *
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
 # errors
@@ -20,7 +20,9 @@ class MemoryRepository(AbstractRepository):
         self.__games: List[Game] = list()
         self.__genres: List[Genre] = list()
         self.__publishers: List[Publisher] = list()
-        # self.__reviews: List[Review] = list()
+        #self.__reviews: List[Review] = list()
+        
+        self.__game_list: List[Game] = list()
         
     def add_game(self, game: Game):
         if isinstance(game, Game):
@@ -102,10 +104,11 @@ class MemoryRepository(AbstractRepository):
             
             # look for the games that have the genre from arg
             for game in self.__games:
-                if genre in game.genres:
+                if genre in game.genres and genre not in game_list:
                     insort_left(game_list, game)
                     
-            return game_list
+            self.__game_list = game_list
+            return self.__game_list
         
     def get_games_by_publisher(self, publisher: Publisher) -> List[Game]:
         if isinstance(publisher, Publisher):
@@ -116,7 +119,75 @@ class MemoryRepository(AbstractRepository):
                 if publisher == game.publisher:
                     insort_left(game_list, game)
             
+            self.__game_list = game_list
             return game_list
+        
+    def get_games_by_genre_str(self, genre: str) -> List[Game]:
+        
+            game_list: List[Game] = list()
+            
+            # look for the games that have the genre from arg
+            for game in self.__games:
+                for gen in game.genres:
+                    if genre.lower() in gen.genre_name.lower():
+                        insort_left(game_list, game)
+                        break
+                    
+            self.__game_list = game_list
+            return self.__game_list
+    
+    def get_games_by_publisher_str(self, publisher: str) -> List[Game]:
+            game_list: List[Game] = list()
+            
+            # look for games that have same publisher form arg
+            for game in self.__games:
+                if publisher.lower() in game.publisher.publisher_name.lower():
+                    insort_left(game_list, game)
+            
+            self.__game_list = game_list
+            return game_list
+        
+    def get_games_by_title_str(self, title: str) -> List[Game]:
+            game_list: List[Game] = list()
+            
+            # look for games that have same publisher form arg
+            for game in self.__games:
+                if title.lower() in game.title.lower():
+                    insort_left(game_list, game)
+            
+            self.__game_list = game_list
+            return game_list
+        
+     # about Search Function
+
+    def get_game_search_list(self) -> List[Game]:
+        return self.__game_list
+
+    def get_number_of_search_games(self):
+        return len(self.__game_list)
+    
+    def get_range_of_search_game_list(self, start: int, end: int, order: str = "game_id") -> List[Game]:
+        if isinstance(start, int) and isinstance(end, int) and isinstance(order, str):
+            gamelist = self.get_game_search_list()
+            
+            if order == "game_id":
+                gamelist.sort(key= lambda game: game.game_id)
+            elif order == "title":
+                gamelist.sort(key=lambda game: game.title)
+            elif order == "publisher":
+                gamelist.sort(key=lambda game: game.publisher.publisher_name)
+            elif order == "release_date":
+                gamelist.sort(key=lambda game: game.release_date)
+            elif order == "price":
+                gamelist.sort(key=lambda game: game.price)
+            else: 
+                gamelist.sort(key= lambda game: game.game_id)
+            
+            gamelist = gamelist[start:end]
+            return gamelist
+            
+        else:
+            raise TypeError
         
             
     # about Genre class
@@ -144,7 +215,9 @@ class MemoryRepository(AbstractRepository):
     
     def get_publisher_list(self) -> List[Game]:
         return self.__publishers
-            
+    
+
+
     
 # add all game data to the memory repo obj using datareader
 def populate(repo: AbstractRepository):

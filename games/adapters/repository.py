@@ -104,6 +104,25 @@ class AbstractRepository(abc.ABC):
         """" get list of game by genre. """
         raise NotImplementedError
     
+    # about Search Function
+    
+    @abc.abstractmethod
+    def get_game_search_list(self) -> List[Game]:
+        """" Returns the list of games. """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_number_of_search_games(self) -> int:
+        """ Returns a number of games exist in the repository. """
+        raise NotImplementedError
+    
+    @abc.abstractmethod
+    def get_range_of_search_game_list(self, start: int, end: int, order: str = "game_id") -> List[Game]:
+        """" Returns the list of games. """
+        raise NotImplementedError
+    
+    
+    
     # @abc.abstractmethod
     # def get_games_by_review(self, review: Review) -> List[Game]:
     #     """" get list of game by review. """
@@ -145,8 +164,6 @@ class AbstractRepository(abc.ABC):
     def get_publisher_list(self) -> List[Game]:
         """" Returns the list of publishers. """
         raise NotImplementedError
-    
-    
     
     # about Review class 
     

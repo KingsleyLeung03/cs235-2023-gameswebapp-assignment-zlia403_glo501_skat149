@@ -43,61 +43,32 @@ def create_app():
     repo.repo_instance = MemoryRepository()
     # fill the repository from the provided CSV file
     populate(repo.repo_instance)
-
-    @app.route('/')
-    def home():
-        # some_game = create_some_game()
-        # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
-        return render_template('layout.html')
-
-    @app.route("/layout")
-    def layout_page():
-        return render_template("layout.html")
-
-    @app.route("/gameDescription/<game_id>", methods=["GET"])
-    def game_description(game_id):
-        # game_id = request.args.get("game_id")
-        # check that recived value is integer
-        try:
-            game_id = int(game_id)
-        except:
-            return "agument error"
-        
-        for game in csvData.dataset_of_games:
-            if game.game_id == game_id:
-                # return str(game_id)
-                return render_template('gameDescription.html', game=game)
-        return render_template("notFound.html", message=f"game id: {game_id} is not found.")
-    
-    
     
     with app.app_context():
-        # Register the browse blueprint to the app instance.
+        # Register the layout blueprint to the app instance.
+        from .layout import layout
+        app.register_blueprint(layout.layout_blueprint)
+
+        # Register the game_desc blueprint to the app instance.
+        from .game_desc import game_desc
+        app.register_blueprint(game_desc.game_desc_blueprint)
+        
+        # Register the games blueprint to the app instance.
         from .games import games
         app.register_blueprint(games.games_blueprint)
+
+        # Register the search blueprint to the app instance.
+        from .search import search
+        app.register_blueprint(search.search_blueprint)
+
+        # Register the genre_bases blueprint to the app instance.
+        from .genre_bases import genre_bases
+        app.register_blueprint(genre_bases.genre_bases_blueprint)
     
+        # Register the genre_bases blueprint to the app instance.
+        from .publisher_bases import publisher_bases
+        app.register_blueprint(publisher_bases.publisher_bases_blueprint)
 
-    @app.route('/search/<target>', methods=["GET"])
-    def search_games(target):
-        try:
-            target = str(target).lower()
-        except:
-            target = ""
-        print(target)
-        result = []
-        for game in csvData.dataset_of_games:
-            if str(target) in game.title.lower() or str(target) in game.publisher.publisher_name.lower() or str(target) in str(game.description).lower():
-                if game not in result:
-                    result.append(game)
-            for genre in game.genres:
-                if str(target) in genre.genre_name.lower() and game not in result:
-                    result.append(game)
-        if len(result)!=0 :
-            return render_template("games.html", games=result)
-        else:
-            suggest = csvData.dataset_of_games[1:10]
-
-            return render_template("games.html", games=suggest)
 
 
     return app

@@ -25,19 +25,16 @@ body {
     /* min-height: 10000px; */
     padding: 0px;
     margin: 0px;
+    font-family: "SFProDisplay";
 }
 
 
 
 header, main {
-    /* background-image: url(../images/background.png);
+    /* background-image: url(../images/background.png); */
     padding-inline: 10%;
     min-width: 800px;
 
-    */
-    margin-left: 150px;
-    float: left;
-    
 }
 
 
@@ -56,6 +53,14 @@ div.page_title {
 }
 div.page_title h1 {
     margin-bottom: 0px;
+}
+
+div.header-container {
+    display: flex;
+}
+div.logo {
+    margin-left: 15%;
+    margin-top: 55px;
 }
 
 /* nav sidebar */
@@ -129,7 +134,7 @@ ul.nav_list li a{
 main {
     vertical-align: middle;
     margin-left: 150px; /* offset for sidebar */
-    float: left;
+    /* float: left; I dont know why this thing set for but this caoursing dysplay issue when #of game display is less than two so commented this out*/ 
     margin-bottom: 50px;
 }
 
@@ -149,12 +154,13 @@ div.section_title h1 {
 
 
 footer {
-    background-color: rgb(14, 30, 77);
+    background-color: rgba(14, 30, 77, 0.75);
     margin: 0px;
     width: 100%;
     height: 35px;
     position: fixed;
     bottom: 0;
+    /* z-index: -10; */
 }
 
 footer p.copyright {
@@ -168,3 +174,78 @@ footer p.copyright {
 
 
 
+.dropbtn {
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    font-size: 10px;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    background-color: #000000
+  }
+  
+  .dropdown-content a:hover {background-color: #000000}
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown:hover .genre {
+    background-color: #929292;
+  }
+
+.gg-games {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,5));
+    width: 24px;
+    height: 12px;
+    border: 3px solid transparent;
+    border-left: 6px solid transparent;
+    box-shadow:
+        0 0 0 2px,
+        inset 2px 0 0;
+    border-radius: 40px
+
+}
+.gg-games::after,
+.gg-games::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    height: 2px;
+    background: currentColor
+}
+.gg-games::before {
+    left: -2px;
+    width: 6px;
+    top: 2px
+}
+.gg-games::after {
+    border-radius: 3px;
+    width: 2px;
+    box-shadow:0 4px 0,-2px 2px 0,2px 2px 0;
+    top: 0;
+    right: 2px
+}

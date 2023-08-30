@@ -1,8 +1,6 @@
-# this is service layer for shered part 
-# here must be implementation of reusing logical oparations
 from typing import List, Iterable
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game
+from games.domainmodel.model import *
 
 class NonExistentGameException(Exception):
     pass
@@ -18,14 +16,15 @@ def get_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, orde
     
     start_index = games_per_page*(pagenum-1)
     end_index = games_per_page*pagenum
-    
+    #remove the -1
     if end_index > get_number_of_games(repo) -1:
         end_index = get_number_of_games(repo)
          
     # games = repo.get_game_list()[start_index: end_index]
-    games = repo.get_range_of_game_list(start_index, end_index, order)
+    games = repo.get_range_of_search_game_list(start_index, end_index, order)
     game_dicts = []
     for game in games:
+        #print(game.genres)
         game_dict = {
             "game_id": game.game_id,
             "title": game.title,
@@ -33,6 +32,7 @@ def get_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, orde
             "price": game.price
         }
         game_dicts.append(game_dict)
+    
     return game_dicts
   
 def get_max_page_num(number_of_games: int, games_per_page: int) -> int:
@@ -55,7 +55,7 @@ def generate_page_list(current_page, max_page):
 
     return page_list
 
-def get_current_display(num_of_games:int, games_per_page:int, current_page: int): #return what game is the page sohowing in sence of total number of games might be display
+def get_current_display(num_of_games:int, games_per_page:int, current_page: int):
     if isinstance(num_of_games, int) and isinstance(games_per_page, int) and isinstance(current_page, int):
         start = games_per_page*(current_page-1) +1
         end = games_per_page*current_page
@@ -67,10 +67,14 @@ def get_current_display(num_of_games:int, games_per_page:int, current_page: int)
 
 
 def get_number_of_games(repo: AbstractRepository) -> int:
-    return repo.get_number_of_games()
+    #return repo.get_number_of_games()
+    return repo.get_number_of_search_games()
 
 def get_genre_list(repo: AbstractRepository) -> list:
     return repo.get_genre_list()
 
 def get_publisher_list(repo: AbstractRepository) -> list:
     return repo.get_publisher_list()
+
+def get_games_by_genre(repo: AbstractRepository, target: Genre) -> list:
+    return repo.get_games_by_genre(target)

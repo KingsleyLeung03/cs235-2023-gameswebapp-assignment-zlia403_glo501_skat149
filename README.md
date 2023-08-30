@@ -1,11 +1,13 @@
-# COMPSCI 235 Starter Repository for the Games WebApp Assignments
-This is a starter repository for the games webapp assignments of CompSci 235 in Semester 2, 2023.
+# COMPSCI 235 S2 2023 Assignment Phase 2: Games WebApp
+By zlia403 | glo501 | skat149
 
 ## Description
 
-This repository contains an implementation of the domain model from Assignment 1. It contains unit tests which can be run through pytest. It also contains a simple Flask application that renders content of a Game object instance from our domain model on a blank HTML page. 
+This Web application showcases the utilization of Python's Flask framework. It leverages libraries like the Jinja templating library. The design of the application incorporates architectural design patterns and principles, including Repository, Dependency Inversion, and Single Responsibility. To ensure a well-structured architecture, Flask Blueprints are employed, effectively separating various application functions. The comprehensive testing strategy encompasses both unit and end-to-end testing, facilitated by the pytest tool.
 
-From here on you can **choose if you want to use the provided domain model or your own implementation from CodeRunner assignment 1**. The domain model implementation may have to be extended, and you may also decide to remove or modify test cases as it suits you. 
+<!-- This repository contains an implementation of the domain model from Assignment 1. It contains unit tests which can be run through pytest. It also contains a simple Flask application that renders content of a Game object instance from our domain model on a blank HTML page. 
+
+From here on you can **choose if you want to use the provided domain model or your own implementation from CodeRunner assignment 1**. The domain model implementation may have to be extended, and you may also decide to remove or modify test cases as it suits you. --> 
 
 ## Installation
 
@@ -27,13 +29,13 @@ $ source venv/bin/activate
 $ pip install -r requirements.txt
 ```
 
-When using PyCharm, set the virtual environment using 'File or PyCharm'->'Settings' and select your project from the left menu. Select 'Project Interpreter', click on the gearwheel button and select 'Add Interpreter'. Click the 'Existing environment' radio button to select the virtual environment. 
+When using PyCharm, set the virtual environment using 'File or PyCharm'->'Settings' and select 'Project:cs235-2023-gameswebapp-assignment-zlia403_glo501_skat149' from the left menu. Select 'Project Interpreter', click on the gearwheel button and select 'Add Interpreter'. Click the 'Existing environment' radio button to select the virtual environment. 
 
 ## Execution
 
 **Running the application**
 
-From the *project directory*, and within the activated virtual environment (see *venv\Scripts\activate* above):
+From the *cs235-2023-gameswebapp-assignment-zlia403_glo501_skat149* directory, and within the activated virtual environment (see *venv\Scripts\activate* above):
 
 ````shell
 $ flask run

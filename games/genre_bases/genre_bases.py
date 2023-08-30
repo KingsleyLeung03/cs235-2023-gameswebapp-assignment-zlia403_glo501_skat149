@@ -2,20 +2,26 @@ from flask import Blueprint, render_template, request
 # from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
 import games.adapters.repository as repo
-import games.games.services as services
-games_blueprint = Blueprint("games_bp", __name__)
+import games.genre_bases.services as services
+from games.domainmodel.model import *
+genre_bases_blueprint = Blueprint("genre_bases_bp", __name__)
 
 games_per_page = 30
 
-
-
-@games_blueprint.route('/games', methods=['GET'])
-def show_games():
+@genre_bases_blueprint.route('/genre/<target>', methods=["GET"])
+def show_games_trial(target):
+    ##
     pagenum = request.args.get("page")
     order = request.args.get("order")
-    
+
     if not order:
         order =""
+    
+    genres_list = services.get_genre_list(repo.repo_instance)
+    
+    for _genre in genres_list:
+        if(_genre.genre_name == target):
+            genre = _genre
     
     #if pagenum is not set then page is 1 else page is given value for invalid page
     if not pagenum:
@@ -26,16 +32,15 @@ def show_games():
         except:
             return render_template("notFound.html", message=f"Invalid page value!")
         
-    
+    services.get_games_by_genre(repo.repo_instance,genre)
+
     num_games = services.get_number_of_games(repo.repo_instance)
     games = services.get_games(repo.repo_instance, games_per_page, pagenum, order)
     maxpage = services.get_max_page_num(num_games, games_per_page)
     pages = services.generate_page_list(pagenum, maxpage)
     option_of_order = ["game_id", "title", "publisher", "release_date", "price"]
-    geners_list = services.get_genre_list(repo.repo_instance)
     publisher_list = services.get_publisher_list(repo.repo_instance)
-    # print(games_per_page, pagenum, order,maxpage,num_games,pages) # I thing someone added for debag but I commented out to not confuse output from program
-    
+
     page_info = {
         "number_of_games": num_games,
         "maxpage": maxpage,
@@ -43,6 +48,7 @@ def show_games():
         "current_page": pagenum,
         "current_order": order
     }
-    
-    return render_template("games.html", games=games, num_game=num_games, page_info=page_info, pages=pages, order_options=option_of_order,genres=geners_list,publishers=publisher_list)
+
+    return render_template("genre.html", games=games, num_game=num_games, page_info=page_info, pages=pages, order_options=option_of_order,genres=genres_list,publishers=publisher_list,genre=genre)
+
 

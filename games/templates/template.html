@@ -4,10 +4,11 @@
     {% block head %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/fonts.css">
-    <link rel="stylesheet" href="../static/css/common-style.css">
-    <title>CS235 Game Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common-style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/games_favicon.ico') }}" type="image/x-icon">
     {% endblock %}
+    <title>CS235 Game Library</title>
 </head>
 <body>
     
@@ -20,7 +21,7 @@
 
     <header>
 
-        <!-- include part from extarnal file -->
+        <!-- include part from external file -->
         {% include "header.html" %}
 
     </header>

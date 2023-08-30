@@ -2,14 +2,14 @@ from flask import Blueprint, render_template, request
 # from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
 import games.adapters.repository as repo
-import games.games.services as services
-games_blueprint = Blueprint("games_bp", __name__)
+import games.publisher_bases.services as services
+publisher_bases_blueprint = Blueprint("publisher_bases_bp", __name__)
 
 games_per_page = 30
 
 
 
-@games_blueprint.route('/games', methods=['GET'])
+@publisher_bases_blueprint.route('/publisher', methods=['GET'])
 def show_games():
     pagenum = request.args.get("page")
     order = request.args.get("order")
@@ -34,7 +34,7 @@ def show_games():
     option_of_order = ["game_id", "title", "publisher", "release_date", "price"]
     geners_list = services.get_genre_list(repo.repo_instance)
     publisher_list = services.get_publisher_list(repo.repo_instance)
-    # print(games_per_page, pagenum, order,maxpage,num_games,pages) # I thing someone added for debag but I commented out to not confuse output from program
+    
     
     page_info = {
         "number_of_games": num_games,
