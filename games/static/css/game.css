@@ -1,3 +1,11 @@
+main {
+    padding-inline: 0px;
+    max-width: 1500;
+    min-width: 800px;
+
+}
+
+
 div.order_selection {
     display: flex;
     flex-wrap: wrap;
@@ -23,6 +31,12 @@ div.order_selection {
 .order_selection h3 {
     margin-block: 6px;
 }
+
+div.current_page {
+    text-align: center;
+}
+
+
 
 
 div.games_holder {
