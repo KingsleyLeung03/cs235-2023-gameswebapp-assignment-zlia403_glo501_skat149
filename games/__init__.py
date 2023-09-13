@@ -2,13 +2,6 @@
 
 from flask import Flask, render_template, request
 
-# TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
-#  stay here!
-from games.domainmodel.model import Game
-
-# this line must be deleted
-from games.adapters.datareader.csvdatareader import GameFileCSVReader
-
 import games.adapters.repository as repo
 from games.adapters.memory_repository import populate
 from games.adapters.memory_repository import MemoryRepository
