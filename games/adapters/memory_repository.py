@@ -13,17 +13,17 @@ class GameNotFoundException(Exception):
 
 # reop class
 class MemoryRepository(AbstractRepository):
-    # about Game object
-    
     def __init__(self) -> None:
         super().__init__()
         self.__games: List[Game] = list()
         self.__genres: List[Genre] = list()
         self.__publishers: List[Publisher] = list()
+        self.__users: List[User] = list()
         #self.__reviews: List[Review] = list()
         
         self.__game_list: List[Game] = list()
-        
+    
+    # about Game class 
     def add_game(self, game: Game):
         if isinstance(game, Game):
             # When inserting the game, keep the game list sorted alphabetically by the id.
@@ -189,6 +189,13 @@ class MemoryRepository(AbstractRepository):
         else:
             raise TypeError
         
+        
+    # about User class 
+    def add_user(self, user: User) -> None:
+        self.__users.append(user)
+
+    def get_user(self, user_name: str) -> User:
+        return next((user for user in self.__users if user.username == user_name), None)
             
     # about Genre class
 
