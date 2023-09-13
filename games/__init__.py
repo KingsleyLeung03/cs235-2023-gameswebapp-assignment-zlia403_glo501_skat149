@@ -25,7 +25,7 @@ def create_app(test_config=None):
     # Create the MemoryRepository implementation for a memory-based repository.
     repo.repo_instance = MemoryRepository()
     # fill the repository from the provided CSV file
-    populate(repo.repo_instance)
+    populate(data_path, repo.repo_instance)
     
     with app.app_context():
         # Register the layout blueprint to the app instance.
