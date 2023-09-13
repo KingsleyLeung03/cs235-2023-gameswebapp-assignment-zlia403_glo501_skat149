@@ -5,6 +5,10 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, ValidationError
 
+from password_validator import PasswordValidator
+
+from functools import wraps
+
 import games.adapters.repository as repo
 import games.games.services as services
 authentication_blueprint  = Blueprint("authentication_bp", __name__)
@@ -19,6 +23,25 @@ def register():
         handler_url=url_for('authentication_bp.register')
         
     )
+
+
+
+class PasswordValid:
+    def __init__(self, message=None):
+        if not message:
+            message = u'Your password must be at least 8 characters, and contain an upper case letter,\
+            a lower case letter and a digit'
+        self.message = message
+
+    def __call__(self, form, field):
+        schema = PasswordValidator()
+        schema \
+            .min(8) \
+            .has().uppercase() \
+            .has().lowercase() \
+            .has().digits()
+        if not schema.validate(field.data):
+            raise ValidationError(self.message)
 
 
 class RegistrationForm(FlaskForm):
@@ -37,7 +60,8 @@ class RegistrationForm(FlaskForm):
     password = PasswordField(
         'Password', 
         validators=[
-            DataRequired(message='Your password is required')
+            DataRequired(message='Your password is required'),
+            PasswordValid()
         ],
         render_kw={
             "placeholder": "Password",
