@@ -229,7 +229,7 @@ class MemoryRepository(AbstractRepository):
 # add all game data to the memory repo obj using datareader
 def populate(data_path: Path, repo: AbstractRepository):
     dir_name = os.path.dirname(os.path.abspath(__file__))
-    games_file_name = os.path.join(data_path, "/games.csv")
+    games_file_name = os.path.join(data_path, "games.csv")
     reader = GameFileCSVReader(games_file_name)
 
     reader.read_csv_file()
