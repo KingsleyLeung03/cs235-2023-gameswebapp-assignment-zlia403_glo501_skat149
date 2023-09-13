@@ -10,19 +10,33 @@ from password_validator import PasswordValidator
 from functools import wraps
 
 import games.adapters.repository as repo
-import games.games.services as services
+import games.authentication.services as services
 authentication_blueprint  = Blueprint("authentication_bp", __name__)
 
 @authentication_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    user_name_not_unique = None
+    
+    if form.validate_on_submit():
+        # Successful POST, i.e. the user name and password have passed validation checking.
+        # Use the service layer to attempt to add the new user.
+        try:
+            services.add_user(form.user_name.data, form.password.data, repo.repo_instance)
+            return redirect(url_for(authentication_blueprint.login)) # only when no error occur
+        
+        except services.NameNotUniqueException:
+            user_name_not_unique = "This user name is already taken - please enter another"
+            
     return render_template(
         "authentication/credentials.html", 
         title="Register",
+        user_name_error_message=user_name_not_unique,
         form=form,
         handler_url=url_for('authentication_bp.register')
         
     )
+
 
 
 

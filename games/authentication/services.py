@@ -46,3 +46,11 @@ def authenticate_user(user_name: str, password: str, repo: AbstractRepository):
     else:
         raise AuthenticationException
     
+
+# model to dictionaries conversion 
+def user_to_dict(user: User):
+    user_dict = {
+        'user_name': user.user_name,
+        'password': user.password
+    }
+    return user_dict
