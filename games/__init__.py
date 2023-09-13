@@ -1,5 +1,5 @@
 """Initialize Flask app."""
-
+from pathlib import Path
 from flask import Flask, render_template, request
 
 import games.adapters.repository as repo
@@ -7,12 +7,20 @@ from games.adapters.memory_repository import populate
 from games.adapters.memory_repository import MemoryRepository
 
 
-def create_app():
+def create_app(test_config=None):
     """Construct the core application."""
 
     # Create the Flask app object.
     app = Flask(__name__)
     
+    # Configure the app from configuration-file settings.
+    app.config.from_object('config.Config')
+    data_path = Path('games') / 'adapters' / 'data'
+    
+    if test_config is not None:
+        # Load test configuration, and override any configuration settings.
+        app.config.from_mapping(test_config)
+        data_path = app.config['TEST_DATA_PATH']
     
     # Create the MemoryRepository implementation for a memory-based repository.
     repo.repo_instance = MemoryRepository()
