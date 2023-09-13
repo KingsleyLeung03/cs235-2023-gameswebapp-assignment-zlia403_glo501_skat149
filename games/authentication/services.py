@@ -35,3 +35,14 @@ def get_user(user_name: str, repo: AbstractRepository) -> User:
         raise UnknownUserException
     
     return user
+
+
+def authenticate_user(user_name: str, password: str, repo: AbstractRepository):
+    authenticated = False
+    
+    user = repo.get_user(user_name)
+    if user is not None:
+        authenticate_user = check_password_hash(user.password, password)
+    else:
+        raise AuthenticationException
+    
