@@ -128,6 +128,20 @@ class AbstractRepository(abc.ABC):
     #     """" get list of game by review. """
     #     raise NotImplementedError
     
+    # about User class
+    @abc.abstractmethod
+    def add_user(self, user: User) -> None:
+        """" Adds a User to the repository. """
+        raise NotImplementedError
+    
+    @abc.abstractmethod
+    def get_user(self, user_name: str) -> User:
+        """ Returns the User named user_name from the repository.
+
+        If there is no User with the given user_name, this method returns None.
+        """
+        raise NotImplementedError
+    
     
     
     # about genres class
