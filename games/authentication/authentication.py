@@ -23,7 +23,7 @@ def register():
         # Use the service layer to attempt to add the new user.
         try:
             services.add_user(form.user_name.data, form.password.data, repo.repo_instance)
-            return redirect(url_for(authentication_blueprint.login)) # only when no error occur
+            return redirect(url_for('authentication_bp.login')) # only when no error occur
         
         except services.NameNotUniqueException:
             user_name_not_unique = "This user name is already taken - please enter another"
@@ -39,6 +39,39 @@ def register():
 
 
 
+@authentication_blueprint.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    user_name_not_recognised = None
+    password_does_not_match_user_name = None
+    
+    if form.validate_on_submit():
+        # Successful POST, i.e. the user name and password have passed validation checking.
+        # Use the service layer to attempt to add the new user.
+        try:
+            user = services.get_user(form.user_name.data, repo.repo_instance)
+            
+            # authenticate user
+            services.authenticate_user(user['user_name'], form.password.data, repo.repo_instance)
+            
+            session.clear()
+            session['User_name'] = user['user_name']
+            return redirect(url_for('layout_bp.layout'))
+        
+        except services.UnknownUserException:
+            user_name_not_recognised = "User name not recognised - please supply another"
+        except services.AuthenticationException:
+            password_does_not_match_user_name = "Password does not match supplied user name - please check and try again"
+    
+    return render_template(
+        "authentication/credentials.html",
+        title = "Login",
+        user_name_error_message=user_name_not_recognised,
+        password_error_message=password_does_not_match_user_name,
+        form=form
+    )
+    
+    
 
 class PasswordValid:
     def __init__(self, message=None):
@@ -85,3 +118,27 @@ class RegistrationForm(FlaskForm):
     )
     
     submit = SubmitField('Register', render_kw={"class": "form_submit_button"})
+    
+class LoginForm(FlaskForm):
+    user_name = StringField(
+        'Username', 
+        validators=[DataRequired(message='Your user name is required')],
+        render_kw={
+            "placeholder": "User name is not case sensitive",
+            "class": "text-input"
+        }
+    )
+    
+    password = PasswordField(
+        'Password', 
+        validators=[DataRequired(message='Your password is required')],
+        render_kw={
+            "placeholder": "Password",
+            "class": "text-input", 
+            "size": "40"
+        }
+    )
+    
+    submit = SubmitField('Login', render_kw={"class": "form_submit_button"})
+        
+        
