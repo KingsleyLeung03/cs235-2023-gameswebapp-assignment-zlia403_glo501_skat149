@@ -17,6 +17,9 @@
         outline: none;
     } */
 
+* {
+    font-family: "Myriad Pro","Open Sans",Arial,Helvetica,sans-serif;
+}
 
 body {
     background-color: rgb(23, 30, 84);
