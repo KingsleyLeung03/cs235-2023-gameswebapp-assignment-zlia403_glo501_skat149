@@ -69,6 +69,10 @@ def create_app():
         from .publisher_bases import publisher_bases
         app.register_blueprint(publisher_bases.publisher_bases_blueprint)
 
+        # Register the profile blueprint to the app instance.
+        from .profile import profile
+        app.register_blueprint(profile.profile_blueprint)
+
 
 
     return app

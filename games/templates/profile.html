@@ -1,0 +1,19 @@
+<!-- profile.html -->
+{% extends "template.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <title>CS235 Game Library</title>
+{% endblock %}
+
+{% block main %}
+
+    <section>
+        <div class="section_title">
+            <h1>Welcome back, __username__!</h1>
+        </div>
+
+    </section>
+
+{% endblock %}
