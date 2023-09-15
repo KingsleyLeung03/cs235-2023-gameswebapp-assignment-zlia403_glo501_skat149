@@ -39,8 +39,8 @@ def register():
         title="Register",
         user_name_error_message=user_name_not_unique,
         form=form,
-        handler_url=url_for('authentication_bp.register')
-        
+        handler_url=url_for('authentication_bp.register'),
+        authenticated=authenticated
     )
 
 
@@ -56,6 +56,7 @@ def login():
         # Use the service layer to attempt to add the new user.
         try:
             user = services.get_user(form.user_name.data, repo.repo_instance)
+            authenticated = authenticated()
             
             # authenticate user
             services.authenticate_user(user['user_name'], form.password.data, repo.repo_instance)
@@ -81,6 +82,11 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('layout_bp.home'))
+
+
+def authenticated() -> bool: # return true if already login 
+    return "user_name" in session
+    
     
 
 class PasswordValid:
