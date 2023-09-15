@@ -101,6 +101,7 @@ ul.nav_list li {
 }
 
 ul.nav_list li a {
+    padding-left: 20px;
     text-decoration: none;
     color: white;
     display: block;
