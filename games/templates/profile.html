@@ -15,4 +15,55 @@
         </div>
     </section>
 
+    <section>
+        <h2 id="profile_review_title" class="profile_title">Reviews: {{ profile.user_reviews_num }}</h2>
+
+        <div id="profile_review_all_container">
+
+            {% for review in profile.user_reviews %}
+                <a href="/gameDescription/{{ review.game.game_id }}">
+                    <div class="profile_review_container">
+                        <div class="profile_review_column_one">
+                            <div class="profile_review_game_image">
+                                <img src="{{ review.game.image_url }}" alt="{{ review.game.title }}">
+                            </div>
+                        </div>
+
+                        <div class="profile_review_column_two">
+                            <div class="profile_review_rating">
+                                <p>Rating: {{ review.rating }}</p>
+                            </div>
+                            <div class="profile_review_text">
+                                <p>{{ review.comment }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            {% endfor %}
+
+        </div>
+
+        <h2 id="profile_favourite_title" class="profile_title">Favourite games: {{ profile.user_favourite_num }}</h2>
+
+        <div id="profile_favourite_all_container">
+
+            {% for game in profile.user_favourite %}
+                <div class="game">
+                    <a href="/gameDescription/{{ game.game_id }}">
+                        <div class="game_img">
+                            <img src="{{ game.image_url }}" alt="">
+                        </div>
+                        <div class="game_data">
+                            <div class="game_title">{{ game.title }}</div>
+                            <div class="game_price">NZ$ {{ game.price }}</div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+
+        </div>
+
+    </section>
+
 {% endblock %}

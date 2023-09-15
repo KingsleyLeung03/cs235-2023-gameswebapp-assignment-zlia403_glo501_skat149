@@ -17,7 +17,9 @@ def get_profile(repo: AbstractRepository, username: str):
     profile_dict = {
         "username": user.username,
         "user_reviews": user.reviews,
-        "user_favourite": user.favourite_games
+        "user_favourite": user.favourite_games,
+        "user_reviews_num": str(len(user.reviews)),
+        "user_favourite_num": str(len(user.favourite_games))
     }
     return profile_dict
 
