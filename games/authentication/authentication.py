@@ -22,6 +22,7 @@ authentication_blueprint  = Blueprint("authentication_bp", __name__)
 def register():
     form = RegistrationForm()
     user_name_not_unique = None
+    authenticated = check_authenticated()
     
     if form.validate_on_submit():
         # Successful POST, i.e. the user name and password have passed validation checking.
@@ -49,13 +50,14 @@ def login():
     form = LoginForm()
     user_name_not_recognised = None
     password_does_not_match_user_name = None
-    
+    authenticated = check_authenticated()
+
     if form.validate_on_submit():
         # Successful POST, i.e. the user name and password have passed validation checking.
         # Use the service layer to attempt to add the new user.
         try:
             user = services.get_user(form.user_name.data, repo.repo_instance)
-            authenticated = authenticated()
+            
             
             # authenticate user
             services.authenticate_user(user['user_name'], form.password.data, repo.repo_instance)
@@ -69,24 +71,25 @@ def login():
         except services.AuthenticationException:
             password_does_not_match_user_name = "Password does not match supplied user name - please check and try again"
     
+    
     return render_template(
         "authentication/credentials.html",
         title = "Login",
         user_name_error_message=user_name_not_recognised,
         password_error_message=password_does_not_match_user_name,
-        form=form
+        form=form,
+        authenticated=authenticated
     )
     
 @authentication_blueprint.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('layout_bp.home'))
+    return redirect(url_for('layout_bp.layout'))
 
 
-def authenticated() -> bool: # return true if already login 
-    return "user_name" in session
-    
-    
+def check_authenticated() -> bool: # return true if already login 
+    return "User_name" in session   
+
 
 class PasswordValid:
     def __init__(self, message=None):
