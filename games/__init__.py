@@ -4,7 +4,7 @@ from flask import Flask, render_template, request
 
 # TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
 #  stay here!
-from games.domainmodel.model import Game
+from games.domainmodel.model import *
 
 # this line must be deleted
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
@@ -43,6 +43,19 @@ def create_app():
     repo.repo_instance = MemoryRepository()
     # fill the repository from the provided CSV file
     populate(repo.repo_instance)
+
+    # Demo user, only for testing profile page
+    demo_user = User("demo_user", "password")
+    repo.repo_instance.add_user(demo_user)
+    demo_game_1 = repo.repo_instance.get_game_by_id(7940)
+    demo_game_2 = repo.repo_instance.get_game_by_id(1228870)
+    demo_game_3 = repo.repo_instance.get_game_by_id(311120)
+    demo_review_1 = Review(demo_user, demo_game_1, 1, "Bad game!")
+    demo_review_2 = Review(demo_user, demo_game_2, 5, "Good game!")
+    demo_user.add_review(demo_review_1)
+    demo_user.add_review(demo_review_2)
+    demo_user.add_favourite_game(demo_game_2)
+    demo_user.add_favourite_game(demo_game_3)
     
     with app.app_context():
         # Register the layout blueprint to the app instance.
