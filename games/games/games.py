@@ -20,6 +20,9 @@ def show_games():
     pagenum = request.args.get("page")
     order = request.args.get("order")
     
+    # check if authenticated
+    authenticated = authentication.check_authenticated()
+    
     if not order:
         order =""
     
@@ -50,5 +53,15 @@ def show_games():
         "current_order": order
     }
     
-    return render_template("games.html", games=games, num_game=num_games, page_info=page_info, pages=pages, order_options=option_of_order,genres=geners_list,publishers=publisher_list)
+    return render_template(
+        "games.html",
+        games=games,
+        num_game=num_games,
+        page_info=page_info,
+        pages=pages,
+        order_options=option_of_order,
+        genres=geners_list,
+        publishers=publisher_list,
+        authenticated=authenticated
+    )
 
