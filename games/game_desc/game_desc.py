@@ -1,9 +1,14 @@
-from flask import Blueprint, render_template, request
-# here must be memory repo import
-# this must be replaced with service layer file
-# from games.adapters.datareader.csvdatareader import GameFileCSVReader
+# ---------------------------------------
+# require packages for all brueprint file
+# ---------------------------------------
+from flask import Blueprint, render_template, redirect, url_for, session, request
 
 import games.adapters.repository as repo
+import games.authentication.authentication as authentication
+import games.authentication.services as services
+
+# ---------------------------------------
+
 import games.game_desc.services as services
 game_desc_blueprint = Blueprint("game_desc_bp", __name__)
 

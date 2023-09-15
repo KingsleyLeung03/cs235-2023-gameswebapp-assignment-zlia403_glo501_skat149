@@ -1,7 +1,14 @@
-from flask import Blueprint, render_template, request
-# from games.adapters.datareader.csvdatareader import GameFileCSVReader
+# ---------------------------------------
+# require packages for all brueprint file
+# ---------------------------------------
+from flask import Blueprint, render_template, redirect, url_for, session, request
 
 import games.adapters.repository as repo
+import games.authentication.authentication as authentication
+import games.authentication.services as services
+
+# ---------------------------------------
+
 import games.genre_bases.services as services
 from games.domainmodel.model import *
 genre_bases_blueprint = Blueprint("genre_bases_bp", __name__)
