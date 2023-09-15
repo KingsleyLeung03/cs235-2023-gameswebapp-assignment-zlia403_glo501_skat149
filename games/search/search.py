@@ -5,7 +5,6 @@ from flask import Blueprint, render_template, redirect, url_for, session, reques
 
 import games.adapters.repository as repo
 import games.authentication.authentication as authentication
-import games.authentication.services as services
 
 # ---------------------------------------
 
