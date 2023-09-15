@@ -77,6 +77,10 @@ def login():
         form=form
     )
     
+@authentication_blueprint.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('layout_bp.home'))
     
 
 class PasswordValid:
