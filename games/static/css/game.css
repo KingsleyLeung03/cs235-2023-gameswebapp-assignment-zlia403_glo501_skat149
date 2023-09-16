@@ -1,6 +1,6 @@
 main {
     padding-inline: 0px;
-    max-width: 1500;
+    max-width: 1500px;
     min-width: 800px;
 
 }
@@ -61,7 +61,7 @@ div.game_img {
 
 div.game_img img {
     width: 360px;
-    overflow: none;
+    /* overflow: none; */
 }
 
 div.game_data {
