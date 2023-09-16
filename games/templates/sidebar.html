@@ -1,7 +1,7 @@
 <ul class="nav_list">
     <li><a href="/layout">Home</a></li>
     <li><a href="/games">List of Games</a></li>
-    <li><a href="">Wish List</a></li>
+    <li><a onclick="favouritelist_b()">Favourites List</a></li>
     
     <li>
         <!-- {% for genre in genres %}
@@ -63,5 +63,9 @@
     function search_publisher() {
       document.getElementById("search_b").innerHTML = "Search by Publisher";
       type = "publisher";
+    }
+
+    function favouritelist_b() {
+      window.open("/favourites","_parent")
     }
 </script>

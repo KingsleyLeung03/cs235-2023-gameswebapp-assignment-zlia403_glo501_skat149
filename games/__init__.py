@@ -86,6 +86,9 @@ def create_app():
         from .profile import profile
         app.register_blueprint(profile.profile_blueprint)
 
+        # Register the profile blueprint to the app instance.
+        from .favourites import favourites
+        app.register_blueprint(favourites.favourites_blueprint)
 
 
     return app
