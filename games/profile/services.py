@@ -23,6 +23,20 @@ def get_profile(repo: AbstractRepository, username: str):
     }
     return profile_dict
 
+def remove_favourite(repo: AbstractRepository, username: str, game_id: int):
+    if not isinstance(username, str):
+        raise TypeError
+
+    if not isinstance(game_id, int):
+        raise TypeError
+
+    user = repo.get_user(username)
+    game = repo.get_game_by_id(game_id)
+
+    user.remove_favourite_game(game)
+
+    return None
+
 
 
 
