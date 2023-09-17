@@ -1,5 +1,5 @@
 pytest
 Flask==2.3.2
 python-dotenv
-flask-wtf==0.15.0
+flask-wtf==1.1.1
 password-validator==1.0
