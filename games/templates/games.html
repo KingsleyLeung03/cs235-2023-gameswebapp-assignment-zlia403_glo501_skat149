@@ -44,6 +44,7 @@
                             <div class="game_price">NZ$ {{ game.price }}</div>
                         </div>
                     </a>
+                    <a class="favourite_b" id="favourite_b_{{game.game_id}}" onclick=favourite(id)>Add to favourite</a>
                 </div>
             {% endfor %}
 
@@ -62,5 +63,16 @@
             </ul>
         </div>
     </section>
-
+<script>
+    function favourite(id) {
+        let target = document.getElementById(id).innerHTML;
+        let c = (target=="Add to favourite");
+        if(c == true){
+            document.getElementById(id).innerHTML = "Remove from favourite";
+        }
+        else{
+            document.getElementById(id).innerHTML = "Add to favourite";
+        }
+    }
+</script>
 {% endblock %}

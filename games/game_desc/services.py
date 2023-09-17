@@ -45,3 +45,11 @@ def get_genre_list(repo: AbstractRepository) -> list:
 
 def get_publisher_list(repo: AbstractRepository) -> list:
     return repo.get_publisher_list()
+
+def get_user_review(repo: AbstractRepository, game_id: int) -> list:
+    review = list()
+    game = repo.get_game_by_id(game_id)
+    review_list = repo.get_game_reviews(game)
+    for i in review_list:
+        review.append(i.comment)
+    return review

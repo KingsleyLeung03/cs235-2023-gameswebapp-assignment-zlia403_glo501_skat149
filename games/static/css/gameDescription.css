@@ -104,6 +104,17 @@
     color: #c59b08;
 }
 
+.favourite_b {
+    font-size: 14px;
+    border: 1px;
+    float: right;
+    background-color: rgb(14, 30, 77);
+    color: #B1B1B1;
+    border: #B1B1B1  2px solid;
+    margin-right: 8pt;
+    margin-bottom: 4px;
+}
+
 @media (max-width: 1200px) {
     .game_info {
         flex-direction: column;
