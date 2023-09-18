@@ -17,6 +17,9 @@
         outline: none;
     } */
 
+* {
+    font-family: "Myriad Pro","Open Sans",Arial,Helvetica,sans-serif;
+}
 
 body {
     background-color: rgb(23, 30, 84);
@@ -101,6 +104,7 @@ ul.nav_list li {
 }
 
 ul.nav_list li a {
+    padding-left: 20px;
     text-decoration: none;
     color: white;
     display: block;

@@ -1,5 +1,6 @@
 # this is service layer for shered part 
 # here must be implementation of reusing logical oparations
+
 from typing import List, Iterable
 from games.adapters.repository import AbstractRepository
 from games.domainmodel.model import Game
