@@ -1,7 +1,7 @@
 from bisect import insort_left
 from typing import List
 import os
-
+from pathlib import Path
 from games.adapters.repository import AbstractRepository
 from games.domainmodel.model import *
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
@@ -13,17 +13,17 @@ class GameNotFoundException(Exception):
 
 # reop class
 class MemoryRepository(AbstractRepository):
-    # about Game object
-    
     def __init__(self) -> None:
         super().__init__()
         self.__games: List[Game] = list()
         self.__genres: List[Genre] = list()
         self.__publishers: List[Publisher] = list()
+        self.__users: List[User] = list()
         #self.__reviews: List[Review] = list()
         
         self.__game_list: List[Game] = list()
-        
+    
+    # about Game class 
     def add_game(self, game: Game):
         if isinstance(game, Game):
             # When inserting the game, keep the game list sorted alphabetically by the id.
@@ -189,6 +189,13 @@ class MemoryRepository(AbstractRepository):
         else:
             raise TypeError
         
+        
+    # about User class 
+    def add_user(self, user: User) -> None:
+        self.__users.append(user)
+
+    def get_user(self, user_name: str) -> User:
+        return next((user for user in self.__users if user.username == user_name), None)
             
     # about Genre class
 
@@ -220,9 +227,9 @@ class MemoryRepository(AbstractRepository):
 
     
 # add all game data to the memory repo obj using datareader
-def populate(repo: AbstractRepository):
+def populate(data_path: Path, repo: AbstractRepository):
     dir_name = os.path.dirname(os.path.abspath(__file__))
-    games_file_name = os.path.join(dir_name, "data/games.csv")
+    games_file_name = os.path.join(data_path, "games.csv")
     reader = GameFileCSVReader(games_file_name)
 
     reader.read_csv_file()
