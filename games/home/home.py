@@ -16,6 +16,7 @@ home_blueprint = Blueprint("home_bp", __name__)
 def home():
     # check if authenticated
     authenticated = authentication.check_authenticated()
+    message = getmessage()
     
     # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
     publisher_list = repo.repo_instance.get_publisher_list()
@@ -24,5 +25,14 @@ def home():
         "home.html",
         genres=genres_list,
         publishers=publisher_list,
-        authenticated=authenticated
+        authenticated=authenticated,
+        message=message
     )
+    
+    
+def getmessage() -> str:
+    if "User_name" in session:
+        return f"Hello {session['User_name']}, welcome back."
+    else:
+        return "You are not loged in. Please login or register to use all features."
+        
