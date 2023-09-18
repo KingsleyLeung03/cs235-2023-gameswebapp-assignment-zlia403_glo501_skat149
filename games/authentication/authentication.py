@@ -5,6 +5,8 @@ from flask import Blueprint, render_template, redirect, url_for, session, reques
 
 import games.adapters.repository as repo
 import games.authentication.authentication as authentication
+import games.utilities.services as utilities
+
 
 # ---------------------------------------
 from flask_wtf import FlaskForm
@@ -24,6 +26,10 @@ def register():
     user_name_not_unique = None
     authenticated = check_authenticated()
     
+    #data for sidebar 
+    genres_list = utilities.get_genre_list(repo.repo_instance)
+    publisher_list = utilities.get_publisher_list(repo.repo_instance)
+    
     if form.validate_on_submit():
         # Successful POST, i.e. the user name and password have passed validation checking.
         # Use the service layer to attempt to add the new user.
@@ -37,6 +43,8 @@ def register():
     return render_template(
         "authentication/credentials.html", 
         title="Register",
+        genres=genres_list,
+        publishers=publisher_list,
         user_name_error_message=user_name_not_unique,
         form=form,
         handler_url=url_for('authentication_bp.register'),
@@ -51,6 +59,10 @@ def login():
     user_name_not_recognised = None
     password_does_not_match_user_name = None
     authenticated = check_authenticated()
+    
+    #data for sidebar 
+    genres_list = utilities.get_genre_list(repo.repo_instance)
+    publisher_list = utilities.get_publisher_list(repo.repo_instance)
 
     if form.validate_on_submit():
         # Successful POST, i.e. the user name and password have passed validation checking.
@@ -75,6 +87,8 @@ def login():
     return render_template(
         "authentication/credentials.html",
         title = "Login",
+        genres=genres_list,
+        publishers=publisher_list,
         user_name_error_message=user_name_not_recognised,
         password_error_message=password_does_not_match_user_name,
         form=form,
