@@ -41,16 +41,19 @@
             </div>
           </div>
         </div>
-    </li>
+      </div>
+    </div>
+  </li>
 </ul>
 
 <script>
   var type = "title";
-    function search_f() {
-      var target = document.getElementById("target").value;
-      if(target != ""){
-      window.open("/search/"+target+"/"+type, "_parent");
-    }}
+  function search_f() {
+    var target = document.getElementById("target").value;
+    if (target != "") {
+      window.open("/search/" + target + "/" + type, "_parent");
+    }
+  }
 
     function search_title() {
       document.getElementById("search_b").innerHTML = "Search by Title";
