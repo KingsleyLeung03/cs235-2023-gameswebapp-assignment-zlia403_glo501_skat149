@@ -26,6 +26,8 @@ def game_description(game_id):
         
     geners_list = services.get_genre_list(repo.repo_instance)
     publisher_list = services.get_publisher_list(repo.repo_instance)
+    review_list = services.get_user_review(repo.repo_instance,game_id)
+
 
     try:
         game = services.get_game(repo.repo_instance, game_id)
@@ -35,7 +37,8 @@ def game_description(game_id):
             message=f"game id: {game_id} is not found.",
             genres=geners_list,
             publishers=publisher_list,
-            authenticated=authenticated
+            authenticated=authenticated,
+            review = review_list
         )
         
     else: # if not error 
@@ -44,6 +47,7 @@ def game_description(game_id):
             game=game,
             genres=geners_list,
             publishers=publisher_list,
-            authenticated=authenticated
+            authenticated=authenticated,
+            review = review_list
         )
     
