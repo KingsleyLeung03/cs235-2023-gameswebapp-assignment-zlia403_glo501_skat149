@@ -34,7 +34,8 @@ def get_game(repo: AbstractRepository, game_id: int):
         "description": game_obj.description,
         "game_reviews": game_obj.reviews,
         "num_game_reviews": len(game_obj.reviews),
-        "game_reviews_average_rating": average_rating
+        "game_reviews_average_rating": average_rating,
+        "game_id": game_id
 
     }
     
@@ -53,3 +54,26 @@ def get_user_review(repo: AbstractRepository, game_id: int) -> list:
     for i in review_list:
         review.append(i.comment)
     return review
+
+def change_favourite(repo: AbstractRepository) -> None:
+    print("clicked")
+    return None
+
+def review(repo: AbstractRepository, game_id: int, rate: int, comment: str, user_name:str) -> None:
+    
+
+    #game = repo.get_game_by_id(game_id)
+    #user = repo.get_user(user_name)
+    
+    #create new review object 
+    
+    # review = Review(user,game,rate,comment)
+
+    #add review object to game
+    # game.add_review(review)
+    
+    #add review object to user
+    # user.add_review(review)
+    
+    print("add review")
+    return None

@@ -97,6 +97,7 @@
         <h3>Your reviews</h3>
             <textarea type="text" class="review" id="comment" placeholder="Your comment.." maxlength = 900></textarea>
         <h3>Your rating</h3>
+        <p id="rate error mesage"></p>
             <dd>
                 <div class="rate">
                     <input type="radio" id="star5" name="rate" value="5" onclick="rating(id)" />
@@ -114,22 +115,28 @@
             <br>
             
     </section>
-    <button class="comment_b" onclick="comment()">Comment</button>
+    <button class="comment_b" id="{{game.game_id}}" onclick="comment(id)">Comment</button>
     <br>
     <br>
     <br>
     <br>
 
 <script>
-    var rate = null 
+    let rate = null 
     function rating(id) {
         rate = document.getElementById(id).value;
         //document.getElementById("comment").value = rate;
       return false;
     }
-    function comment() {
+    function comment(id) {
         var comment = document.getElementById("comment").value;
-        //document.getElementById("comment").value = comment ;
+        if(rate == null || comment.length == 0){
+            document.getElementById("comment").value = comment + 1;
+            document.getElementById("rate error mesage").innerHTML = "Please rate for the game";
+        }
+        else{
+            url_for('review', game_id=id,rate=rate,comment=comment)
+        }
     }
     function favourite(id) {
         let target = document.getElementById(id).innerHTML;
