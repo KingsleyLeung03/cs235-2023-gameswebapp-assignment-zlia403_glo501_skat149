@@ -31,6 +31,90 @@
     color: #B1B1B1
 }
 
+.review {
+    width: 100%;
+    height: 150px;
+    background-color: rgb(199, 211, 255);
+}
+
+.comment_b {
+    font-size: 14px;
+    border: 1px;
+    float: right;
+    background-color: rgb(14, 30, 77);
+    color: #B1B1B1;
+    border: #B1B1B1  2px solid;
+}
+
+.comment_b:hover {
+    background-color: #B1B1B1;
+    color: rgb(14, 30, 77);
+  }
+
+.checked {
+    color: orange;
+}
+
+.fa {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+} 
+
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+    float: center;
+}
+
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+
+.rate > input:checked ~ label {
+    color: #ffc700;    
+}
+
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;  
+}
+
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+.favourite_b {
+    font-size: 14px;
+    border: 1px;
+    float: right;
+    background-color: rgb(14, 30, 77);
+    color: #B1B1B1;
+    border: #B1B1B1  2px solid;
+    margin-right: 8pt;
+    margin-bottom: 4px;
+}
+
 @media (max-width: 1200px) {
     .game_info {
         flex-direction: column;

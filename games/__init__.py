@@ -2,6 +2,7 @@
 from pathlib import Path
 from flask import Flask, render_template, request
 
+
 import games.adapters.repository as repo
 from games.adapters.memory_repository import populate
 from games.adapters.memory_repository import MemoryRepository
@@ -25,7 +26,23 @@ def create_app(test_config=None):
     # Create the MemoryRepository implementation for a memory-based repository.
     repo.repo_instance = MemoryRepository()
     # fill the repository from the provided CSV file
+
+
     populate(data_path, repo.repo_instance)
+
+    # Demo user, only for testing profile page
+    demo_user = User("demo_user", "password")
+    repo.repo_instance.add_user(demo_user)
+    demo_game_1 = repo.repo_instance.get_game_by_id(7940)
+    demo_game_2 = repo.repo_instance.get_game_by_id(1228870)
+    demo_game_3 = repo.repo_instance.get_game_by_id(311120)
+    demo_review_1 = Review(demo_user, demo_game_1, 1, "Bad game!")
+    demo_review_2 = Review(demo_user, demo_game_2, 5, "Good game!")
+    demo_user.add_review(demo_review_1)
+    demo_user.add_review(demo_review_2)
+    demo_user.add_favourite_game(demo_game_2)
+    demo_user.add_favourite_game(demo_game_3)
+
     
     with app.app_context():
         # Register the home blueprint to the app instance.
@@ -55,6 +72,13 @@ def create_app(test_config=None):
         from .authentication import authentication
         app.register_blueprint(authentication.authentication_blueprint)
 
+        # Register the profile blueprint to the app instance.
+        from .profile import profile
+        app.register_blueprint(profile.profile_blueprint)
+
+        # Register the profile blueprint to the app instance.
+        from .favourites import favourites
+        app.register_blueprint(favourites.favourites_blueprint)
 
 
     return app

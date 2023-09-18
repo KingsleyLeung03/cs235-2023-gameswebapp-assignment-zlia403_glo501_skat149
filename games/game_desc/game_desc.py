@@ -26,6 +26,9 @@ def game_description(game_id):
         
     geners_list = services.get_genre_list(repo.repo_instance)
     publisher_list = services.get_publisher_list(repo.repo_instance)
+    review_list = services.get_user_review(repo.repo_instance,game_id)
+    print(review_list)
+
 
     try:
         game = services.get_game(repo.repo_instance, game_id)
@@ -44,6 +47,24 @@ def game_description(game_id):
             game=game,
             genres=geners_list,
             publishers=publisher_list,
-            authenticated=authenticated
+            authenticated=authenticated,
+            review=review_list
         )
     
+
+@game_desc_blueprint.route("/change_favourite")
+def change_favourite():
+     print("clicked")
+     #print(id)
+     return None
+
+@game_desc_blueprint.route('/review/<game_id>/<rate>/<comment>', methods=["GET"])
+def review(game_id: int, rate: int, comment: str):
+    user_name = None
+    print(game_id)
+    print(rate)
+    print(comment)
+    print(user_name)
+    services.review(repo.repo_instance,game_id,rate,comment,user_name)
+    game_description(3010)
+
