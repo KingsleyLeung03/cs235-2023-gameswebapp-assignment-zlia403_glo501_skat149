@@ -2,6 +2,8 @@
 from pathlib import Path
 from flask import Flask, render_template, request
 
+#for test 
+from games.domainmodel.model import *
 
 import games.adapters.repository as repo
 from games.adapters.memory_repository import populate
