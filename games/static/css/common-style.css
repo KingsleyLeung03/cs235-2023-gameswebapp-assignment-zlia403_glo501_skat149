@@ -17,6 +17,9 @@
         outline: none;
     } */
 
+* {
+    font-family: "Myriad Pro","Open Sans",Arial,Helvetica,sans-serif;
+}
 
 body {
     background-color: rgb(23, 30, 84);
@@ -28,6 +31,17 @@ body {
     font-family: "SFProDisplay";
 }
 
+div.message {
+    background-color: rgb(8, 15, 37);
+    margin: 20px auto;
+    box-shadow: 0 0 40px rgba(206, 206, 206, 0.753);
+    border-radius: 15px;
+}
+div.message h2 {
+    margin-block: 20px;
+    margin-left: 30px;
+    color: #c2c2c2;
+}
 
 
 header, main {
@@ -101,6 +115,7 @@ ul.nav_list li {
 }
 
 ul.nav_list li a {
+    padding-left: 20px;
     text-decoration: none;
     color: white;
     display: block;

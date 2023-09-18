@@ -1,7 +1,13 @@
-from flask import Blueprint, render_template, request
-# from games.adapters.datareader.csvdatareader import GameFileCSVReader
+# ---------------------------------------
+# require packages for all brueprint file
+# ---------------------------------------
+from flask import Blueprint, render_template, redirect, url_for, session, request
 
 import games.adapters.repository as repo
+import games.authentication.authentication as authentication
+
+# ---------------------------------------
+
 import games.publisher_bases.services as services
 publisher_bases_blueprint = Blueprint("publisher_bases_bp", __name__)
 
@@ -11,6 +17,9 @@ games_per_page = 30
 
 @publisher_bases_blueprint.route('/publisher', methods=['GET'])
 def show_games():
+    # check if authenticated
+    authenticated = authentication.check_authenticated()
+    
     pagenum = request.args.get("page")
     order = request.args.get("order")
     
@@ -24,7 +33,7 @@ def show_games():
         try:
             pagenum = int(pagenum)
         except:
-            return render_template("notFound.html", message=f"Invalid page value!")
+            return render_template("notFound.html", message=f"Invalid page value!", authenticated=authenticated)
         
     
     num_games = services.get_number_of_games(repo.repo_instance)
@@ -44,5 +53,15 @@ def show_games():
         "current_order": order
     }
     
-    return render_template("games.html", games=games, num_game=num_games, page_info=page_info, pages=pages, order_options=option_of_order,genres=geners_list,publishers=publisher_list)
+    return render_template(
+        "games.html",
+        games=games,
+        num_game=num_games,
+        page_info=page_info,
+        pages=pages,
+        order_options=option_of_order,
+        genres=geners_list,
+        publishers=publisher_list,
+        authenticated=authenticated
+    )
 

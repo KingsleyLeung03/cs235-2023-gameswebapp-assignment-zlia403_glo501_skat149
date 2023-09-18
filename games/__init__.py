@@ -1,48 +1,34 @@
 """Initialize Flask app."""
-
+from pathlib import Path
 from flask import Flask, render_template, request
 
-# TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
-#  stay here!
-from games.domainmodel.model import *
-
-# this line must be deleted
-from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
 import games.adapters.repository as repo
 from games.adapters.memory_repository import populate
 from games.adapters.memory_repository import MemoryRepository
 
 
-# TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
-#  stay here!
-
-# this lines must be removed
-csvData = GameFileCSVReader("games/adapters/data/games.csv")
-csvData.read_csv_file()
-
-def create_some_game():
-    some_game = Game(1, "Call of Duty® 4: Modern Warfare®")
-    some_game.release_date = "Nov 12, 2007"
-    some_game.price = 9.99
-    some_game.description = "The new action-thriller from the award-winning team at Infinity Ward, the creators of " \
-                            "the Call of Duty® series, delivers the most intense and cinematic action experience ever. "
-    some_game.image_url = "https://cdn.akamai.steamstatic.com/steam/apps/7940/header.jpg?t=1646762118"
-    return some_game
-
-
-
-def create_app():
+def create_app(test_config=None):
     """Construct the core application."""
 
     # Create the Flask app object.
     app = Flask(__name__)
     
+    # Configure the app from configuration-file settings.
+    app.config.from_object('config.Config')
+    data_path = Path('games') / 'adapters' / 'data'
+    
+    if test_config is not None:
+        # Load test configuration, and override any configuration settings.
+        app.config.from_mapping(test_config)
+        data_path = app.config['TEST_DATA_PATH']
     
     # Create the MemoryRepository implementation for a memory-based repository.
     repo.repo_instance = MemoryRepository()
     # fill the repository from the provided CSV file
-    populate(repo.repo_instance)
+
+
+    populate(data_path, repo.repo_instance)
 
     # Demo user, only for testing profile page
     demo_user = User("demo_user", "password")
@@ -56,11 +42,12 @@ def create_app():
     demo_user.add_review(demo_review_2)
     demo_user.add_favourite_game(demo_game_2)
     demo_user.add_favourite_game(demo_game_3)
+
     
     with app.app_context():
-        # Register the layout blueprint to the app instance.
-        from .layout import layout
-        app.register_blueprint(layout.layout_blueprint)
+        # Register the home blueprint to the app instance.
+        from .home import home
+        app.register_blueprint(home.home_blueprint)
 
         # Register the game_desc blueprint to the app instance.
         from .game_desc import game_desc
@@ -81,6 +68,9 @@ def create_app():
         # Register the genre_bases blueprint to the app instance.
         from .publisher_bases import publisher_bases
         app.register_blueprint(publisher_bases.publisher_bases_blueprint)
+        
+        from .authentication import authentication
+        app.register_blueprint(authentication.authentication_blueprint)
 
         # Register the profile blueprint to the app instance.
         from .profile import profile
