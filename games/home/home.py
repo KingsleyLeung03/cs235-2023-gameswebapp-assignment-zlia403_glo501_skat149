@@ -8,12 +8,12 @@ import games.authentication.authentication as authentication
 
 # ---------------------------------------
 
-layout_blueprint = Blueprint("layout_bp", __name__)
+home_blueprint = Blueprint("home_bp", __name__)
 
 
-@layout_blueprint.route('/', methods=['GET'])
-@layout_blueprint.route("/layout", methods=['GET'])
-def layout():
+@home_blueprint.route('/', methods=['GET'])
+@home_blueprint.route("/home", methods=['GET'])
+def home():
     # check if authenticated
     authenticated = authentication.check_authenticated()
     
@@ -21,7 +21,7 @@ def layout():
     publisher_list = repo.repo_instance.get_publisher_list()
     genres_list = repo.repo_instance.get_genre_list()
     return render_template(
-        "layout.html",
+        "home.html",
         genres=genres_list,
         publishers=publisher_list,
         authenticated=authenticated

@@ -76,7 +76,7 @@ def login():
             
             session.clear()
             session['User_name'] = user['user_name']
-            return redirect(url_for('layout_bp.layout'))
+            return redirect(url_for('home_bp.home'))
         
         except services.UnknownUserException:
             user_name_not_recognised = "User name not recognised - please supply another"
@@ -98,7 +98,7 @@ def login():
 @authentication_blueprint.route('/logout')
 def logout():
     session.clear()
-    return redirect(url_for('layout_bp.layout'))
+    return redirect(url_for('home_bp.home'))
 
 
 def check_authenticated() -> bool: # return true if already login 

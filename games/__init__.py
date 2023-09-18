@@ -28,9 +28,9 @@ def create_app(test_config=None):
     populate(data_path, repo.repo_instance)
     
     with app.app_context():
-        # Register the layout blueprint to the app instance.
-        from .layout import layout
-        app.register_blueprint(layout.layout_blueprint)
+        # Register the home blueprint to the app instance.
+        from .home import home
+        app.register_blueprint(home.home_blueprint)
 
         # Register the game_desc blueprint to the app instance.
         from .game_desc import game_desc
