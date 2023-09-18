@@ -2,7 +2,12 @@
     <li><a href="/layout">Home</a></li>
     <li><a href="/games">List of Games</a></li>
     <li><a onclick="favouritelist_b()">Favourites List</a></li>
-    
+    {% if not authenticated %}
+      <li><a href="{{ url_for('authentication_bp.register') }}">Register</a></li>
+      <li><a href="{{ url_for('authentication_bp.login') }}">Login</a></li>
+    {% else %}
+      <li><a href="{{ url_for('authentication_bp.logout') }}">Logout</a></li>
+    {% endif %}
     <li>
         <!-- {% for genre in genres %}
         <select name="example">

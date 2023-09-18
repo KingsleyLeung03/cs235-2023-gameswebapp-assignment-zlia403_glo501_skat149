@@ -93,5 +93,7 @@ def create_app():
         from .favourites import favourites
         app.register_blueprint(favourites.favourites_blueprint)
 
+        from .authentication import authentication
+        app.register_blueprint(authentication.authentication_blueprint)
 
     return app
