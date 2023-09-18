@@ -1,5 +1,5 @@
 """Initialize Flask app."""
-
+from pathlib import Path
 from flask import Flask, render_template, request
 
 # TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
@@ -16,6 +16,9 @@ from games.adapters.memory_repository import MemoryRepository
 
 # TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
 #  stay here!
+app = Flask(__name__)
+app.config.from_object('config.Config')
+data_path = Path('games') / 'adapters' / 'data'
 
 # this lines must be removed
 csvData = GameFileCSVReader("games/adapters/data/games.csv")
@@ -42,7 +45,7 @@ def create_app():
     # Create the MemoryRepository implementation for a memory-based repository.
     repo.repo_instance = MemoryRepository()
     # fill the repository from the provided CSV file
-    populate(repo.repo_instance)
+    populate(data_path,repo.repo_instance)
 
     # Demo user, only for testing profile page
     demo_user = User("demo_user", "password")
