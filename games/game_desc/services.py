@@ -56,8 +56,18 @@ def get_user_review(repo: AbstractRepository, game_id: int) -> list:
         review.append(i.comment)
     return review
 
-def change_favourite(repo: AbstractRepository) -> None:
-    print("clicked")
+def change_favourite(repo: AbstractRepository, game_id: int, user_name: str) -> None:
+    print(game_id)
+    game = repo.get_game_by_id(int(game_id))
+    user = repo.get_user(user_name)
+    print(user.favourite_games)
+    if (game not in user.favourite_games):
+        user.add_favourite_game(game)
+    else:
+        user.remove_favourite_game(game)
+    print(user.favourite_games)
+    print(game)
+    print("added")
     return None
 
 def review(repo: AbstractRepository, game_id: int, rate: int, comment: str, user_name:str) -> None:

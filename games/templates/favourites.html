@@ -14,6 +14,12 @@
             <h1>Favourites Game</h1>
         </div>
 
+
+        {% if games|length == 0 %}
+            <div class="current_page"><h3>No favourites game yet</h3></div>
+        {% endif %}
+
+
         <div class="order_selection">
             <h3>Order games by:</h3>
             <!-- for each option of ordering of the games -->

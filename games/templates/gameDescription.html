@@ -63,7 +63,9 @@
                             </dd>
                         {% endfor %}
                     </dl>
-                    <a class="favourite_b" id="favourite_b_{{game.game_id}}" onclick=favourite(id)>Add to favourite</a>
+                    <form action="/change_favourite" method="post">
+                    <a class="favourite_b" id="{{game.game_id}}" onclick=favourite(id)>Add to favourite</a>
+                    </form>
                 </div>
             </div>
         </div>
@@ -147,9 +149,11 @@
         let c = (target=="Add to favourite");
         if(c == true){
             document.getElementById(id).innerHTML = "Remove from favourite";
+            window.open("/change_favourite/"+id,"_parent")
         }
         else{
             document.getElementById(id).innerHTML = "Add to favourite";
+            window.open("/change_favourite/"+id,"_parent")
         }
     }
 </script>
