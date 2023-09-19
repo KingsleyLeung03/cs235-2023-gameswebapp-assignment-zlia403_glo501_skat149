@@ -67,7 +67,7 @@ def review(game_id: int, rate: int, comment: str):
         print(rate)
         print(comment)
         print(user_name)
-        services.review(repo.repo_instance,game_id,rate,comment,user_name)
+        services.review(repo.repo_instance,int(game_id),int(rate),comment,user_name)
         return game_description(3010)
     else :
         print("No user login yet")

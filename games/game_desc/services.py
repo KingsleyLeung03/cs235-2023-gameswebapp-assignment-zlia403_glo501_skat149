@@ -1,6 +1,6 @@
 from typing import List, Iterable
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game
+from games.domainmodel.model import *
 
 class NonExistentGameException(Exception):
     pass
@@ -62,18 +62,21 @@ def change_favourite(repo: AbstractRepository) -> None:
 def review(repo: AbstractRepository, game_id: int, rate: int, comment: str, user_name:str) -> None:
     
 
-    #game = repo.get_game_by_id(game_id)
-    #user = repo.get_user(user_name)
+    game = repo.get_game_by_id(game_id)
+    user = repo.get_user(user_name)
     
     #create new review object 
-    
-    # review = Review(user,game,rate,comment)
+    #review = Review(user,game,rate,comment)
 
     #add review object to game
     # game.add_review(review)
     
     #add review object to user
     # user.add_review(review)
+
+    print(user)
+    print(game)
+    print(type(user))
     
     print("add review")
     return None
