@@ -18,7 +18,7 @@ def get_game(repo: AbstractRepository, game_id: int):
 
     # Check the review numbers first to avoid ZeroDivisionError, then add to the dictionary
     if (len(game_obj.reviews) > 0):
-        average_rating = round(sum(review.rating for review in game_obj.reviews) / len(game_obj.reviews), 1)
+        average_rating = int(round(sum(review.rating for review in game_obj.reviews) / len(game_obj.reviews), 1))
     else:
         average_rating = 0
 
@@ -38,7 +38,6 @@ def get_game(repo: AbstractRepository, game_id: int):
         "game_id": game_id
 
     }
-    
     return game
     
 def get_genre_list(repo: AbstractRepository) -> list:
@@ -48,9 +47,11 @@ def get_publisher_list(repo: AbstractRepository) -> list:
     return repo.get_publisher_list()
 
 def get_user_review(repo: AbstractRepository, game_id: int) -> list:
-    review = list()
+    review = []
     game = repo.get_game_by_id(game_id)
-    review_list = repo.get_game_reviews(game)
+    review_list = game.reviews
+    print("service")
+    print(review_list)
     for i in review_list:
         review.append(i.comment)
     return review
@@ -61,22 +62,27 @@ def change_favourite(repo: AbstractRepository) -> None:
 
 def review(repo: AbstractRepository, game_id: int, rate: int, comment: str, user_name:str) -> None:
     
-
     game = repo.get_game_by_id(game_id)
     user = repo.get_user(user_name)
-    
-    #create new review object 
-    #review = Review(user,game,rate,comment)
 
-    #add review object to game
-    # game.add_review(review)
-    
-    #add review object to user
-    # user.add_review(review)
+    if not isinstance(game, Game) or not isinstance(user,User):
+        print(user)
+        print(game)
+        print(type(user))
+        print(type(user))
+        print(type(game))
+        raise TypeError
+    else:
+        #create new review object 
+        review = Review(user,game,rate,comment)
 
-    print(user)
-    print(game)
-    print(type(user))
-    
-    print("add review")
-    return None
+        #add review object to game
+        game.add_review(review)
+        
+        #add review object to user
+        user.add_review(review)
+        
+        #print("add review")
+        #print(game.reviews)
+        
+        return None

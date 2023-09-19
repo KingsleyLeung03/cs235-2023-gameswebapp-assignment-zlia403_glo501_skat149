@@ -1,8 +1,9 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, session
 # from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
 import games.adapters.repository as repo
 import games.favourites.services as services
+import games.authentication.authentication as authentication
 favourites_blueprint = Blueprint("favourites_bp", __name__)
 
 games_per_page = 30
@@ -11,6 +12,8 @@ games_per_page = 30
 
 @favourites_blueprint.route('/favourites', methods=['GET'])
 def show_games():
+    authenticated = authentication.check_authenticated()
+    user_name = session["User_name"]
     pagenum = request.args.get("page")
     order = request.args.get("order")
     
@@ -27,8 +30,8 @@ def show_games():
             return render_template("notFound.html", message=f"Invalid page value!")
         
     
-    num_games = services.get_number_of_games(repo.repo_instance)
-    games = services.get_games(repo.repo_instance, games_per_page, pagenum, order)
+    num_games = services.get_number_of_games(repo.repo_instance, user_name)
+    games = services.get_games(repo.repo_instance, games_per_page, pagenum, user_name, order)
     maxpage = services.get_max_page_num(num_games, games_per_page)
     pages = services.generate_page_list(pagenum, maxpage)
     option_of_order = ["game_id", "title", "publisher", "release_date", "price"]
@@ -44,5 +47,5 @@ def show_games():
         "current_order": order
     }
     
-    return render_template("favourites.html", games=games, num_game=num_games, page_info=page_info, pages=pages, order_options=option_of_order,genres=geners_list,publishers=publisher_list)
+    return render_template("favourites.html", games=games, num_game=num_games, page_info=page_info, pages=pages, order_options=option_of_order,genres=geners_list,publishers=publisher_list,authenticated=authenticated)
 

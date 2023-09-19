@@ -115,6 +115,7 @@
     margin-bottom: 4px;
 }
 
+
 @media (max-width: 1200px) {
     .game_info {
         flex-direction: column;

@@ -10,15 +10,15 @@ class UnknownPageException(Exception):
     pass
 
 
-def get_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, order: str = ""):
+def get_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, user_name: str, order: str = ""):
     if not isinstance(games_per_page, int) or not isinstance(pagenum, int) or pagenum<1:
         raise UnknownPageException
     
     start_index = games_per_page*(pagenum-1)
     end_index = games_per_page*pagenum
     
-    if end_index > get_number_of_games(repo) -1:
-        end_index = get_number_of_games(repo)
+    if end_index > get_number_of_games(repo,user_name) -1:
+        end_index = get_number_of_games(repo,user_name)
          
     # games = repo.get_game_list()[start_index: end_index]
     games = repo.get_range_of_game_list(start_index, end_index, order)
@@ -64,8 +64,10 @@ def get_current_display(num_of_games:int, games_per_page:int, current_page: int)
         return (start, end)
 
 
-def get_number_of_games(repo: AbstractRepository) -> int:
-    return repo.get_number_of_games()
+def get_number_of_games(repo: AbstractRepository, user_name: str) -> int:
+    user = repo.get_user(user_name)
+    return len(user.favourite_games)
+    #return repo.get_number_of_games()
 
 def get_genre_list(repo: AbstractRepository) -> list:
     return repo.get_genre_list()

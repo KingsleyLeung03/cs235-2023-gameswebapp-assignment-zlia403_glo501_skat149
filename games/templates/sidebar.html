@@ -9,7 +9,11 @@
   {% endif %}
   <li><br></li>
   <li><a href="/games">List of Games</a></li>
-  <li><a onclick="favouritelist_b()">Favourites List</a></li>
+  {% if not authenticated %}
+    
+  {% else %}
+    <li><a onclick="favouritelist_b()">Favourites List</a></li>
+  {% endif %}
 
   <li>
       <!-- {% for genre in genres %}

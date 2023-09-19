@@ -40,7 +40,12 @@
                         {% if game.num_game_reviews == 0 %}
                             <dd>No customer review yet</dd>
                         {% else %}
-                            <dd>{{ game.game_reviews_average_rating }}</dd>
+                            {% for i in range(game.game_reviews_average_rating) %}<!--show the game average rating-->
+                                <span class="fa fa-star checked"></span>
+                            {% endfor %}
+                            {% for i in range(5-game.game_reviews_average_rating) %}<!--show the game average rating-->
+                                <span class="fa fa-star"></span>
+                            {% endfor %}
                         {% endif %}
 
                         {% if game.website_url is not none %}
@@ -57,12 +62,6 @@
                                 <br>
                             </dd>
                         {% endfor %}
-                        <dt>Rating</dt>
-                        <dd>
-                        {% for i in range(5) %}<!--show the game average rating-->
-                                <span class="fa fa-star checked"></span>
-                        {% endfor %}
-                        </dd>
                     </dl>
                     <a class="favourite_b" id="favourite_b_{{game.game_id}}" onclick=favourite(id)>Add to favourite</a>
                 </div>
@@ -87,10 +86,14 @@
 
     <section class="game_all_user_reviews"> <!-- This section shows all user reviews. No data for now. -->
         <h3>Customer reviews</h3>
-            <!--p class="game_user_review_zero_notice">No customer review yet</p-->
+        {% if game.num_game_reviews == 0 %}
+            <dd>No customer review yet</dd>
+        {% else %}
             {% for i in review %}<!--show the game average rating-->
-                <p class="user_review">review</p>
+                <p class="reviewlist">{{i}}</p>
             {% endfor %}
+        {% endif %}
+            
     </section>
 
     <section class="user_reviews"> <!-- This section let user comment the games. -->
@@ -131,7 +134,7 @@
     function comment(id) {
         var comment = document.getElementById("comment").value;
         if(rate == null || comment.length == 0){
-            document.getElementById("comment").value = comment + 1;
+            //document.getElementById("comment").value = comment;
             document.getElementById("rate error mesage").innerHTML = "Please rate for the game";
         }
         else{
