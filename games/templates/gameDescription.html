@@ -135,7 +135,8 @@
             document.getElementById("rate error mesage").innerHTML = "Please rate for the game";
         }
         else{
-            url_for('review', game_id=id,rate=rate,comment=comment)            
+            window.open("/review/"+id+"/"+rate+"/"+comment,"_parent")       
+            //url_for('review', game_id=id,rate=rate,comment=comment)     
         }
     }
     function favourite(id) {
