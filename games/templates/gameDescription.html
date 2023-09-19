@@ -135,7 +135,8 @@
     }
     function comment(id) {
         var comment = document.getElementById("comment").value;
-        if(rate == null || comment.length == 0){
+        
+        if(rate == null){
             //document.getElementById("comment").value = comment;
             document.getElementById("rate error mesage").innerHTML = "Please rate for the game";
         }

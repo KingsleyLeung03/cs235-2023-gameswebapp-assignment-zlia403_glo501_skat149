@@ -71,7 +71,11 @@ def review(game_id: int, rate: int, comment: str):
     user_name = None
     if "User_name" in session:
         user_name = session["User_name"]
-        services.review(repo.repo_instance,int(game_id),int(rate),comment,user_name)
+        print("review")
+        print(comment)
+        print(comment=="style.css")
+        if (comment!="style.css"):
+            services.review(repo.repo_instance,int(game_id),int(rate),comment,user_name)
         return game_description(game_id)
     else :
         print("No user login yet")
