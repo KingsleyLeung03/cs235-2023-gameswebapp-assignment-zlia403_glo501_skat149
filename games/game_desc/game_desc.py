@@ -27,8 +27,12 @@ def game_description(game_id):
     geners_list = services.get_genre_list(repo.repo_instance)
     publisher_list = services.get_publisher_list(repo.repo_instance)
     review_list = services.get_user_review(repo.repo_instance,game_id)
-    print(review_list)
 
+    favourite_list = False
+    if "User_name" in session:
+        user_name = session["User_name"]
+        favourite_list = services.get_favourite_list(repo.repo_instance,game_id,user_name)
+    print(review_list)
 
     try:
         game = services.get_game(repo.repo_instance, game_id)
@@ -38,7 +42,8 @@ def game_description(game_id):
             message=f"game id: {game_id} is not found.",
             genres=geners_list,
             publishers=publisher_list,
-            authenticated=authenticated
+            authenticated=authenticated,
+            favourite_list = favourite_list
         )
         
     else: # if not error 
@@ -48,7 +53,8 @@ def game_description(game_id):
             genres=geners_list,
             publishers=publisher_list,
             authenticated=authenticated,
-            review=review_list
+            review=review_list,
+            favourite_list = favourite_list
         )
     
 

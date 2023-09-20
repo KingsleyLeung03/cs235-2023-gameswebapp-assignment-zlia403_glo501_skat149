@@ -70,17 +70,22 @@ def change_favourite(repo: AbstractRepository, game_id: int, user_name: str) -> 
     print("added")
     return None
 
+def get_favourite_list(repo: AbstractRepository, game_id: int, user_name: str):
+    favourite_list = False
+    user = repo.get_user(user_name)
+    game = repo.get_game_by_id(int(game_id))
+    for i in user.favourite_games:
+        if (i == game):
+            favourite_list = True
+            break
+    return favourite_list
+
 def review(repo: AbstractRepository, game_id: int, rate: int, comment: str, user_name:str) -> None:
     
     game = repo.get_game_by_id(game_id)
     user = repo.get_user(user_name)
 
     if not isinstance(game, Game) or not isinstance(user,User):
-        print(user)
-        print(game)
-        print(type(user))
-        print(type(user))
-        print(type(game))
         raise TypeError
     else:
         #create new review object 
@@ -91,8 +96,5 @@ def review(repo: AbstractRepository, game_id: int, rate: int, comment: str, user
         
         #add review object to user
         user.add_review(review)
-        
-        #print("add review")
-        #print(game.reviews)
         
         return None

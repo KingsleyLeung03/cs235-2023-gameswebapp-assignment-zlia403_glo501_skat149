@@ -64,7 +64,11 @@
                         {% endfor %}
                     </dl>
                     <form action="/change_favourite" method="post">
-                    <a class="favourite_b" id="{{game.game_id}}" onclick=favourite(id)>Add to favourite</a>
+                    {% if favourite_list == False %}
+                        <a class="favourite_b" id="{{game.game_id}}" onclick=favourite(id)>Add to favourite</a>
+                    {% else %}
+                        <a class="favourite_b" id="{{game.game_id}}" onclick=favourite(id)>Remove from favourite</a>
+                    {% endif %}
                     </form>
                 </div>
             </div>
@@ -140,6 +144,9 @@
             //document.getElementById("comment").value = comment;
             document.getElementById("rate error mesage").innerHTML = "Please rate for the game";
         }
+        else if(document.getElementById("comment").value == ''){
+            document.getElementById("rate error mesage").innerHTML = "Please commend for the game";
+        }
         else{
             window.open("/review/"+id+"/"+rate+"/"+comment,"_parent")       
             //url_for('review', game_id=id,rate=rate,comment=comment)     
@@ -149,11 +156,11 @@
         let target = document.getElementById(id).innerHTML;
         let c = (target=="Add to favourite");
         if(c == true){
-            document.getElementById(id).innerHTML = "Remove from favourite";
+            //document.getElementById(id).innerHTML = "Remove from favourite";
             window.open("/change_favourite/"+id,"_parent")
         }
         else{
-            document.getElementById(id).innerHTML = "Add to favourite";
+            //document.getElementById(id).innerHTML = "Add to favourite";
             window.open("/change_favourite/"+id,"_parent")
         }
     }
