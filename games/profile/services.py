@@ -24,6 +24,7 @@ def get_profile(repo: AbstractRepository, username: str):
     }
     return profile_dict
 
+
 def remove_favourite(repo: AbstractRepository, username: str, game_id: int):
     if not isinstance(username, str):
         raise TypeError
@@ -37,4 +38,3 @@ def remove_favourite(repo: AbstractRepository, username: str, game_id: int):
     user.remove_favourite_game(game)
 
     return None
-

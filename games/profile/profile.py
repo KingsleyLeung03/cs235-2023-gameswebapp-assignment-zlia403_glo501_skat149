@@ -16,9 +16,6 @@ def show_profile():
         return redirect(url_for('home_bp.home'))
     user_name = session["User_name"]
 
-    # Use the testing profile for testing
-    # profile = services.get_profile(repo.repo_instance, "demo_user")
-
     profile = profile_services.get_profile(repo.repo_instance, user_name)
     genre_list = utilities_services.get_genre_list(repo.repo_instance)
 
@@ -32,10 +29,6 @@ def remove_favourite(game_id):
         return redirect(url_for('home_bp.home'))
     user_name = session["User_name"]
 
-    # Use the testing profile for testing
-    # services.remove_favourite(repo.repo_instance, "demo_user", int(game_id))
-
     profile_services.remove_favourite(repo.repo_instance, user_name, int(game_id))
 
     return redirect(url_for("profile_bp.show_profile"))
-

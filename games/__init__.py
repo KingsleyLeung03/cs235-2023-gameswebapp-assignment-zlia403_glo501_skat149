@@ -32,20 +32,8 @@ def create_app(test_config=None):
 
     populate(data_path, repo.repo_instance)
 
-    # Demo user, only for testing profile page
-    demo_user = User("demo_user", "password")
-    repo.repo_instance.add_user(demo_user)
-    demo_game_1 = repo.repo_instance.get_game_by_id(7940)
-    demo_game_2 = repo.repo_instance.get_game_by_id(1228870)
-    demo_game_3 = repo.repo_instance.get_game_by_id(311120)
-    demo_review_1 = Review(demo_user, demo_game_1, 1, "Bad game!")
-    demo_review_2 = Review(demo_user, demo_game_2, 5, "Good game!")
-    demo_user.add_review(demo_review_1)
-    demo_user.add_review(demo_review_2)
-    demo_user.add_favourite_game(demo_game_2)
-    demo_user.add_favourite_game(demo_game_3)
 
-    
+
     with app.app_context():
         # Register the home blueprint to the app instance.
         from .home import home
