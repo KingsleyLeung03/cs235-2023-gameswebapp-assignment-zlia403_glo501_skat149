@@ -87,4 +87,3 @@ def review(game_id: int, rate: int, comment: str):
         print("No user login yet")
         return game_description(game_id)
 
-
