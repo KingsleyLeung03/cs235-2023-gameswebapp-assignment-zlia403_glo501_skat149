@@ -8,26 +8,35 @@ favourites_blueprint = Blueprint("favourites_bp", __name__)
 
 games_per_page = 10
 
-
+order_c = None
+pagenum_c = None
 
 @favourites_blueprint.route('/favourites', methods=['GET'])
-def show_games():
+def show_games(reflesh=None):
     authenticated = authentication.check_authenticated()
     user_name = session["User_name"]
     pagenum = request.args.get("page")
     order = request.args.get("order")
     
-    if not order:
-        order =""
+    if(reflesh==None):
+        if not order:
+            order =""
+        
+        #if pagenum is not set then page is 1 else page is given value for invalid page
+        if not pagenum:
+            pagenum = 1
+        else:
+            try:
+                pagenum = int(pagenum)
+            except:
+                return render_template("notFound.html", message=f"Invalid page value!")
+        global order_c, pagenum_c
+        order_c = order
+        pagenum_c = pagenum
     
-    #if pagenum is not set then page is 1 else page is given value for invalid page
-    if not pagenum:
-        pagenum = 1
     else:
-        try:
-            pagenum = int(pagenum)
-        except:
-            return render_template("notFound.html", message=f"Invalid page value!")
+        order = order_c
+        pagenum = pagenum_c
         
     
     num_games = services.get_number_of_games(repo.repo_instance, user_name)
@@ -55,4 +64,4 @@ def change_favourite(game_id: str):
     user_name = session["User_name"]
     services.change_favourite(repo.repo_instance,(game_id),user_name)
     print("clicked")
-    return show_games()
+    return show_games(True)

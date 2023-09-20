@@ -24,7 +24,7 @@ def show_games(reflesh=None):
     # check if authenticated
     authenticated = authentication.check_authenticated()
     
-    if(reflesh==None):
+    if(reflesh!=True):
         if not order:
             order =""
         
