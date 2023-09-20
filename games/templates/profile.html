@@ -56,7 +56,11 @@
                         </div>
                         <div class="game_data">
                             <div class="game_title">{{ game.title }}</div>
+                            {% if game.price == 0 %}
+                            <div class="game_price">Free to Play</div>
+                            {% else %}
                             <div class="game_price">NZ$ {{ game.price }}</div>
+                            {% endif %}
                         </div>
                     </a>
                 </div>
