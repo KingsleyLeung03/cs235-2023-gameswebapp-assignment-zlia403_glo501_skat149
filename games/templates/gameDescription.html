@@ -63,7 +63,6 @@
                             </dd>
                         {% endfor %}
                     </dl>
-                    <form action="/change_favourite" method="post">
                     {% if favourite_list == False %}
                         <a class="favourite_b" id="{{game.game_id}}" onclick=favourite(id)>Add to favourite</a>
                     {% else %}
