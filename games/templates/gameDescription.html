@@ -31,7 +31,12 @@
                         <dd>{{ game.release_date }}</dd>
 
                         <dt>Price</dt>
+
+                        {% if game.price == 0 %}
+                        <dd>Free to Play</dd>
+                        {% else %}
                         <dd>NZ$ {{ game.price }}</dd>
+                        {% endif %}
 
                         <dt>Publisher</dt>
                         <dd>{{ game.publisher_name }}</dd>
