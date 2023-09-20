@@ -79,7 +79,7 @@ div.logo {
 
 /* nav sidebar */
 aside {
-    width: 150px; /* width of sidebar must same as margin ofset of main element */
+    width: 160px; /* width of sidebar must same as margin ofset of main element */
     
     /* justify-content: center; 
     background-color: rgb(14, 30, 77);
