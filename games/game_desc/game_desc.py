@@ -58,20 +58,6 @@ def game_description(game_id):
         )
     
 
-@game_desc_blueprint.route("/change_favourite/<game_id>")
-def change_favourite(game_id: str):
-    user_name = None
-    if "User_name" in session:
-        user_name = session["User_name"]
-        services.change_favourite(repo.repo_instance,(game_id),user_name)
-        print("clicked")
-        return game_description(game_id)
-    else:
-        #set a error message?
-        print(type(game_id))
-        print(game_id)
-        return game_description(game_id)
-
 @game_desc_blueprint.route('/review/<game_id>/<rate>/<comment>', methods=["GET"])
 def review(game_id: int, rate: int, comment: str):
     user_name = None
@@ -87,3 +73,17 @@ def review(game_id: int, rate: int, comment: str):
         print("No user login yet")
         return game_description(game_id)
 
+
+@game_desc_blueprint.route("/gameDescription/change_favourite/<game_id>")
+def change_favourite(game_id: str):
+    user_name = None
+    if "User_name" in session:
+        user_name = session["User_name"]
+        services.change_favourite(repo.repo_instance,(game_id),user_name)
+        print("clicked")
+        return game_description(game_id)
+    else:
+        #set a error message?
+        print(type(game_id))
+        print(game_id)
+        return game_description(game_id)

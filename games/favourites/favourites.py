@@ -6,7 +6,7 @@ import games.favourites.services as services
 import games.authentication.authentication as authentication
 favourites_blueprint = Blueprint("favourites_bp", __name__)
 
-games_per_page = 30
+games_per_page = 10
 
 
 
@@ -49,3 +49,10 @@ def show_games():
     
     return render_template("favourites.html", games=games, num_game=num_games, page_info=page_info, pages=pages, order_options=option_of_order,genres=geners_list,publishers=publisher_list,authenticated=authenticated)
 
+@favourites_blueprint.route("/favourites/change_favourite/<game_id>")
+def change_favourite(game_id: str):
+    user_name = None
+    user_name = session["User_name"]
+    services.change_favourite(repo.repo_instance,(game_id),user_name)
+    print("clicked")
+    return show_games()

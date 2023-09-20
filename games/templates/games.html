@@ -44,7 +44,11 @@
                             <div class="game_price">NZ$ {{ game.price }}</div>
                         </div>
                     </a>
-                    <a class="favourite_b" id="favourite_b_{{game.game_id}}" onclick=favourite(id)>Add to favourite</a>
+                    {% if game.game_id in favourite_list %}
+                        <a class="favourite_b" id="{{game.game_id}}" onclick=favourite(id)>Remove from favourite</a>
+                    {% else %}                        
+                        <a class="favourite_b" id="{{game.game_id}}" onclick=favourite(id)>Add to favourite</a>
+                    {% endif %}
                 </div>
             {% endfor %}
 
@@ -67,12 +71,7 @@
     function favourite(id) {
         let target = document.getElementById(id).innerHTML;
         let c = (target=="Add to favourite");
-        if(c == true){
-            document.getElementById(id).innerHTML = "Remove from favourite";
-        }
-        else{
-            document.getElementById(id).innerHTML = "Add to favourite";
-        }
+        window.open("/game/change_favourite/"+id,"_parent")
     }
 </script>
 {% endblock %}
