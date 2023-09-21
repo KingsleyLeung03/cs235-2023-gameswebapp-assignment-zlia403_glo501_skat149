@@ -16,7 +16,7 @@ from flask import session
 def test_e2e_layout_page(client):
     # Check that we can retrieve the layout page.
     response = client.get('/')
-    response_layout = client.get('/layout')
+    response_layout = client.get('/home')
     assert response.status_code == 200
     assert response_layout.status_code == 200
 
