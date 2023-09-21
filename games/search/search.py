@@ -12,42 +12,65 @@ import games.search.services as services
 search_blueprint = Blueprint("game_search_bp", __name__)
 games_per_page = 30
 
-
+order_s = None
+pagenum_s = None
+target_s = None 
+type_s = None
 
 @search_blueprint.route('/search/<target>/<type>', methods=["GET"])
-def show_games(target,type):
+def show_games(target=None,type=None,reflesh=None):
     # check if authenticated
     authenticated = authentication.check_authenticated()
     
     pagenum = request.args.get("page")
     order = request.args.get("order")
 
-    if not order:
-        order =""
-    
     genres_list = services.get_genre_list(repo.repo_instance)
     publisher_list = services.get_publisher_list(repo.repo_instance)
     
+    
+    #print(type)
+
+
+    if(reflesh!=True):
+
+        if not order:
+            order =""
+        
+        #if pagenum is not set then page is 1 else page is given value for invalid page
+        if not pagenum:
+            pagenum = 1
+        else:
+            try:
+                pagenum = int(pagenum)
+            except:
+                return render_template("notFound.html", message=f"Invalid page value!")
+        global order_s, pagenum_s, target_s,type_s
+        order_s = order
+        pagenum_s = pagenum
+        target_s = target
+        type_s = type
+    
+    else:
+        order = order_s
+        pagenum = pagenum_s
+        target = target_s
+        type = type_s
+
     if (type == "publisher"):
         print(services.get_games_by_publisher(repo.repo_instance,target))
     elif (type == "genre"): 
         print(services.get_games_by_genre(repo.repo_instance,target))
     else: 
         print(services.get_games_by_title(repo.repo_instance,target))
-    #print(type)
 
 
+    favourite_list = []
+    if "User_name" in session:
+        user_name = session["User_name"]
+        favourite_list = services.get_favourite_list(repo.repo_instance,user_name)
 
-    #if pagenum is not set then page is 1 else page is given value for invalid page
-    if not pagenum:
-        pagenum = 1
-    else:
-        try:
-            pagenum = int(pagenum)
-        except:
-            return render_template("notFound.html", message=f"Invalid page value!", authenticated=authenticated)
-        
-    
+    print(favourite_list)
 
     num_games = services.get_number_of_games(repo.repo_instance)
     games = services.get_games(repo.repo_instance, games_per_page, pagenum, order)
@@ -78,9 +101,21 @@ def show_games(target,type):
         publishers=publisher_list,
         type=type,
         target=target,
-        authenticated=authenticated
+        authenticated=authenticated,
+        favourite_list=favourite_list
     )
     
-
+@search_blueprint.route("/search/change_favourite/<game_id>")
+def change_favourite(game_id: str):
+    user_name = None
+    if "User_name" in session:
+        user_name = session["User_name"]
+        services.change_favourite(repo.repo_instance,(game_id),user_name)
+        print("clicked")
+    else:
+        #set a error message?
+        print(type(game_id))
+        print(game_id)
+    return show_games(None,None,True)
 
 
