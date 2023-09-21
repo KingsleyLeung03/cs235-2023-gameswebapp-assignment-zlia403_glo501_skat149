@@ -90,3 +90,7 @@ div.game_price {
     float: right;
     margin-right: 10px;
 }
+
+.checked {
+    color: orange;
+}

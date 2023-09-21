@@ -4,6 +4,7 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>CS235 Game Library</title>
 {% endblock %}
 
@@ -31,7 +32,14 @@
 
                         <div class="profile_review_column_two">
                             <div class="profile_review_rating">
-                                <p>Rating: {{ review.rating }}</p>
+                                <p>Rating:
+                                {% for i in range(review.rating) %}
+                                    <span class="fa fa-star checked"></span>
+                                {% endfor %}
+                                {% for i in range(5-review.rating) %}
+                                    <span class="fa fa-star"></span>
+                                {% endfor %}
+                                </p>
                             </div>
                             <div class="profile_review_text">
                                 <p>{{ review.comment }}</p>
