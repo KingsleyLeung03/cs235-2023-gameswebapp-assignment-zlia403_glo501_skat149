@@ -3,7 +3,17 @@ import pytest
 from flask import session
 
 # Test registering
+def test_e2e_register(client):
+    # Check that we retrieve the register page.
+    response_code = client.get('/register').status_code
+    assert response_code == 200
 
+    # Check that we can register a user successfully, supplying a valid user name and password.
+    response = client.post(
+        '/register',
+        data={'user_name': 'test', 'password': 'Test1234'}
+    )
+    # assert response.headers['Location'] == 'http://localhost/login'
 
 
 
