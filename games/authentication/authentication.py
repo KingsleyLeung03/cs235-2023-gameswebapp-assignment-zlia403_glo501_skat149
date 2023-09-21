@@ -104,6 +104,13 @@ def logout():
 def check_authenticated() -> bool: # return true if already login 
     return "User_name" in session   
 
+def login_required(view):
+    @wraps(view)
+    def wrapped_view(**kwargs):
+        if 'user_name' not in session:
+            return redirect(url_for('authentication_bp.login'))
+        return view(**kwargs)
+    return wrapped_view
 
 class PasswordValid:
     def __init__(self, message=None):
