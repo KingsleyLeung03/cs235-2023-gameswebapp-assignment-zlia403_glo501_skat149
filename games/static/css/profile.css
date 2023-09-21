@@ -64,14 +64,18 @@ div.game_data {
 div.game_title {
     width: 240px;
     display:  inline-block;
-    margin-left: 25px;
+    /* margin-left: 25px; */
     margin-block: 4px;
     white-space: nowrap;
     font-size: 18px;
     font-family: "Myriad Pro","Open Sans",Arial,Helvetica,sans-serif;
     color: white;
+
     overflow: hidden;
     text-overflow: ellipsis;
+
+    float: left;
+    margin-left: 10px;
 }
 
 div.game_price {
@@ -83,4 +87,21 @@ div.game_price {
     background-color: rgb(8, 15, 37);
     color: white;
     vertical-align: top;
+    float: right;
+    margin-right: 10px;
+}
+
+.checked {
+    color: orange;
+}
+
+.profile_favourite_remove_link {
+    font-size: 14px;
+    border: 1px;
+    float: right;
+    background-color: rgb(14, 30, 77);
+    color: #B1B1B1;
+    border: #B1B1B1  2px solid;
+    margin-right: 8pt;
+    margin-bottom: 4px;
 }

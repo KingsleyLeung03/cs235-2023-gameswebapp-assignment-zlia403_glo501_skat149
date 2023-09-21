@@ -26,13 +26,16 @@ def game_description(game_id):
         
     geners_list = services.get_genre_list(repo.repo_instance)
     publisher_list = services.get_publisher_list(repo.repo_instance)
-    review_list = services.get_user_review(repo.repo_instance,game_id)
+    # review_list = services.get_user_review(repo.repo_instance,game_id)
+    # Move down this code, or it will raise GameNotFoundException if game is not exist
 
     favourite_list = False
     if "User_name" in session:
         user_name = session["User_name"]
         favourite_list = services.get_favourite_list(repo.repo_instance,game_id,user_name)
-    print(review_list)
+    # print(review_list)
+    # Move down this code, or it will raise GameNotFoundException if game is not exist
+    # Also it can be deleted later since this is only for testing
 
     try:
         game = services.get_game(repo.repo_instance, game_id)
@@ -46,7 +49,9 @@ def game_description(game_id):
             favourite_list = favourite_list
         )
         
-    else: # if not error 
+    else: # if not error
+        review_list = services.get_user_review(repo.repo_instance, game_id)
+        print(review_list)
         return render_template(
             'gameDescription.html',
             game=game,
