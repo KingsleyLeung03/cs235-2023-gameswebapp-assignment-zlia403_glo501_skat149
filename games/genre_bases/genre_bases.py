@@ -14,33 +14,54 @@ genre_bases_blueprint = Blueprint("genre_bases_bp", __name__)
 
 games_per_page = 30
 
+order_g = None
+pagenum_g = None
+genre_g = None
+
 @genre_bases_blueprint.route('/genre/<target>', methods=["GET"])
-def show_games_trial(target):
+def show_games(target=None,reflesh=None):
     # check if authenticated
     authenticated = authentication.check_authenticated()
     
     pagenum = request.args.get("page")
     order = request.args.get("order")
-
-    if not order:
-        order =""
     
     genres_list = services.get_genre_list(repo.repo_instance)
     
-    for _genre in genres_list:
-        if(_genre.genre_name == target):
-            genre = _genre
-    
-    #if pagenum is not set then page is 1 else page is given value for invalid page
-    if not pagenum:
-        pagenum = 1
-    else:
-        try:
-            pagenum = int(pagenum)
-        except:
-            return render_template("notFound.html", message=f"Invalid page value!", authenticated=authenticated)
+    if(reflesh!=True):
+        if not order:
+            order =""
         
+        #if pagenum is not set then page is 1 else page is given value for invalid page
+        if not pagenum:
+            pagenum = 1
+        else:
+            try:
+                pagenum = int(pagenum)
+            except:
+                return render_template("notFound.html", message=f"Invalid page value!")
+            
+        for _genre in genres_list:
+            if(_genre.genre_name == target):
+                genre = _genre
+
+        global order_g, pagenum_g, genre_g
+        order_g = order
+        pagenum_g = pagenum
+        genre_g = genre
+    
+    else:
+        order = order_g
+        pagenum = pagenum_g
+        genre = genre_g
+
     services.get_games_by_genre(repo.repo_instance,genre)
+    favourite_list = []
+    if "User_name" in session:
+        user_name = session["User_name"]
+        favourite_list = services.get_favourite_list(repo.repo_instance,user_name)
+
+    print(favourite_list)
 
     num_games = services.get_number_of_games(repo.repo_instance)
     games = services.get_games(repo.repo_instance, games_per_page, pagenum, order)
@@ -67,8 +88,20 @@ def show_games_trial(target):
         genres=genres_list,
         publishers=publisher_list,
         genre=genre,
-        authenticated=authenticated
+        authenticated=authenticated,
+        favourite_list=favourite_list
     )
 
-
+@genre_bases_blueprint.route("/genre/change_favourite/<game_id>")
+def change_favourite(game_id: str):
+    user_name = None
+    if "User_name" in session:
+        user_name = session["User_name"]
+        services.change_favourite(repo.repo_instance,(game_id),user_name)
+        print("clicked")
+    else:
+        #set a error message?
+        print(type(game_id))
+        print(game_id)
+    return show_games(None,True)
 
