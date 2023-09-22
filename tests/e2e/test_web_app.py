@@ -11,15 +11,44 @@ def test_e2e_register(client):
     # Check that we can register a user successfully, supplying a valid user name and password.
     response = client.post(
         '/register',
-        data={'user_name': 'test', 'password': 'Test1234'}
+        data={'user_name': 'kingsley', 'password': '1701Hanayo'}
     )
     assert response.headers['Location'] == '/login'
 
+@pytest.mark.parametrize(('user_name', 'password', 'message'), (
+        ('', '', b'Your user name is required'),
+        ('cj', '', b'Your user name is too short'),
+        ('test', '', b'Your password is required'),
+        ('test', 'test', b'Your password must be at least 8 characters, and contain an upper case letter,\
+            a lower case letter and a digit'),
+        ('kingsley', '1701Hanayo', b'This user name is already taken - please enter another'),
+))
+def test_e2e_register_with_invalid_input(client, auth, user_name, password, message):
+    # Check that attempting to register with invalid combinations of user name and password generate appropriate error
+    # messages.
+    auth.register() # Register a user first to test if the client tries registering with the same username.
+    response = client.post(
+        '/register',
+        data={'user_name': user_name, 'password': password}
+    )
+    assert message in response.data
 
 
 # Test logging in
+def test_e2e_login(client, auth):
+    auth.register() # Register a user first to use this user to test login.
+    # Check that we can retrieve the login page.
+    status_code = client.get('/login').status_code
+    assert status_code == 200
 
+    # Check that a successful login generates a redirect to the homepage.
+    response = auth.login()
+    assert response.headers['Location'] == '/home'
 
+    # Check that a session has been created for the logged-in user.
+    with client:
+        client.get('/')
+        assert session['User_name'] == 'kingsley'
 
 
 # Test browsing games
