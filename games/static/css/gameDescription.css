@@ -44,6 +44,7 @@
     background-color: rgb(14, 30, 77);
     color: #B1B1B1;
     border: #B1B1B1  2px solid;
+    cursor: pointer;
 }
 
 .comment_b:hover {
@@ -113,6 +114,7 @@
     border: #B1B1B1  2px solid;
     margin-right: 8pt;
     margin-bottom: 4px;
+    cursor: pointer;
 }
 
 
