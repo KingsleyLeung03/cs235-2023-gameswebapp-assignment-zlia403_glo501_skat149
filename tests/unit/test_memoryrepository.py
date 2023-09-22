@@ -1,6 +1,6 @@
 import pytest
 
-from games.domainmodel.model import Game, Genre, Publisher
+from games.domainmodel.model import *
 
 
 # Test repository can add a game object
@@ -112,3 +112,15 @@ def test_repo_search_game_by_genre_name(in_memory_repo):
     # Check if every game from the search results includes the potential genre
     for game in search_result:
         assert genre in game.genres
+
+
+# Test repository search games by genre
+def test_repo_get_range_of_favourite_game_list(in_memory_repo):
+    user = User("root","Test1234")
+
+    assert len(in_memory_repo.get_range_of_favourite_game_list(user,0,9)) == 0 
+
+def test_get_user(in_memory_repo):
+    user = User("root","Test1234")
+    in_memory_repo.add_user(user)
+    assert in_memory_repo.get_user("root") == user

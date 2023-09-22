@@ -33,3 +33,11 @@ def test_game_desc_get_genre_list(in_memory_repo):
 
 def test_game_desc_get_publisher_list(in_memory_repo):
     assert services.get_publisher_list(in_memory_repo) == in_memory_repo.get_publisher_list()
+
+def test_get_favourite_list(in_memory_repo):
+    user = User("root","Test1234")
+    in_memory_repo.add_user(user)
+    assert services.get_favourite_list(in_memory_repo,12140,"root") == False
+
+def test_get_game(in_memory_repo):
+    assert services.get_game(in_memory_repo,12140)["game_id"] == 12140

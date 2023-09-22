@@ -72,7 +72,6 @@ class MemoryRepository(AbstractRepository):
         
     def get_range_of_favourite_game_list(self, user: User, start: int, end: int, order: str = "game_id") -> List[Game]:
         if isinstance(start, int) and isinstance(end, int) and isinstance(order, str):
-            #gamelist = self.get_game_list()
             gamelist = user.favourite_games
             
             if order == "game_id":
