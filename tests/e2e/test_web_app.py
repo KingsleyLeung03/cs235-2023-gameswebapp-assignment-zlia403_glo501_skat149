@@ -123,13 +123,82 @@ def test_e2e_games_page_with_order(client):
     assert b'Gem Tower Defense 2' in response_release_date.data
     assert b'Darza' in response_release_date.data
 
+def test_e2e_game_desc(client):
+    response = client.get('/gameDescription/1002510')
+    assert response.status_code == 200
+    assert b'The Spell - A Kinetic Novel' in response.data
+
+def test_e2e_game_desc_not_found(client):
+    response = client.get('/gameDescription/114514')
+    assert response.status_code == 200
+    assert b'game id: 114514 is not found.' in response.data
+
+def test_e2e_game_desc_invalid(client):
+    response = client.get('/gameDescription/Kingsley')
+    assert response.status_code == 200
+    assert b'Invalid game ID!' in response.data
 
 
+# Test adding/ removing games to the favourite list
+def test_e2e_games_page_favourite(client, auth):
+    # Check if we can use the button in the games page to add/ remove favourite.
+    # Register and login a user.
+    auth.register()
+    auth.login()
 
+    # Add favourite by the button in the games page.
+    response_add = client.get('/game/change_favourite/1002510')
+    assert response_add.status_code == 200
+    response_add_check = client.get('/favourites')
+    assert response_add_check.status_code == 200
+    assert b'The Spell - A Kinetic Novel' in response_add_check.data
 
-# Test adding games to the favourite list
+    # Remove favourite by the button in the games page.
+    response_remove = client.get('/game/change_favourite/1002510')
+    assert response_remove.status_code == 200
+    response_remove_check = client.get('/favourites')
+    assert response_remove_check.status_code == 200
+    assert b'The Spell - A Kinetic Novel' not in response_remove_check.data
 
+def test_e2e_game_desc_page_favourite(client, auth):
+    # Check if we can use the button in the game_desc page to add/ remove favourite.
+    # Register and login a user.
+    auth.register()
+    auth.login()
 
+    # Add favourite by the button in the game_desc page.
+    response_add = client.get('/gameDescription/change_favourite/1002510')
+    assert response_add.status_code == 200
+    response_add_check = client.get('/favourites')
+    assert response_add_check.status_code == 200
+    assert b'The Spell - A Kinetic Novel' in response_add_check.data
+
+    # Remove favourite by the button in the game_desc page.
+    response_remove = client.get('/gameDescription/change_favourite/1002510')
+    assert response_remove.status_code == 200
+    response_remove_check = client.get('/favourites')
+    assert response_remove_check.status_code == 200
+    assert b'The Spell - A Kinetic Novel' not in response_remove_check.data
+
+def test_e2e_favourite_page_remove_favourite(client, auth):
+    # Check if we can use the button in the favourite page to remove favourite.
+    # Register and login a user.
+    auth.register()
+    auth.login()
+
+    # Add favourite by the button in the game_desc page.
+    response_add = client.get('/gameDescription/change_favourite/1002510')
+    assert response_add.status_code == 200
+    response_add_check = client.get('/favourites')
+    assert response_add_check.status_code == 200
+    assert b'The Spell - A Kinetic Novel' in response_add_check.data
+
+    # Remove favourite by the button in the favourite page.
+    response_remove = client.get('/favourites/change_favourite/1002510')
+    assert response_remove.status_code == 200
+    response_remove_check = client.get('/favourites')
+    assert response_remove_check.status_code == 200
+    assert b'The Spell - A Kinetic Novel' not in response_remove_check.data
 
 
 # Test logging out
