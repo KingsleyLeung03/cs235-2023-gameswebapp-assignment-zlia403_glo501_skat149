@@ -34,3 +34,14 @@ def test_repo_get_games(in_memory_repo):
     genre = Genre("Action")
     in_memory_repo.get_games_by_genre(genre)
     assert len(services.get_games(in_memory_repo,30,1,"")) == 30
+
+def test_get_favourite_list(in_memory_repo):
+    user = User("root","Test1234")
+    in_memory_repo.add_user(user)
+    assert len(services.get_favourite_list(in_memory_repo,"root")) == 0
+
+def test_change_favourite(in_memory_repo):
+    user = User("root","Test1234")
+    in_memory_repo.add_user(user)
+    assert services.change_favourite(in_memory_repo,12140,"root") == True
+    assert len(services.get_favourite_list(in_memory_repo,"root")) == 1

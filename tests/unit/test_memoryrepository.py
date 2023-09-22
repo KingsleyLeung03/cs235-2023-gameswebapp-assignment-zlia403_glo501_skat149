@@ -124,3 +124,4 @@ def test_get_user(in_memory_repo):
     user = User("root","Test1234")
     in_memory_repo.add_user(user)
     assert in_memory_repo.get_user("root") == user
+

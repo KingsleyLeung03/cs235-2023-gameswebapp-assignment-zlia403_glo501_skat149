@@ -41,3 +41,14 @@ def test_get_favourite_list(in_memory_repo):
 
 def test_get_game(in_memory_repo):
     assert services.get_game(in_memory_repo,12140)["game_id"] == 12140
+
+def test_review(in_memory_repo):
+    user = User("root","Test1234")
+    in_memory_repo.add_user(user)
+    assert services.review(in_memory_repo,12140,3,"shdkghskdjl","root") == True
+
+def test_change_favourite(in_memory_repo):
+    user = User("root","Test1234")
+    in_memory_repo.add_user(user)
+    assert services.change_favourite(in_memory_repo,12140,"root") == True
+

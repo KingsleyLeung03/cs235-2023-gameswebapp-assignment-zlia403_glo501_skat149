@@ -77,7 +77,7 @@ def change_favourite(repo: AbstractRepository, game_id: int, user_name: str) -> 
     print(user.favourite_games)
     print(game)
     print("added")
-    return None
+    return True
 
 def get_favourite_list(repo: AbstractRepository, user_name: str):
     favourite_list = []
