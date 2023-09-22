@@ -25,6 +25,7 @@ def show_profile():
 
 
 @profile_blueprint.route('/profile/remove_favourite/<game_id>', methods=['GET'])
+@login_required
 def remove_favourite(game_id):
     # authenticated = authentication.check_authenticated()
     # if not authenticated:
