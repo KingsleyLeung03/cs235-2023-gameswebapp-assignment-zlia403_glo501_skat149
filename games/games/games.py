@@ -5,6 +5,7 @@ from flask import Blueprint, render_template, redirect, url_for, session, reques
 
 import games.adapters.repository as repo
 import games.authentication.authentication as authentication
+from games.authentication.authentication import login_required
 
 # ---------------------------------------
 
@@ -82,6 +83,7 @@ def show_games(reflesh=None):
     )
 
 @games_blueprint.route("/game/change_favourite/<game_id>")
+@login_required
 def change_favourite(game_id: str):
     user_name = None
     if "User_name" in session:
