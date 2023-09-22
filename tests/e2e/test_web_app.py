@@ -13,7 +13,7 @@ def test_e2e_register(client):
         '/register',
         data={'user_name': 'test', 'password': 'Test1234'}
     )
-    # assert response.headers['Location'] == 'http://localhost/login'
+    assert response.headers['Location'] == '/login'
 
 
 
