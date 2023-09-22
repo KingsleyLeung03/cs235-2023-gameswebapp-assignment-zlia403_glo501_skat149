@@ -201,4 +201,22 @@ def test_e2e_favourite_page_remove_favourite(client, auth):
     assert b'The Spell - A Kinetic Novel' not in response_remove_check.data
 
 
+# Test Comment and profile page
+def test_e2e_comment_and_profile(client, auth):
+    # Register and login a user.
+    auth.register()
+    auth.login()
+
+    # Write a comment and check if the game_desc page shows the comment.
+    response_comment = client.get('/review/1002510/5/Good%20game!')
+    response_game_desc = client.get('/gameDescription/1002510')
+    assert response_comment.status_code == 200
+    assert response_game_desc.status_code == 200
+    assert b'Good game!' in response_game_desc
+
+    # Check if the profile page shows the comment.
+    response_profile = client.get('/profile')
+    assert response_profile.status_code == 200
+    assert b'Good game!' in response_profile
+
 # Test logging out
