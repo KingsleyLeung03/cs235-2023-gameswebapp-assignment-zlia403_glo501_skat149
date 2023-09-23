@@ -8,6 +8,9 @@ import games.authentication.authentication as authentication
 from games.authentication.authentication import login_required
 
 # ---------------------------------------
+from flask_wtf import FlaskForm
+from wtforms import TextAreaField, HiddenField, SubmitField, RadioField
+from wtforms.validators import DataRequired, Length, ValidationError
 
 import games.game_desc.services as services
 game_desc_blueprint = Blueprint("game_desc_bp", __name__)
@@ -16,12 +19,7 @@ game_desc_blueprint = Blueprint("game_desc_bp", __name__)
 def game_description(game_id):
     # check if authenticated
     authenticated = authentication.check_authenticated()
-    
-    # check that recived value is integer
-    try:
-        game_id = int(game_id)
-    except:
-        return render_template("notFound.html", message=f"Invalid game ID!")
+    form = ReviewForm()
     game = None
 
         
@@ -39,6 +37,7 @@ def game_description(game_id):
     # Also it can be deleted later since this is only for testing
 
     try:
+        game_id = int(game_id)
         game = services.get_game(repo.repo_instance, game_id)
     except: # if game not found
         return render_template(
@@ -51,8 +50,22 @@ def game_description(game_id):
         )
         
     else: # if not error
+        favourite_list = False
+        if "User_name" in session:
+            user_name = session["User_name"]
+            favourite_list = services.get_favourite_list(repo.repo_instance,game_id,user_name)
+        
+        # Process inout from form
+        if form.validate_on_submit():
+            # Successful POST, i.e. the user name and password have passed validation checking.
+            # Use the service layer to attempt to add the new user.
+            
+            #services.review(repo.repo_instance,int(game_id),int(form.rate.data),form.comment.data,user_name)
+            print(form.rate.value)
+
+
         review_list = services.get_user_review(repo.repo_instance, game_id)
-        # print(review_list)
+                
         return render_template(
             'gameDescription.html',
             game=game,
@@ -60,6 +73,7 @@ def game_description(game_id):
             publishers=publisher_list,
             authenticated=authenticated,
             review_list=review_list,
+            form=form,
             favourite_list = favourite_list
         )
     
@@ -95,3 +109,8 @@ def change_favourite(game_id: str):
         print(type(game_id))
         print(game_id)
         return game_description(game_id)
+
+class ReviewForm(FlaskForm):
+    comment = TextAreaField('Comment', [DataRequired()])
+    rate = RadioField("Rating")
+    submit = SubmitField('Submit')
