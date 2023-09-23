@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import List
 
 
 class Publisher:
@@ -80,9 +81,9 @@ class Game:
         self.__description = None
         self.__image_url = None
         self.__website_url = None
-        self.__genres: list = []
-        self.__reviews: list = []
-        self.__publisher = None
+        self.__genres: list[GeneratorExit] = []
+        self.__reviews: list[Review] = list()
+        self.__publisher: Publisher = None
 
     @property
     def publisher(self) -> Publisher:
@@ -255,7 +256,7 @@ class User:
     def favourite_games(self) -> list:
         return self.__favourite_games
 
-    def add_favourite_game(self, game):
+    def add_favourite_game(self, game: Game):
         if not isinstance(game, Game) or game in self.__favourite_games:
             return
         self.__favourite_games.append(game)
