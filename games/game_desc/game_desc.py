@@ -63,9 +63,19 @@ def review(game_id: int, rate: int, comment: str):
     user_name = None
     if "User_name" in session:
         user_name = session["User_name"]
-        if (comment!="style.css"):
+
+        if (6> int(rate) > 0 and services.get_game(repo.repo_instance,int(game_id))!=None and comment!="style.css"):
+            #get game 
             services.review(repo.repo_instance,int(game_id),int(rate),comment,user_name)
-        return game_description(game_id)
+            return game_description(game_id)
+        else:
+            return game_description(game_id)
+
+
+        
+        
+        #services.review(repo.repo_instance,int(game_id),int(rate),comment,user_name)
+        
     else :
         print("No user login yet")
         return game_description(game_id)
@@ -77,8 +87,11 @@ def change_favourite(game_id: str):
     user_name = None
     if "User_name" in session:
         user_name = session["User_name"]
-        services.change_favourite(repo.repo_instance,(game_id),user_name)
-        return game_description(game_id)
+        if (services.get_game(repo.repo_instance,int(game_id))!=None):
+            services.change_favourite(repo.repo_instance,(game_id),user_name)
+            return game_description(game_id)
+        else:
+            return game_description(game_id)
     else:
         #set a error message?
         return game_description(game_id)
