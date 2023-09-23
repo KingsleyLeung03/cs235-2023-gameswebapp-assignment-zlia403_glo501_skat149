@@ -29,17 +29,13 @@ def game_description(game_id):
     # Move down this code, or it will raise GameNotFoundException if game is not exist
 
     favourite_list = False
-    if "User_name" in session:
-        user_name = session["User_name"]
-        favourite_list = services.get_favourite_list(repo.repo_instance,game_id,user_name)
+
     # print(review_list)
-    # Move down this code, or it will raise GameNotFoundException if game is not exist
-    # Also it can be deleted later since this is only for testing
 
     try:
-        game
+        game_id = int(game_id)
         game = services.get_game(repo.repo_instance, game_id)
-    except: # if game not found
+    except: # if game not found 
         return render_template(
             "notFound.html",
             message=f"game id: {game_id} is not found.",
@@ -50,18 +46,20 @@ def game_description(game_id):
         )
         
     else: # if not error
-        favourite_list = False
+        
         if "User_name" in session:
             user_name = session["User_name"]
             favourite_list = services.get_favourite_list(repo.repo_instance,game_id,user_name)
         
         # Process inout from form
         if form.validate_on_submit():
+            print("submit")
             # Successful POST, i.e. the user name and password have passed validation checking.
             # Use the service layer to attempt to add the new user.
             
             #services.review(repo.repo_instance,int(game_id),int(form.rate.data),form.comment.data,user_name)
-            print(form.rate.value)
+        print("form")
+        print(form.comment.data)
 
 
         review_list = services.get_user_review(repo.repo_instance, game_id)
@@ -111,6 +109,6 @@ def change_favourite(game_id: str):
         return game_description(game_id)
 
 class ReviewForm(FlaskForm):
-    comment = TextAreaField('Comment', [DataRequired()])
+    comment = TextAreaField('Comment', render_kw={"rows": 7, "cols": 100})
     rate = RadioField("Rating")
     submit = SubmitField('Submit')

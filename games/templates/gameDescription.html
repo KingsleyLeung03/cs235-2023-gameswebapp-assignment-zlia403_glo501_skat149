@@ -125,6 +125,7 @@
             
     </section>
 
+    <form action="/gameDescription/{{ game.game_id }}" method="GET">
     <section class="user_reviews"> <!-- This section let user comment the games. -->
         <h3>Your reviews</h3>
             <textarea type="text" class="review" id="comment" placeholder="Your comment.." maxlength = 900></textarea>
@@ -146,7 +147,7 @@
                     
                 </div>
                 <br>
-                <form action="/gameDescription/{{ game.game_id }}" method="post">
+                
                     <div class="rate">
                         <input type="radio" id="test" name="rate" value="5"  />
                         <label for="test">{{form.rate}}</label>
@@ -161,10 +162,10 @@
                     </div>
                     {{ form.submit }}
                 </dd>
-            </form>
             <br>
             
     </section>
+    </form>
     <button class="comment_b" id="{{game.game_id}}" onclick="comment(id)">Comment</button>
     <br>
     <br>
