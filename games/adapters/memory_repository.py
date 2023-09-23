@@ -227,7 +227,7 @@ class MemoryRepository(AbstractRepository):
         if isinstance(genre, Genre):
             insort_left(self.__genres, genre)
             
-    def get_genre_list(self) -> List[Game]:
+    def get_genre_list(self) -> List[Genre]:
         return self.__genres
 
     def get_number_of_genres(self) -> int:
