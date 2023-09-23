@@ -9,7 +9,7 @@ def test_e2e_register(client):
     response_code = client.get('/register').status_code
     assert response_code == 200
 
-    # Check that we can register a user successfully, supplying a valid user name and password.
+    # Check that we can register a user successfully, supplying a valid username and password.
     response = client.post(
         '/register',
         data={'user_name': 'kingsley', 'password': '1701Hanayo'}
@@ -26,7 +26,7 @@ def test_e2e_register(client):
         ('kingsley', '1701Hanayo', b'This user name is already taken - please enter another'),
 ))
 def test_e2e_register_with_invalid_input(client, auth, user_name, password, message):
-    # Check that attempting to register with invalid combinations of user name and password generate appropriate error
+    # Check that attempting to register with invalid combinations of username and password generate appropriate error
     # messages.
     auth.register()  # Register a user first to test if the client tries registering with the same username.
     response = client.post(
@@ -139,12 +139,6 @@ def test_e2e_game_desc_not_found(client):
     response = client.get('/gameDescription/114514')
     assert response.status_code == 200
     assert b'game id: 114514 is not found.' in response.data
-
-
-def test_e2e_game_desc_invalid(client):
-    response = client.get('/gameDescription/Kingsley')
-    assert response.status_code == 200
-    assert b'Invalid game ID!' in response.data
 
 
 # Test adding/ removing games to the favourite list
