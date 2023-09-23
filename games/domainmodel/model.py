@@ -81,7 +81,7 @@ class Game:
         self.__description = None
         self.__image_url = None
         self.__website_url = None
-        self.__genres: list[GeneratorExit] = []
+        self.__genres: list[Genre] = []
         self.__reviews: list[Review] = list()
         self.__publisher: Publisher = None
 
