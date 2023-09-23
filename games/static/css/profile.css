@@ -13,7 +13,6 @@
 
 .profile_review_column_one {
     width: 25%;
-    height: 160px;
     margin: 0 auto;
 }
 
@@ -73,6 +72,8 @@ div.game_title {
 
     overflow: hidden;
     text-overflow: ellipsis;
+
+
     margin-left: 10px;
 }
 
@@ -85,6 +86,7 @@ div.game_price {
     background-color: rgb(8, 15, 37);
     color: white;
     vertical-align: top;
+    float: right;
     margin-right: 10px;
 }
 
