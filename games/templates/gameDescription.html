@@ -146,7 +146,7 @@
                     
                 </div>
                 <br>
-                <form action="{{ handler_url }}" method="post">
+                <form action="/gameDescription/{{ game.game_id }}" method="post">
                     <div class="rate">
                         <input type="radio" id="test" name="rate" value="5"  />
                         <label for="test">{{form.rate}}</label>

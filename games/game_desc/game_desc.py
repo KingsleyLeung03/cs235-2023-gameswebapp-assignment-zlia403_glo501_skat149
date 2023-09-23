@@ -37,7 +37,7 @@ def game_description(game_id):
     # Also it can be deleted later since this is only for testing
 
     try:
-        game_id = int(game_id)
+        game
         game = services.get_game(repo.repo_instance, game_id)
     except: # if game not found
         return render_template(
