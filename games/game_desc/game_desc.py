@@ -8,6 +8,9 @@ import games.authentication.authentication as authentication
 from games.authentication.authentication import login_required
 
 # ---------------------------------------
+from flask_wtf import FlaskForm
+from wtforms import TextAreaField, HiddenField, SubmitField
+from wtforms.validators import DataRequired, Length, ValidationError
 
 import games.game_desc.services as services
 game_desc_blueprint = Blueprint("game_desc_bp", __name__)
@@ -16,29 +19,17 @@ game_desc_blueprint = Blueprint("game_desc_bp", __name__)
 def game_description(game_id):
     # check if authenticated
     authenticated = authentication.check_authenticated()
+    form = ReviewForm()
     
-    # check that recived value is integer
-    try:
-        game_id = int(game_id)
-    except:
-        return render_template("notFound.html", message=f"Invalid game ID!")
     game = None
 
-        
     geners_list = services.get_genre_list(repo.repo_instance)
     publisher_list = services.get_publisher_list(repo.repo_instance)
     # review_list = services.get_user_review(repo.repo_instance,game_id)
-    # Move down this code, or it will raise GameNotFoundException if game is not exist
-
-    favourite_list = False
-    if "User_name" in session:
-        user_name = session["User_name"]
-        favourite_list = services.get_favourite_list(repo.repo_instance,game_id,user_name)
-    # print(review_list)
-    # Move down this code, or it will raise GameNotFoundException if game is not exist
-    # Also it can be deleted later since this is only for testing
 
     try:
+        # check that recived value is integer
+        game_id = int(game_id)
         game = services.get_game(repo.repo_instance, game_id)
     except: # if game not found
         return render_template(
@@ -46,13 +37,15 @@ def game_description(game_id):
             message=f"game id: {game_id} is not found.",
             genres=geners_list,
             publishers=publisher_list,
-            authenticated=authenticated,
-            favourite_list = favourite_list
+            authenticated=authenticated
         )
         
     else: # if not error
         review_list = services.get_user_review(repo.repo_instance, game_id)
-        # print(review_list)
+        favourite_list = False
+        if "User_name" in session:
+            user_name = session["User_name"]
+            favourite_list = services.get_favourite_list(repo.repo_instance,game_id,user_name)
         return render_template(
             'gameDescription.html',
             game=game,
@@ -70,9 +63,6 @@ def review(game_id: int, rate: int, comment: str):
     user_name = None
     if "User_name" in session:
         user_name = session["User_name"]
-        print("review")
-        print(comment)
-        print(comment=="style.css")
         if (comment!="style.css"):
             services.review(repo.repo_instance,int(game_id),int(rate),comment,user_name)
         return game_description(game_id)
@@ -88,10 +78,13 @@ def change_favourite(game_id: str):
     if "User_name" in session:
         user_name = session["User_name"]
         services.change_favourite(repo.repo_instance,(game_id),user_name)
-        print("clicked")
         return game_description(game_id)
     else:
         #set a error message?
-        print(type(game_id))
-        print(game_id)
         return game_description(game_id)
+
+class ReviewForm(FlaskForm):
+    comment = TextAreaField('Comment', [
+        DataRequired()])
+    rate = HiddenField("Rating")
+    submit = SubmitField('Submit')
