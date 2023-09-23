@@ -27,6 +27,7 @@
     color: #FFFFFF
 }
 
+
 .game_awards_content, .game_description_content, .game_user_review_zero_notice, .game_user_review_name, .game_user_review_num {
     color: #B1B1B1
 }
@@ -35,6 +36,17 @@
     width: 100%;
     height: 150px;
     background-color: rgb(199, 211, 255);
+}
+
+
+section.game_all_user_reviews dd {
+    background-color: rgb(8, 15, 37);
+    border-radius: 5px;
+    margin: 15px 0px;
+}
+p.reviewlist {
+    margin: 8px 15px
+       
 }
 
 .comment_b {
