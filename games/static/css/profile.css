@@ -1,7 +1,4 @@
 
-#profile_review_all_container {
-
-}
 
 .profile_review_container {
     background-color: rgb(16, 36, 94);
@@ -86,7 +83,6 @@ div.game_price {
     background-color: rgb(8, 15, 37);
     color: white;
     vertical-align: top;
-    float: right;
     margin-right: 10px;
 }
 
