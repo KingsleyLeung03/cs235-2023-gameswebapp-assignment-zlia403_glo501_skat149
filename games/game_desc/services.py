@@ -41,33 +41,38 @@ def get_game(repo: AbstractRepository, game_id: int):
     return game
     
 def get_genre_list(repo: AbstractRepository) -> list:
+    
     return repo.get_genre_list()
 
 def get_publisher_list(repo: AbstractRepository) -> list:
     return repo.get_publisher_list()
 
+
 def get_user_review(repo: AbstractRepository, game_id: int) -> list:
-    review = []
+    reviews = []
     game = repo.get_game_by_id(game_id)
-    review_list = game.reviews
-    print("service")
-    print(review_list)
-    for i in review_list:
-        review.append(i.comment)
-    return review
+    game_reviews: List[Review] =  game.reviews
+    for review in game_reviews:
+        #add detail of reivew to dict and append to list of review 
+        reviews.append({
+            "user_name": review.user.username,
+            "rating": review.rating,
+            "comment": review.comment
+        })
+    return reviews
 
 def change_favourite(repo: AbstractRepository, game_id: int, user_name: str) -> None:
-    print(game_id)
+    # print(game_id)
     game = repo.get_game_by_id(int(game_id))
     user = repo.get_user(user_name)
-    print(user.favourite_games)
+    # print(user.favourite_games)
     if (game not in user.favourite_games):
         user.add_favourite_game(game)
     else:
         user.remove_favourite_game(game)
-    print(user.favourite_games)
-    print(game)
-    print("added")
+    # print(user.favourite_games)
+    # print(game)
+    # print("added")
     return True
 
 def get_favourite_list(repo: AbstractRepository, game_id: int, user_name: str):

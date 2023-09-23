@@ -97,10 +97,29 @@
     <section class="game_all_user_reviews"> <!-- This section shows all user reviews. No data for now. -->
         <h3>Customer reviews</h3>
         {% if game.num_game_reviews == 0 %}
-            <dd>No customer review yet</dd>
+            <div class="postedReview">
+                <div class="review_header">
+                    <h5>No customer review yet</h5>
+                </div>
+            </div>            
         {% else %}
-            {% for i in review %}<!--show the game average rating-->
-                <dd><p class="reviewlist">{{i}}</p></dd>
+            {% for review in review_list %}
+                <div class="postedReview">
+                    <div class="review_header">
+                        <h5 class="review_title">{{ review.user_name }}</h5>
+                        <div class="review_rating">
+                            {% for i in range(review.rating) %}
+                                <span class="fa fa-star checked"></span>
+                            {% endfor %}
+                            {% for i in range(5-review.rating) %}
+                                <span class="fa fa-star"></span>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    <p>{{ review.comment }}</p>
+
+                </div>
             {% endfor %}
         {% endif %}
             

@@ -39,14 +39,25 @@
 }
 
 
-section.game_all_user_reviews dd {
+
+div.postedReview {
     background-color: rgb(8, 15, 37);
     border-radius: 5px;
-    margin: 15px 0px;
+    width: 100%;
+    padding-block: 20px;
 }
-p.reviewlist {
-    margin: 8px 15px
-       
+div.postedReview .review_header{
+    margin-bottom: 10px;
+}
+div.postedReview .review_header *{
+    display: inline-block;    
+}
+div.postedReview .review_header h5.review_title {
+    margin: 10px 30px;
+   
+}
+div.postedReview p {
+    margin: 0px 100px;
 }
 
 .comment_b {

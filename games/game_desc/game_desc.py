@@ -52,14 +52,14 @@ def game_description(game_id):
         
     else: # if not error
         review_list = services.get_user_review(repo.repo_instance, game_id)
-        print(review_list)
+        # print(review_list)
         return render_template(
             'gameDescription.html',
             game=game,
             genres=geners_list,
             publishers=publisher_list,
             authenticated=authenticated,
-            review=review_list,
+            review_list=review_list,
             favourite_list = favourite_list
         )
     
