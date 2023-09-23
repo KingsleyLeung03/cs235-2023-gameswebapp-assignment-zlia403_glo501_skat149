@@ -13,7 +13,7 @@
 
 .profile_review_column_one {
     width: 25%;
-    /* height: 160px; */
+    height: 160px;
     margin: 0 auto;
 }
 
@@ -73,8 +73,6 @@ div.game_title {
 
     overflow: hidden;
     text-overflow: ellipsis;
-
-    float: left;
     margin-left: 10px;
 }
 
