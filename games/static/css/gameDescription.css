@@ -45,6 +45,7 @@ div.postedReview {
     border-radius: 5px;
     width: 100%;
     padding-block: 20px;
+    margin-block: 20px;
 }
 div.postedReview .review_header{
     margin-bottom: 10px;
