@@ -53,6 +53,12 @@ def test_e2e_login(client, auth):
         assert session['User_name'] == 'kingsley'
 
 
+# Test accessing page that require login
+def test_e2e_required_login(client):
+    response = client.get('/profile')
+    assert response.headers['Location'] == '/login'
+
+
 # Test browsing games
 def test_e2e_layout_page(client):
     # Check that we can retrieve the layout page.
