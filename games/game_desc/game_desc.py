@@ -19,13 +19,10 @@ game_desc_blueprint = Blueprint("game_desc_bp", __name__)
 def game_description(game_id):
     # check if authenticated
     authenticated = authentication.check_authenticated()
-    form = ReviewForm()
     
     game = None
-
     geners_list = services.get_genre_list(repo.repo_instance)
     publisher_list = services.get_publisher_list(repo.repo_instance)
-    # review_list = services.get_user_review(repo.repo_instance,game_id)
 
     try:
         # check that recived value is integer
@@ -63,16 +60,15 @@ def review(game_id: int, rate: int, comment: str):
     user_name = None
     if "User_name" in session:
         user_name = session["User_name"]
-
-        if (6> int(rate) > 0 and services.get_game(repo.repo_instance,int(game_id))!=None and comment!="style.css"):
-            #get game 
-            services.review(repo.repo_instance,int(game_id),int(rate),comment,user_name)
+        try:
+            if (6> int(rate) > 0 and services.get_game(repo.repo_instance,int(game_id))!=None and comment!="style.css"):
+                #get game 
+                services.review(repo.repo_instance,int(game_id),int(rate),comment,user_name)
+                return game_description(game_id)
+            else:
+                return game_description(game_id)
+        except:
             return game_description(game_id)
-        else:
-            return game_description(game_id)
-
-
-        
         
         #services.review(repo.repo_instance,int(game_id),int(rate),comment,user_name)
         
@@ -87,14 +83,21 @@ def change_favourite(game_id: str):
     user_name = None
     if "User_name" in session:
         user_name = session["User_name"]
-        if (services.get_game(repo.repo_instance,int(game_id))!=None):
+        #if (services.get_game(repo.repo_instance,int(game_id))!=None):
+        try:
             services.change_favourite(repo.repo_instance,(game_id),user_name)
-            return game_description(game_id)
-        else:
-            return game_description(game_id)
-    else:
-        #set a error message?
-        return game_description(game_id)
+        except: # if game not found
+            geners_list = services.get_genre_list(repo.repo_instance)
+            publisher_list = services.get_publisher_list(repo.repo_instance)
+            authenticated = authentication.check_authenticated()
+            return render_template(
+                "notFound.html",
+                message=f"game id: {game_id} is not found.",
+                genres=geners_list,
+                publishers=publisher_list,
+                authenticated=authenticated
+            )          
+    return game_description(game_id)
 
 class ReviewForm(FlaskForm):
     comment = TextAreaField('Comment', [

@@ -65,7 +65,19 @@ def show_games(reflesh=None):
 def change_favourite(game_id: str):
     user_name = None
     user_name = session["User_name"]
-    services.change_favourite(repo.repo_instance,(game_id),user_name)
-    print("clicked")
-    # return show_games(True)
+    try:
+        # check that recived value is integer
+        game_id = int(game_id)
+        services.change_favourite(repo.repo_instance,(game_id),user_name)
+    except: # if game not found
+        geners_list = services.get_genre_list(repo.repo_instance)
+        publisher_list = services.get_publisher_list(repo.repo_instance)
+        authenticated = authentication.check_authenticated()
+        return render_template(
+            "notFound.html",
+            message=f"game id: {game_id} is not found.",
+            genres=geners_list,
+            publishers=publisher_list,
+            authenticated=authenticated
+        )
     return redirect(url_for("favourites_bp.show_games"))

@@ -5,7 +5,7 @@ from flask import Blueprint, render_template, redirect, url_for, session, reques
 
 import games.adapters.repository as repo
 import games.authentication.authentication as authentication
-
+from games.authentication.authentication import login_required
 # ---------------------------------------
 
 import games.genre_bases.services as services
@@ -93,15 +93,25 @@ def show_games(target=None,reflesh=None):
     )
 
 @genre_bases_blueprint.route("/genre/change_favourite/<game_id>")
+@login_required
 def change_favourite(game_id: str):
     user_name = None
     if "User_name" in session:
         user_name = session["User_name"]
-        services.change_favourite(repo.repo_instance,(game_id),user_name)
-        print("clicked")
+        try:
+            services.change_favourite(repo.repo_instance,(game_id),user_name)
+        except: # if game not found
+            geners_list = services.get_genre_list(repo.repo_instance)
+            publisher_list = services.get_publisher_list(repo.repo_instance)
+            authenticated = authentication.check_authenticated()
+            return render_template(
+                "notFound.html",
+                message=f"game id: {game_id} is not found.",
+                genres=geners_list,
+                publishers=publisher_list,
+                authenticated=authenticated
+            )
     else:
-        #set a error message?
-        print(type(game_id))
-        print(game_id)
+        pass
     return show_games(None,True)
 
