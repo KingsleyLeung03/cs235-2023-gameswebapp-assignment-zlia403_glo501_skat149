@@ -10,6 +10,15 @@ from games.adapters.memory_repository import populate
 from games.adapters.memory_repository import MemoryRepository
 from games.adapters.orm import metadata, map_model_to_tables
 
+# imports from SQLAlchemy
+from sqlalchemy import create_engine, inspect
+from sqlalchemy.orm import sessionmaker, clear_mappers
+from sqlalchemy.pool import NullPool
+
+
+from games.adapters.database_repository import SqlAlchemyRepository
+#from games.adapters.repository_populate import populate
+from games.adapters.orm import metadata, map_model_to_tables
 
 def create_app(test_config=None):
     """Construct the core application."""
@@ -30,11 +39,50 @@ def create_app(test_config=None):
     repo.repo_instance = MemoryRepository()
     # fill the repository from the provided CSV file
 
-
     populate(data_path, repo.repo_instance)
 
-    map_model_to_tables()
 
+
+    #SQL 
+    database_uri = 'sqlite:///games.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_uri
+    app.config['SQLALCHEMY_ECHO'] = True  # echo SQL statements - useful for debugging
+
+    # Create a database engine and connect it to the specified database
+    database_engine = create_engine(database_uri, connect_args={"check_same_thread": False}, poolclass=NullPool,
+                                    echo=False)
+
+    # Create the database session factory using sessionmaker (this has to be done once, in a global manner)
+    session_factory = sessionmaker(autocommit=False, autoflush=True, bind=database_engine)
+
+    # Create the SQLAlchemy DatabaseRepository instance for an sqlite3-based repository.
+    repo.repo_instance = SqlAlchemyRepository(session_factory)
+    data_path = Path('games') / 'adapters' / 'data'
+
+    if len(inspect(database_engine).get_table_names()) == 0:
+        print("REPOPULATING DATABASE...")
+        # For testing, or first-time use of the web application, reinitialise the database.
+        clear_mappers()
+        # Conditionally create database tables.
+        metadata.create_all(database_engine)
+        # Remove any data from the tables.
+        for table in reversed(metadata.sorted_tables):
+            with database_engine.connect() as conn:
+                conn.execute(table.delete())
+
+        # Generate mappings that map domain model classes to the database tables.
+        map_model_to_tables()
+
+        populate(data_path, repo.repo_instance)
+        print("REPOPULATING DATABASE... FINISHED")
+
+    else:
+        # Solely generate mappings that map domain model classes to the database tables.
+        map_model_to_tables()
+
+
+
+    # read blueprint
     with app.app_context():
         # Register the home blueprint to the app instance.
         from .home import home
