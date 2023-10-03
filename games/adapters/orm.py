@@ -44,7 +44,7 @@ review_table = Table(
     'review', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
     Column('user', ForeignKey('user.id'), nullable=False),
-    Column('gmae', ForeignKey('game.id'), nullable=False),
+    Column('game', ForeignKey('game.id'), nullable=False),
     Column('rating', Integer, nullable=False),
     Column('comment', String(255), nullable=False)
 )
@@ -96,14 +96,14 @@ def map_model_to_tables():
         # one to many
         #review
         # one to many
-        #'_Game__publisher': ForeignKey null
+        #'_Game__publisher': ForeignKey =>> null
     })
 
     mapper(model.Review, review_table, properties={
         # one to many
-        '_Review__user': relationship(model.User, back_populates='_User__reviews') ,
+        # '_Review__user': relationship(model.User, back_populates='_User__reviews') ,
         # one to many                                      
-        '_Review__game': relationship(model.Game, back_populates='_Game__reviews') ,
+        #'_Review__game': relationship(model.Game, back_populates='_Game__reviews') ,
         '_Review__rating': review_table.c.rating ,
         '_Review__comment': review_table.c.comment 
     })

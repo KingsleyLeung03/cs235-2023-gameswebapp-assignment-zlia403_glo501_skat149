@@ -5,7 +5,6 @@ from flask import Flask, render_template, request
 #for test 
 from games.domainmodel.model import *
 
-import games.adapters.repository as repo
 from games.adapters.memory_repository import populate
 from games.adapters.memory_repository import MemoryRepository
 from games.adapters.orm import metadata, map_model_to_tables
@@ -15,7 +14,7 @@ from sqlalchemy import create_engine, inspect
 from sqlalchemy.orm import sessionmaker, clear_mappers
 from sqlalchemy.pool import NullPool
 
-
+import games.adapters.repository as repo
 from games.adapters.database_repository import SqlAlchemyRepository
 #from games.adapters.repository_populate import populate
 from games.adapters.orm import metadata, map_model_to_tables
@@ -40,7 +39,6 @@ def create_app(test_config=None):
     # fill the repository from the provided CSV file
 
     populate(data_path, repo.repo_instance)
-
 
 
     #SQL 
