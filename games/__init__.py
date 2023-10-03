@@ -8,6 +8,7 @@ from games.domainmodel.model import *
 import games.adapters.repository as repo
 from games.adapters.memory_repository import populate
 from games.adapters.memory_repository import MemoryRepository
+from games.adapters.orm import metadata, map_model_to_tables
 
 
 def create_app(test_config=None):
@@ -32,7 +33,7 @@ def create_app(test_config=None):
 
     populate(data_path, repo.repo_instance)
 
-
+    map_model_to_tables()
 
     with app.app_context():
         # Register the home blueprint to the app instance.

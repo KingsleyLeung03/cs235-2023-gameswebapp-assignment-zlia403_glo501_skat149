@@ -35,8 +35,8 @@ game_table = Table(
     Column('price', Float, nullable=False),
     Column('release_date', Date),
     Column('description', String(255)),
-    Column('image', URL),
-    Column('website', URL),
+    Column('image', String(255)),
+    Column('website', String(255)),
     Column('publisher', ForeignKey('publisher.publisher'))
 )
 
@@ -64,15 +64,6 @@ game_genre_table = Table(
     Column('game', ForeignKey('game.id')),
     Column('genre', ForeignKey('genre.genre'))
 )
-# game publoisher table 
-game_publisher_table = Table(
-    'game publisher', metadata,
-    Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('game', ForeignKey('game.id')),
-    Column('genre', ForeignKey('publisher.id'))
-)
-
-
 
 # map model
 def map_model_to_tables():
@@ -102,7 +93,10 @@ def map_model_to_tables():
         '_Game__website_url': game_table.c.website,
         # many to many
         '_Game__genres': relationship(model.Genre, secondary=game_genre_table)
-        # publisher
+        # one to many
+        #review
+        # one to many
+        #'_Game__publisher': ForeignKey null
     })
 
     mapper(model.Review, review_table, properties={
@@ -117,7 +111,7 @@ def map_model_to_tables():
     mapper(model.Wishlist, favourite_table, properties={
         #game
         # many to many
-        #'_Wishlist__list_of_games': relationship(model.Game,secondary=)
+        '_Wishlist__list_of_games': relationship(model.Game, secondary=favourite_table),
         #user
         # many to many
         #'_Wishlist__user': relationship(model.User, back_populates='_User__favourite_games') 
