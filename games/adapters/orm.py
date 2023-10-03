@@ -107,12 +107,3 @@ def map_model_to_tables():
         '_Review__rating': review_table.c.rating ,
         '_Review__comment': review_table.c.comment 
     })
-
-    mapper(model.Wishlist, favourite_table, properties={
-        #game
-        # many to many
-        '_Wishlist__list_of_games': relationship(model.Game, secondary=favourite_table),
-        #user
-        # many to many
-        #'_Wishlist__user': relationship(model.User, back_populates='_User__favourite_games') 
-    })
