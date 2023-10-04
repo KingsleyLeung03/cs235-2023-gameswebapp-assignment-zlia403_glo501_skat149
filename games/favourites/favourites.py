@@ -47,7 +47,6 @@ def show_games(reflesh=None):
     pages = services.generate_page_list(pagenum, maxpage)
     option_of_order = ["game_id", "title", "publisher", "release_date", "price"]
     geners_list = services.get_genre_list(repo.repo_instance)
-    # print(games_per_page, pagenum, order,maxpage,num_games,pages) # I thing someone added for debag but I commented out to not confuse output from program
     
     page_info = {
         "number_of_games": num_games,
