@@ -43,6 +43,7 @@ class SessionContextManager:
 
 class SqlAlchemyRepository(AbstractRepository, ABC):
 
+    # defult function 
     def __init__(self, session_factory):
         self._session_cm = SessionContextManager(session_factory)
         self.__game_list: List[Game] = list()
@@ -53,23 +54,26 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     def reset_session(self):
         self._session_cm.reset_session()
 
-
+    #implemented
     def add_game(self, game: Game):
         """ Add a game to the repository list of games. """
         with self._session_cm as scm:
             scm.session.merge(game)
             scm.commit()
     
+    #implemented
     def get_number_of_games(self) -> int:
         """ Returns a number of games exist in the repository. """
         number_of_game = self._session_cm.session.query(Game).count()
         return number_of_game
     
+    #implemented
     def get_game_list(self) -> List[Game]:
         """" Returns the list of games. """
         game = self._session_cm.session.query(Game).all()
         return game
     
+    #implemented
     def get_range_of_game_list(self, start: int, end: int, order: str = "game_id") -> List[Game]:
         """" Returns the list of games. """
         if isinstance(start, int) and isinstance(end, int) and isinstance(order, str):
@@ -99,9 +103,10 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     
     def get_game_by_id(self, game_id: int) -> Game:
         """" get game by id. """
-        game = self._session_cm.session.query(Game).filter(Game._Game__game_id.in_(game_id)).all()
+        game = self._session_cm.session.query(Game).filter(Game._Game__game_id.in_(game_id)).first()
         return game
     
+    #implemented
     def get_game_title(self, game_obj: Game) -> str:
         """" get title of game by id. """
         result = None
@@ -109,6 +114,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             result = game_obj.title
         return result
     
+    #implemented
     def get_game_price(self, game_obj: Game) -> float:
         """" get price of the game by id. """
         result = None
@@ -116,6 +122,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             result = game_obj.price
         return result
     
+    #implemented
     def get_geme_release_date(self, game_obj: Game) -> str:
         """" get release_date of the game by id. """
         result = None
@@ -130,6 +137,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             result = game_obj.description
         return result
     
+    #implemented
     def get_game_image_url(self, game_obj: Game) -> str:
         """" get image_url of the game by id. """
         raise NotImplementedError
@@ -141,6 +149,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             result = game_obj.website_url
         return result
 
+    #mostly
     def get_game_publisher(self, game_obj: Game) -> Publisher:
         """" get auther of game by id. """
         result = None
@@ -148,6 +157,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             result = game_obj.publisher
         return result
     
+    #mostly
     def get_game_genres(self, game_obj: Game) -> List[Genre]:
         """" get list of genres of the game by id. """
         result = None
@@ -179,10 +189,12 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
         """" Returns the list of games. """
         raise NotImplementedError
 
+    #implemented
     def get_number_of_search_games(self) -> int:
         """ Returns a number of games exist in the repository. """
         return len(self.__game_list)
     
+    #implemented
     def get_range_of_search_game_list(self, start: int, end: int, order: str = "game_id") -> List[Game]:
         """" Returns the list of games. """
         if isinstance(start, int) and isinstance(end, int) and isinstance(order, str):
@@ -208,12 +220,14 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             raise TypeError
     
     # about User class
+    #implemented
     def add_user(self, user: User) -> None:
         """" Adds a User to the repository. """
         with self._session_cm as scm:
             scm.session.add(user)
             scm.commit()
     
+    #implemented
     def get_user(self, user_name: str) -> User:
         """ Returns the User named user_name from the repository.
 
@@ -230,18 +244,20 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     
 
     # about genres class
-    
+    #implemented
     def add_genre(self, genre: Genre):
         """ Add a genre to the repository list of genres. """
         with self._session_cm as scm:
             scm.session.merge(genre)
             scm.commit()
 
+    #implemented
     def get_number_of_genres(self) -> int:
         """ Returns a number of genres exist in the repository. """
         number_of_genres = self._session_cm.session.query(Genre).count()
         return number_of_genres
     
+    #implemented
     def get_genre_list(self) -> List[Genre]:
         """" Returns the list of genres. """
         genre = self._session_cm.session.query(Genre).all()
@@ -249,23 +265,26 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     
     
     # about Publisher class
-    
+    #mostly
     def add_publisher(self, publisher: Publisher):
         """ Add a publisher to the repository list of publishers. """
         with self._session_cm as scm:
             scm.session.merge(publisher)
             scm.commit()
 
+    #mostly
     def get_number_of_publisher(self) -> int:
         """ Returns a number of publishers exist in the repository. """
         number_of_publisher = self._session_cm.session.query(Publisher).count()
         return number_of_publisher
     
+    #mostly
     def get_publisher_list(self) -> List[Game]:
         """" Returns the list of publishers. """
         publisher = self._session_cm.session.query(Publisher).all()
         return publisher
         
+    #mostly
     def get_games_by_genre_str(self, genre: str) -> List[Game]:
         if genre is None:
             self.__game_list = []
@@ -277,6 +296,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             print(len(self.__game_list))
             return games
     
+    #mostly
     def get_games_by_publisher_str(self, publisher: str) -> List[Game]:
         if publisher is None:
             self.__game_list = []
@@ -288,6 +308,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             self.__game_list = games
             return games
         
+    #mostly
     def get_games_by_title_str(self, title: str) -> List[Game]:
         if title is None:
             self.__game_list = []
