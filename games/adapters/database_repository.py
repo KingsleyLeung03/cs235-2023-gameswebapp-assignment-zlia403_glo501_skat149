@@ -56,7 +56,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     def add_game(self, game: Game):
         """ Add a game to the repository list of games. """
         with self._session_cm as scm:
-            scm.session.add(game)
+            scm.session.merge(game)
             scm.commit()
     
     def get_number_of_games(self) -> int:
@@ -192,7 +192,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     def add_genre(self, genre: Genre):
         """ Add a genre to the repository list of genres. """
         with self._session_cm as scm:
-            scm.session.add(genre)
+            scm.session.merge(genre)
             scm.commit()
 
     def get_number_of_genres(self) -> int:
@@ -211,7 +211,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     def add_publisher(self, publisher: Publisher):
         """ Add a publisher to the repository list of publishers. """
         with self._session_cm as scm:
-            scm.session.add(publisher)
+            scm.session.merge(publisher)
             scm.commit()
 
     def get_number_of_publisher(self) -> int:
