@@ -99,10 +99,6 @@ def create_app(test_config=None):
         # Register the genre_bases blueprint to the app instance.
         from .genre_bases import genre_bases
         app.register_blueprint(genre_bases.genre_bases_blueprint)
-    
-        # Register the genre_bases blueprint to the app instance.
-        from .publisher_bases import publisher_bases
-        app.register_blueprint(publisher_bases.publisher_bases_blueprint)
         
         from .authentication import authentication
         app.register_blueprint(authentication.authentication_blueprint)

@@ -19,12 +19,10 @@ def home():
     message = getmessage()
     
     # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
-    publisher_list = repo.repo_instance.get_publisher_list()
     genres_list = repo.repo_instance.get_genre_list()
     return render_template(
         "home.html",
         genres=genres_list,
-        publishers=publisher_list,
         authenticated=authenticated,
         message=message
     )
