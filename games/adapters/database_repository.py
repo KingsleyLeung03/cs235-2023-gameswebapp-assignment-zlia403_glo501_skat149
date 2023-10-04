@@ -71,7 +71,28 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     
     def get_range_of_game_list(self, start: int, end: int, order: str = "game_id") -> List[Game]:
         """" Returns the list of games. """
-        raise NotImplementedError
+        if isinstance(start, int) and isinstance(end, int) and isinstance(order, str):
+            gamelist = self.get_game_list()
+            
+            if order == "game_id":
+                gamelist.sort(key= lambda game: game.game_id)
+            elif order == "title":
+                gamelist.sort(key=lambda game: game.title)
+            elif order == "publisher":
+                gamelist.sort(key=lambda game: game.publisher.publisher_name)
+            elif order == "release_date":
+                gamelist.sort(key=lambda game: game.release_date)
+            elif order == "price":
+                gamelist.sort(key=lambda game: game.price)
+            else: 
+                gamelist.sort(key= lambda game: game.game_id)
+            
+            
+            gamelist = gamelist[start:end]
+            return gamelist
+            
+        else:
+            raise TypeError
     
     # game atritbutes 
     

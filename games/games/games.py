@@ -87,7 +87,6 @@ def change_favourite(game_id: str):
             services.change_favourite(repo.repo_instance,(game_id),user_name)
         except: # if game not found
             geners_list = services.get_genre_list(repo.repo_instance)
-            publisher_list = services.get_publisher_list(repo.repo_instance)
             authenticated = authentication.check_authenticated()
             return render_template(
                 "notFound.html",
