@@ -56,8 +56,6 @@ def show_games(reflesh=None):
     pages = services.generate_page_list(pagenum, maxpage)
     option_of_order = ["game_id", "title", "publisher", "release_date", "price"]
     geners_list = services.get_genre_list(repo.repo_instance)
-    publisher_list = services.get_publisher_list(repo.repo_instance)
-    # print(games_per_page, pagenum, order,maxpage,num_games,pages) # I thing someone added for debag but I commented out to not confuse output from program
     
     page_info = {
         "number_of_games": num_games,
@@ -75,7 +73,6 @@ def show_games(reflesh=None):
         pages=pages,
         order_options=option_of_order,
         genres=geners_list,
-        publishers=publisher_list,
         authenticated=authenticated,
         favourite_list=favourite_list
     )
@@ -96,7 +93,6 @@ def change_favourite(game_id: str):
                 "notFound.html",
                 message=f"game id: {game_id} is not found.",
                 genres=geners_list,
-                publishers=publisher_list,
                 authenticated=authenticated
             )
     else:

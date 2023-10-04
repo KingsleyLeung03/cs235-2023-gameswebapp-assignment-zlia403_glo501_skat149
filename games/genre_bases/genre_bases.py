@@ -61,14 +61,11 @@ def show_games(target=None,reflesh=None):
         user_name = session["User_name"]
         favourite_list = services.get_favourite_list(repo.repo_instance,user_name)
 
-    print(favourite_list)
-
     num_games = services.get_number_of_games(repo.repo_instance)
     games = services.get_games(repo.repo_instance, games_per_page, pagenum, order)
     maxpage = services.get_max_page_num(num_games, games_per_page)
     pages = services.generate_page_list(pagenum, maxpage)
     option_of_order = ["game_id", "title", "publisher", "release_date", "price"]
-    publisher_list = services.get_publisher_list(repo.repo_instance)
 
     page_info = {
         "number_of_games": num_games,
@@ -86,7 +83,6 @@ def show_games(target=None,reflesh=None):
         pages=pages,
         order_options=option_of_order,
         genres=genres_list,
-        publishers=publisher_list,
         genre=genre,
         authenticated=authenticated,
         favourite_list=favourite_list
@@ -102,13 +98,11 @@ def change_favourite(game_id: str):
             services.change_favourite(repo.repo_instance,(game_id),user_name)
         except: # if game not found
             geners_list = services.get_genre_list(repo.repo_instance)
-            publisher_list = services.get_publisher_list(repo.repo_instance)
             authenticated = authentication.check_authenticated()
             return render_template(
                 "notFound.html",
                 message=f"game id: {game_id} is not found.",
                 genres=geners_list,
-                publishers=publisher_list,
                 authenticated=authenticated
             )
     else:
