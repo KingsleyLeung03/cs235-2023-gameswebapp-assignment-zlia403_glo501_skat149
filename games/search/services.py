@@ -68,14 +68,10 @@ def change_favourite(repo: AbstractRepository, game_id: int, user_name: str) -> 
     print(game_id)
     game = repo.get_game_by_id(int(game_id))
     user = repo.get_user(user_name)
-    print(user.favourite_games)
     if (game not in user.favourite_games):
         user.add_favourite_game(game)
     else:
         user.remove_favourite_game(game)
-    print(user.favourite_games)
-    print(game)
-    print("added")
     return True
 
 def get_favourite_list(repo: AbstractRepository, user_name: str):

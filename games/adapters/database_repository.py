@@ -45,6 +45,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
 
     def __init__(self, session_factory):
         self._session_cm = SessionContextManager(session_factory)
+        self.__game_list: List[Game] = list()
 
     def close_session(self):
         self._session_cm.close_current_session()
@@ -180,11 +181,32 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
 
     def get_number_of_search_games(self) -> int:
         """ Returns a number of games exist in the repository. """
-        raise NotImplementedError
+        return len(self.__game_list)
     
     def get_range_of_search_game_list(self, start: int, end: int, order: str = "game_id") -> List[Game]:
         """" Returns the list of games. """
-        raise NotImplementedError
+        if isinstance(start, int) and isinstance(end, int) and isinstance(order, str):
+            gamelist = self.__game_list
+            
+            if order == "game_id":
+                gamelist.sort(key= lambda game: game.game_id)
+            elif order == "title":
+                gamelist.sort(key=lambda game: game.title)
+            elif order == "publisher":
+                gamelist.sort(key=lambda game: game.publisher.publisher_name)
+            elif order == "release_date":
+                gamelist.sort(key=lambda game: game.release_date)
+            elif order == "price":
+                gamelist.sort(key=lambda game: game.price)
+            else: 
+                gamelist.sort(key= lambda game: game.game_id)
+            
+            
+            gamelist = gamelist[start:end]
+            return gamelist
+            
+        else:
+            raise TypeError
     
     # about User class
     def add_user(self, user: User) -> None:
@@ -200,7 +222,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
         """
         user = None
         try:
-            user = self._session_cm.session.query(User).filter(User._User__user_name == user_name).one()
+            user = self._session_cm.session.query(User).filter(User._User__username == user_name).one()
         except NoResultFound:
             # Ignore any exception and return None.
             pass
@@ -244,3 +266,33 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
         """" Returns the list of publishers. """
         publisher = self._session_cm.session.query(Publisher).all()
         return publisher
+        
+    def get_games_by_genre_str(self, genre: str) -> List[Game]:
+        if genre is None:
+            self.__game_list = []
+            return None
+        else:
+            # Return games matching title; return an empty list if there are no matches.
+            games = self._session_cm.session.query(Game).filter(Game._Game__genres.contains(genre)).all()
+            self.__game_list = games
+            return games
+    
+    def get_games_by_publisher_str(self, publisher: str) -> List[Game]:
+        if publisher is None:
+            self.__game_list = []
+            return None
+        else:
+            # Return games matching title; return an empty list if there are no matches.
+            games = [] #self._session_cm.session.query(Game).filter(Game._Game__genres.contains(genre)).all()
+            self.__game_list = games
+            return games
+        
+    def get_games_by_title_str(self, title: str) -> List[Game]:
+        if title is None:
+            self.__game_list = []
+            return None
+        else:
+            # Return games matching title; return an empty list if there are no matches.
+            games = self._session_cm.session.query(Game).filter(Game._Game__game_title.contains(title)).all()
+            self.__game_list = games
+            return games

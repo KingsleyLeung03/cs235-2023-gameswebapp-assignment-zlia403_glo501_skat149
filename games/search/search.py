@@ -64,7 +64,6 @@ def show_games(target=None,type=None,reflesh=None):
     else: 
         print(services.get_games_by_title(repo.repo_instance,target))
 
-
     favourite_list = []
     if "User_name" in session:
         user_name = session["User_name"]
@@ -72,6 +71,7 @@ def show_games(target=None,type=None,reflesh=None):
 
     num_games = services.get_number_of_games(repo.repo_instance)
     games = services.get_games(repo.repo_instance, games_per_page, pagenum, order)
+    
     maxpage = services.get_max_page_num(num_games, games_per_page)
     pages = services.generate_page_list(pagenum, maxpage)
     option_of_order = ["game_id", "title", "publisher", "release_date", "price"]
