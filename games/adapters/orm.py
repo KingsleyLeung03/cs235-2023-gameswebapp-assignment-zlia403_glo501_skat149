@@ -97,7 +97,7 @@ def map_model_to_tables():
 
         # publisher
         # one to many
-        '_Game__publisher': relationship(model.Publisher)
+        #'_Game__publisher': relationship(model.Publisher)
     })
 
     # mapper(model.Publisher, publisher_table, properties={
