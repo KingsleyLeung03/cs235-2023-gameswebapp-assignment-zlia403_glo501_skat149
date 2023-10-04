@@ -272,8 +272,9 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             return None
         else:
             # Return games matching title; return an empty list if there are no matches.
-            games = self._session_cm.session.query(Game).filter(Game._Game__genres.contains(genre)).all()
+            games = self._session_cm.session.query(Game).filter(Genre._Genre__genre_name.contains(genre)).all()
             self.__game_list = games
+            print(len(self.__game_list))
             return games
     
     def get_games_by_publisher_str(self, publisher: str) -> List[Game]:
