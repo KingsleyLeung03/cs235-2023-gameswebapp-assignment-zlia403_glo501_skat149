@@ -20,7 +20,7 @@ user_table = Table(
 
 genre_table = Table(
     'genre', metadata,
-    Column('genre', String(255), primary_key=True)
+    Column('genre_name', String(255), primary_key=True, nullable=False)
 )
 
 publisher_table = Table(
@@ -33,7 +33,7 @@ game_table = Table(
     Column('id', Integer, primary_key=True),
     Column('title', String(255), nullable=False),
     Column('price', Float, nullable=False),
-    Column('release_date', Date),
+    Column('release_date', String(255)),
     Column('description', String(255)),
     Column('image', String(255)),
     Column('website', String(255)),
@@ -50,7 +50,7 @@ review_table = Table(
 )
 
 favourite_table = Table(
-    'favourite game', metadata,
+    'favourite_game', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
     Column('user', ForeignKey('user.id'), nullable=False),
     Column('game', ForeignKey('game.id'), nullable=False)
@@ -59,10 +59,10 @@ favourite_table = Table(
 
 # game genre table
 game_genre_table = Table(
-    'game genre', metadata,
+    'game_genre', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('game', ForeignKey('game.id')),
-    Column('genre', ForeignKey('genre.genre'))
+    Column('game_id', ForeignKey('game.id')),
+    Column('genre_name', ForeignKey('genre.genre_name'))
 )
 
 # map model
@@ -76,7 +76,7 @@ def map_model_to_tables():
     })
 
     mapper(model.Genre, genre_table, properties={
-        '_Genre__genre_name': genre_table.c.genre
+        '_Genre__genre_name': genre_table.c.genre_name
     })
 
     mapper(model.Publisher, publisher_table, properties={
