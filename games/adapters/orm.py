@@ -91,12 +91,18 @@ def map_model_to_tables():
         '_Game__image_url': game_table.c.image,
         '_Game__website_url': game_table.c.website,
         # many to many
-        '_Game__genres': relationship(model.Genre, secondary=game_genre_table)
+        '_Game__genres': relationship(model.Genre, secondary=game_genre_table),
+        # review
+        # one to many        
+
+        # publisher
         # one to many
-        #review
-        # one to many
-        #'_Game__publisher': ForeignKey =>> null
+        #'_Game__publisher': relationship(model.Publisher, back_populates='_Publisher__publisher')
     })
+
+    # mapper(model.Publisher, publisher_table, properties={
+    #     '_Publisher__publisher_name': publisher_table.c.publisher
+    # })
 
     mapper(model.Review, review_table, properties={
         # one to many

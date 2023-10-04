@@ -201,7 +201,6 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             else: 
                 gamelist.sort(key= lambda game: game.game_id)
             
-            
             gamelist = gamelist[start:end]
             return gamelist
             
@@ -283,7 +282,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             return None
         else:
             # Return games matching title; return an empty list if there are no matches.
-            games = [] #self._session_cm.session.query(Game).filter(Game._Game__genres.contains(genre)).all()
+            games = [] #self._session_cm.session.query(Game).filter(Game._Game__publisher.contains(publisher)).all()
             self.__game_list = games
             return games
         
