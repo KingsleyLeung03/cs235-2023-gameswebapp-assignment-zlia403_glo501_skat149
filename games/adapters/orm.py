@@ -101,10 +101,6 @@ def map_model_to_tables():
 
     })
 
-    # mapper(model.Publisher, publisher_table, properties={
-    #     '_Publisher__publisher_name': publisher_table.c.publisher
-    # })
-
     mapper(model.Review, review_table, properties={
         # one to many
         '_Review__user': relationship(model.User),
