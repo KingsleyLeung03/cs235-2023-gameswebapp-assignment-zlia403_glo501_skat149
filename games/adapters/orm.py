@@ -24,7 +24,7 @@ genre_table = Table(
 
 publisher_table = Table(
     'publisher', metadata,
-    Column('publisher', String(255), primary_key=True)
+    Column('name', String(255), primary_key=True)
 )
 
 game_table = Table(
@@ -36,7 +36,7 @@ game_table = Table(
     Column('description', String(255)),
     Column('image', String(255)),
     Column('website', String(255)),
-    Column('publisher', ForeignKey('publisher.publisher'))
+    Column('publisher_name', ForeignKey('publisher.name'))
 )
 
 review_table = Table(
@@ -79,7 +79,7 @@ def map_model_to_tables():
     })
 
     mapper(model.Publisher, publisher_table, properties={
-        '_Publisher__publisher_name': publisher_table.c.publisher
+        '_Publisher__publisher_name': publisher_table.c.name
     })
     
     mapper(model.Game, game_table, properties={
@@ -90,14 +90,14 @@ def map_model_to_tables():
         '_Game__description': game_table.c.description,
         '_Game__image_url': game_table.c.image,
         '_Game__website_url': game_table.c.website,
+        # publisher
+        # one to many
+        '_Game__publisher': relationship(model.Publisher),
         # many to many
-        '_Game__genres': relationship(model.Genre, secondary=game_genre_table),
+        '_Game__genres': relationship(model.Genre, secondary=game_genre_table)
         # review
         # one to many        
 
-        # publisher
-        # one to many
-        #'_Game__publisher': relationship(model.Publisher)
     })
 
     # mapper(model.Publisher, publisher_table, properties={

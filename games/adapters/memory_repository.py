@@ -262,6 +262,9 @@ def populate(data_path: Path, repo: AbstractRepository):
     genres = reader.dataset_of_genres
     publishers = reader.dataset_of_publishers
     # reviews = reader.dataset
+    
+    for publisher in publishers:
+        repo.add_publisher(publisher)
 
     # Add games to the repo
     for game in games:
@@ -270,6 +273,4 @@ def populate(data_path: Path, repo: AbstractRepository):
     for genre in genres:
         repo.add_genre(genre)
         
-    for publisher in publishers:
-        repo.add_publisher(publisher)
         
