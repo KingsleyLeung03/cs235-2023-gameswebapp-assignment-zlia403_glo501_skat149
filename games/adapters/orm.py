@@ -106,9 +106,9 @@ def map_model_to_tables():
 
     mapper(model.Review, review_table, properties={
         # one to many
-        # '_Review__user': relationship(model.User, back_populates='_User__reviews') ,
+        '_Review__user': relationship(model.User) ,
         # one to many                                      
-        #'_Review__game': relationship(model.Game, back_populates='_Game__reviews') ,
+        '_Review__game': relationship(model.Game) ,
         '_Review__rating': review_table.c.rating ,
         '_Review__comment': review_table.c.comment 
     })
