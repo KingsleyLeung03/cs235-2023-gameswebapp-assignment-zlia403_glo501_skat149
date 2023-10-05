@@ -96,7 +96,7 @@ def map_model_to_tables():
         # many to many
         '_Game__genres': relationship(model.Genre, secondary=game_genre_table),
         # review
-        # one to many        
+        # one to many
         '_Game__reviews': relationship(model.Review)
 
     })
@@ -109,7 +109,8 @@ def map_model_to_tables():
         # one to many
         '_Review__user': relationship(model.User),
         # one to many                                      
-        '_Review__game': relationship(model.Game),
+        # '_Review__game': relationship(model.Game),
+        '_Review__game': review_table.c.game,
         '_Review__rating': review_table.c.rating,
         '_Review__comment': review_table.c.comment 
     })
