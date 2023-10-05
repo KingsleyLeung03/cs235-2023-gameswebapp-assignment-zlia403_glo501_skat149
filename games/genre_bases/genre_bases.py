@@ -74,7 +74,7 @@ def show_games(target=None,reflesh=None):
         "current_page": pagenum,
         "current_order": order
     }
-
+    
     return render_template(
         "genre.html",
         games=games,
