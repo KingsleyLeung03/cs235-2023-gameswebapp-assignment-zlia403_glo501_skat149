@@ -94,9 +94,10 @@ def map_model_to_tables():
         # one to many
         '_Game__publisher': relationship(model.Publisher),
         # many to many
-        '_Game__genres': relationship(model.Genre, secondary=game_genre_table)
+        '_Game__genres': relationship(model.Genre, secondary=game_genre_table),
         # review
         # one to many        
+        '_Game__reviews': relationship(model.Review)
 
     })
 
@@ -106,9 +107,9 @@ def map_model_to_tables():
 
     mapper(model.Review, review_table, properties={
         # one to many
-        '_Review__user': relationship(model.User) ,
+        '_Review__user': relationship(model.User),
         # one to many                                      
-        '_Review__game': relationship(model.Game) ,
-        '_Review__rating': review_table.c.rating ,
+        '_Review__game': relationship(model.Game),
+        '_Review__rating': review_table.c.rating,
         '_Review__comment': review_table.c.comment 
     })
