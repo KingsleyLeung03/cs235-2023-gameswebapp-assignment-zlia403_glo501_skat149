@@ -22,6 +22,9 @@ def game_description(game_id):
     
     game = None
     geners_list = services.get_genre_list(repo.repo_instance)
+    
+    game_id = int(game_id)
+    game = services.get_game(repo.repo_instance, game_id)
 
     try:
         # check that recived value is integer

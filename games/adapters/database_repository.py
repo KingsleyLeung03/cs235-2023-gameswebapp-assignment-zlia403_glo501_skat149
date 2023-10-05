@@ -103,7 +103,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     
     def get_game_by_id(self, game_id: int) -> Game:
         """" get game by id. """
-        game = self._session_cm.session.query(Game).filter(Game._Game__game_id.in_(game_id)).first()
+        game = self._session_cm.session.query(Game).filter(Game._Game__game_id == game_id).one()
         return game
     
     #implemented
