@@ -63,7 +63,7 @@ def review(game_id: int, rate: int, comment: str):
         
         services.review(repo.repo_instance,int(game_id),int(rate),comment,user_name)
         
-        
+        # print(review)
         try:
             if (6> int(rate) > 0 and services.get_game(repo.repo_instance,int(game_id))!=None and comment!="style.css"):
                 #get game 

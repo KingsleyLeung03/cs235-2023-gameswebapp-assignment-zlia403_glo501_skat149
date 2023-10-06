@@ -42,8 +42,8 @@ game_table = Table(
 review_table = Table(
     'review', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('user', ForeignKey('user.id'), nullable=False),
-    Column('game', ForeignKey('game.id'), nullable=False),
+    Column('user_id', ForeignKey('user.id'), nullable=False),
+    Column('game_id', ForeignKey('game.id'), nullable=False),
     Column('rating', Integer, nullable=False),
     Column('comment', String(255), nullable=False)
 )
@@ -72,7 +72,7 @@ def map_model_to_tables():
         # many to many                        
         '_User__favourite_games': relationship(model.Game, secondary=favourite_table) ,
         # review 
-        '_User__reviews': relationship(model.Review)
+        '_User__reviews': relationship(model.Review, back_populates="_Review__user")
     })
 
     mapper(model.Genre, genre_table, properties={
@@ -98,7 +98,7 @@ def map_model_to_tables():
         '_Game__genres': relationship(model.Genre, secondary=game_genre_table),
         # review
         # one to many        
-        '_Game__reviews': relationship(model.Review)
+        '_Game__reviews': relationship(model.Review, back_populates="_Review__game")
 
     })
 
@@ -108,9 +108,9 @@ def map_model_to_tables():
 
     mapper(model.Review, review_table, properties={
         # one to many
-        '_Review__user': relationship(model.User),
+        '_Review__user': relationship(model.User, back_populates="_User__reviews"),
         # one to many                                      
-        '_Review__game': relationship(model.Game),
+        '_Review__game': relationship(model.Game, back_populates="_Game__reviews"),
         '_Review__rating': review_table.c.rating,
         '_Review__comment': review_table.c.comment 
     })
