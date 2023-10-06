@@ -202,6 +202,11 @@ class AbstractRepository(abc.ABC):
     #     """" Returns the list of reviews. """
     #     raise NotImplementedError
     
+    
+    # about favourite
+    
+    
+    
 
     
     

@@ -71,6 +71,7 @@ def change_favourite(repo: AbstractRepository, game_id: int, user_name: str) -> 
         user.add_favourite_game(game)
     else:
         user.remove_favourite_game(game)
+    repo.commit_session()
     return True
 
 def get_favourite_list(repo: AbstractRepository, user_name: str):

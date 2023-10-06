@@ -54,6 +54,9 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
 
     def reset_session(self):
         self._session_cm.reset_session()
+        
+    def commit_session(self):
+        self._session_cm.commit()
 
     #implemented
     def add_game(self, game: Game):
