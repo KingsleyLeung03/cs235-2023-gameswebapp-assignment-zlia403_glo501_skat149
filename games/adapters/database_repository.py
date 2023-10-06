@@ -3,6 +3,7 @@ from typing import List
 
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy import *
 
 from games.adapters.repository import AbstractRepository
 #from games.adapters.utils import search_string
@@ -103,7 +104,7 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     
     def get_game_by_id(self, game_id: int) -> Game:
         """" get game by id. """
-        game = self._session_cm.session.query(Game).filter(Game._Game__game_id == game_id).one()
+        game = self._session_cm.session.query(Game).filter(Game._Game__game_id == int(game_id)).one()
         return game
     
     #implemented
@@ -292,9 +293,12 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             return None
         else:
             # Return games matching title; return an empty list if there are no matches.
-            games = self._session_cm.session.query(Game).filter(Genre._Genre__genre_name.contains(genre)).all()
+            games = []            
+            game = self._session_cm.session.execute('SELECT game_id FROM game_genre WHERE genre_name LIKE :genre', {'genre': '%'+genre+'%'}).fetchall()
+            if game is not None:
+                for i in game:
+                    games.append(self.get_game_by_id(i[0]))
             self.__game_list = games
-            print(len(self.__game_list))
             return games
     
     #mostly
@@ -304,11 +308,12 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             return None
         else:
             # Return games matching title; return an empty list if there are no matches.
-            print(publisher)
-            games = self._session_cm.session.query(Game).filter(Publisher._Publisher__publisher_name.contains(publisher)).all()
-            games = [] #self._session_cm.session.query(Game).filter(Game._Game__publisher.contains(publisher)).all()
+            games = []            
+            game = self._session_cm.session.execute('SELECT id FROM game WHERE publisher_name LIKE :publisher', {'publisher': '%'+publisher+'%'}).fetchall()
+            if game is not None:
+                for i in game:
+                    games.append(self.get_game_by_id(i[0]))
             self.__game_list = games
-            print(games)
             return games
         
     #mostly
