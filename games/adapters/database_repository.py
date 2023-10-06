@@ -7,6 +7,7 @@ from sqlalchemy.orm.exc import NoResultFound
 from games.adapters.repository import AbstractRepository
 #from games.adapters.utils import search_string
 from games.domainmodel.model import *
+from games.domainmodel.model import Game, Review
 
 
 class SessionContextManager:
@@ -167,10 +168,13 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     
     def get_game_reviews(self, game_obj: Game) -> List[Review]:
         """" get list of reviews of the game by id. """
-        result = None
-        if game_obj is not None:
-            result = game_obj.reviews
-        return result
+        # result = None
+        # if game_obj is not None:
+        #     result = game_obj.reviews
+        # return result
+        
+        reviews = self._session_cm.session.query(Review).filter(Review._Review__game > game_obj).all()
+        return reviews
     
     #get games by xxx 
     
@@ -320,3 +324,12 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             games = self._session_cm.session.query(Game).filter(Game._Game__game_title.contains(title)).all()
             self.__game_list = games
             return games
+        
+
+     # about Review class 
+    def add_review(self, review: Review) -> None:
+        super().add_review(review)
+        print(review)
+        with self._session_cm as scm:
+            scm.session.add(review)
+            scm.commit()

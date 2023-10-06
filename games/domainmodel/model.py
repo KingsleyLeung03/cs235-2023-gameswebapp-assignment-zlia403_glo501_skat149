@@ -227,8 +227,8 @@ class User:
         else:
             raise ValueError('Password not valid!')
 
-        self.__reviews: list[Review] = []
-        self.__favourite_games: list[Game] = []
+        self.__reviews: list[Review] = list()
+        self.__favourite_games: list[Game] = list()
 
     @property
     def username(self):

@@ -49,6 +49,7 @@ def get_user_review(repo: AbstractRepository, game_id: int) -> list:
     reviews = []
     game = repo.get_game_by_id(game_id)
     game_reviews: List[Review] =  game.reviews
+    # print(game_reviews)
     for review in game_reviews:
         #add detail of reivew to dict and append to list of review 
         reviews.append({
@@ -89,9 +90,13 @@ def review(repo: AbstractRepository, game_id: int, rate: int, comment: str, user
         review = Review(user,game,rate,comment)
 
         #add review object to game
+        
         game.add_review(review)
         
         #add review object to user
         user.add_review(review)
+        
+        #add review to database
+        repo.add_review(review)
         
         return True

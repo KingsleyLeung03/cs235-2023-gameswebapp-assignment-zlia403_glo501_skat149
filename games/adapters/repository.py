@@ -179,12 +179,18 @@ class AbstractRepository(abc.ABC):
         """" Returns the list of publishers. """
         raise NotImplementedError
     
+    
+    
     # about Review class 
     
-    # @abc.abstractmethod
-    # def add_review(self, review: Review):
-    #     """ Add a review to the repository list of reviews. """
-    #     raise NotImplementedError
+    @abc.abstractmethod
+    def add_review(self, review: Review) -> None:
+        """ Add a review to the repository list of reviews. """
+        if review.user is None or review not in review.user.reviews:
+            raise RepositoryException("Review not correctly attached to a User")
+        if review.game is None or review not in review.game.reviews:
+            raise RepositoryException("Review not correctly attached to a Game")
+       
 
     # @abc.abstractmethod
     # def get_number_of_review(self) -> int:

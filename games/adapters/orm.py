@@ -72,6 +72,7 @@ def map_model_to_tables():
         # many to many                        
         '_User__favourite_games': relationship(model.Game, secondary=favourite_table) ,
         # review 
+        '_User__reviews': relationship(model.Review)
     })
 
     mapper(model.Genre, genre_table, properties={
