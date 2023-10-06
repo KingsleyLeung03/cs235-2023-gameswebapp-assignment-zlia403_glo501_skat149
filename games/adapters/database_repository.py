@@ -320,3 +320,23 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             games = self._session_cm.session.query(Game).filter(Game._Game__game_title.contains(title)).all()
             self.__game_list = games
             return games
+
+    def get_range_of_favourite_game_list(self, user: User, start: int, end: int, order: str = "game_id") -> List[Game]:
+        if isinstance(start, int) and isinstance(end, int) and isinstance(order, str):
+            gamelist = user.favourite_games
+
+        if order == "game_id":
+            gamelist.sort(key=lambda game: game.game_id)
+        elif order == "title":
+            gamelist.sort(key=lambda game: game.title)
+        elif order == "publisher":
+            gamelist.sort(key=lambda game: game.publisher.publisher_name)
+        elif order == "release_date":
+            gamelist.sort(key=lambda game: game.release_date)
+        elif order == "price":
+            gamelist.sort(key=lambda game: game.price)
+        else:
+            gamelist.sort(key=lambda game: game.game_id)
+
+        gamelist = gamelist[start:end]
+        return gamelist
