@@ -68,14 +68,15 @@ def review(game_id: int, rate: int, comment: str):
             if (6> int(rate) > 0 and services.get_game(repo.repo_instance,int(game_id))!=None and comment!="style.css"):
                 #get game 
                 services.review(repo.repo_instance,int(game_id),int(rate),comment,user_name)
-                return game_description(game_id)
+                
+                return redirect(url_for('game_desc_bp.game_description', game_id=game_id))
             else:
-                return game_description(game_id)
+                return redirect(url_for('game_desc_bp.game_description', game_id=game_id))
         except:
-            return game_description(game_id)
+            return redirect(url_for('game_desc_bp.game_description', game_id=game_id))
         
     else :
-        return game_description(game_id)
+        return redirect(url_for('game_desc_bp.game_description', game_id=game_id))
 
 
 @game_desc_blueprint.route("/gameDescription/change_favourite/<game_id>")
@@ -96,7 +97,7 @@ def change_favourite(game_id: str):
                 genres=geners_list,
                 authenticated=authenticated
             )          
-    return game_description(game_id)
+    return redirect(url_for('game_desc_bp.game_description', game_id=game_id))
 
 class ReviewForm(FlaskForm):
     comment = TextAreaField('Comment', [
