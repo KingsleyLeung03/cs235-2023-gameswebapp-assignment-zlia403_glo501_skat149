@@ -42,8 +42,8 @@ game_table = Table(
 review_table = Table(
     'review', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('user', ForeignKey('user.id'), nullable=False),
-    Column('game', ForeignKey('game.id'), nullable=False),
+    Column('user_name', ForeignKey('user.id'), nullable=False),
+    Column('game_name', ForeignKey('game.id'), nullable=False),
     Column('rating', Integer, nullable=False),
     Column('comment', String(255), nullable=False)
 )
@@ -96,21 +96,16 @@ def map_model_to_tables():
         # many to many
         '_Game__genres': relationship(model.Genre, secondary=game_genre_table),
         # review
-        # one to many
+        # one to many        
         '_Game__reviews': relationship(model.Review)
 
     })
-
-    # mapper(model.Publisher, publisher_table, properties={
-    #     '_Publisher__publisher_name': publisher_table.c.publisher
-    # })
 
     mapper(model.Review, review_table, properties={
         # one to many
         '_Review__user': relationship(model.User),
         # one to many                                      
-        # '_Review__game': relationship(model.Game),
-        '_Review__game': review_table.c.game,
+        '_Review__game': relationship(model.Game),
         '_Review__rating': review_table.c.rating,
         '_Review__comment': review_table.c.comment 
     })
