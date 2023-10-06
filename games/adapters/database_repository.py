@@ -180,8 +180,9 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     
     def get_games_by_genre(self, genre: Genre) -> List[Game]:
         """" get list of game by genre. """
-        game = self._session_cm.session.query(Game).filter(Game._Game__genres.in_(genre)).all()
-        return game
+        games = self._session_cm.session.query(Game).filter(Game._Game__genres.contains(genre)).all()
+        self.__game_list = games
+        return games
     
     # about Search Function
     
