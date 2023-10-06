@@ -70,8 +70,9 @@ def map_model_to_tables():
         '_User__username': user_table.c.user_name,
         '_User__password': user_table.c.password,
         # many to many                        
-        '_User__favourite_games': relationship(model.Game, secondary=favourite_table) ,
-        # review 
+        '_User__favourite_games': relationship(model.Game, secondary=favourite_table),
+        # review
+        '_User__reviews': relationship(model.Review, back_populates='_Review__user')
     })
 
     mapper(model.Genre, genre_table, properties={
@@ -97,7 +98,8 @@ def map_model_to_tables():
         '_Game__genres': relationship(model.Genre, secondary=game_genre_table),
         # review
         # one to many        
-        '_Game__reviews': relationship(model.Review)
+        # '_Game__reviews': relationship(model.Review)
+        '_Game__reviews': relationship(model.Review, back_populates='_Review__game')
 
     })
 
