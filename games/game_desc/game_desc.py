@@ -58,9 +58,7 @@ def review(game_id: int, rate: int, comment: str):
     user_name = None
     if "User_name" in session:
         user_name = session["User_name"]
-        
-        services.review(repo.repo_instance,int(game_id),int(rate),comment,user_name)
-        
+                
         # print(review)
         try:
             if (6> int(rate) > 0 and services.get_game(repo.repo_instance,int(game_id))!=None and comment!="style.css"):
