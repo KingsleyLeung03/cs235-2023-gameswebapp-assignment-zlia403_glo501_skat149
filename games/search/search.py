@@ -6,7 +6,7 @@ from flask import Blueprint, render_template, redirect, url_for, session, reques
 import games.adapters.repository as repo
 import games.authentication.authentication as authentication
 from games.authentication.authentication import login_required
-import games.utilities.utilities as util
+import games.utilities.services as util
 # ---------------------------------------
 
 import games.search.services as services
@@ -121,6 +121,7 @@ def change_favourite(game_id: str):
             )
     else:
         pass
+    # return redirect(url_for('game_search_bp.show_games', target=game_id,type="",reflesh=True))
     return show_games(None,None,True)
 
 
