@@ -103,6 +103,32 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
         else:
             raise TypeError
     
+    def get_range_of_favourite_game_list(self, user: User, start: int, end: int, order: str = "game_id") -> List[Game]:
+        """" Returns the list of games. """
+        if isinstance(start, int) and isinstance(end, int) and isinstance(order, str):
+            gamelist = user.favourite_games
+            
+            if order == "game_id":
+                gamelist.sort(key= lambda game: game.game_id)
+            elif order == "title":
+                gamelist.sort(key=lambda game: game.title)
+            elif order == "publisher":
+                gamelist.sort(key=lambda game: game.publisher.publisher_name)
+            elif order == "release_date":
+                gamelist.sort(key=lambda game: game.release_date)
+            elif order == "price":
+                gamelist.sort(key=lambda game: game.price)
+            else: 
+                gamelist.sort(key= lambda game: game.game_id)
+            
+            
+            gamelist = gamelist[start:end]
+            return gamelist
+            
+        else:
+            raise TypeError
+    
+    
     # game atritbutes 
     
     def get_game_by_id(self, game_id: int) -> Game:

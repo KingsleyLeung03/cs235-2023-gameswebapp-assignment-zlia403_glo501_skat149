@@ -70,6 +70,7 @@ def change_favourite(repo: AbstractRepository, game_id: int, user_name: str) -> 
     else:
         user.remove_favourite_game(game)
     return True
+    
 
 def get_favourite_list(repo: AbstractRepository, user_name: str):
     favourite_list = []
