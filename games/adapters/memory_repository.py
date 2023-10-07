@@ -250,6 +250,9 @@ class MemoryRepository(AbstractRepository):
     def commit_session(self):
         pass
 
+    def add_review(self, review: Review) -> None:
+        pass
+
     
 # add all game data to the memory repo obj using datareader
 def populate(data_path: Path, repo: AbstractRepository):
