@@ -18,9 +18,12 @@ pagenum_s = None
 target_s = None 
 type_s = None
 
-@search_blueprint.route('/search/<target>/<type>', methods=["GET"])
-def show_games(target=None,type=None,reflesh=None):
+@search_blueprint.route('/search', methods=["GET"])
+def show_games():
     # check if authenticated
+    target = request.args.get("target")
+    type = request.args.get("type")
+    reflesh = bool(request.args.get("reflesh"))
     authenticated = authentication.check_authenticated()
     
     pagenum = request.args.get("page")
@@ -29,8 +32,6 @@ def show_games(target=None,type=None,reflesh=None):
     genres_list = services.get_genre_list(repo.repo_instance)
     publisher_list = services.get_publisher_list(repo.repo_instance)
     
-    
-    #print(type)
 
 
     if(reflesh!=True):
@@ -59,11 +60,11 @@ def show_games(target=None,type=None,reflesh=None):
         type = type_s
 
     if (type == "publisher"):
-        print(services.get_games_by_publisher(repo.repo_instance,target))
+        services.get_games_by_publisher(repo.repo_instance,target)
     elif (type == "genre"): 
-        print(services.get_games_by_genre(repo.repo_instance,target))
+        services.get_games_by_genre(repo.repo_instance,target)
     else: 
-        print(services.get_games_by_title(repo.repo_instance,target))
+        services.get_games_by_title(repo.repo_instance,target)
 
     favourite_list = []
     if "User_name" in session:
@@ -100,9 +101,11 @@ def show_games(target=None,type=None,reflesh=None):
         favourite_list=favourite_list
     )
     
-@search_blueprint.route("/search/change_favourite/<game_id>")
+@search_blueprint.route("/search/change_favourite", methods=["GET"])
 @login_required
-def change_favourite(game_id: str):
+def change_favourite():
+    game_id = request.args.get("game_id")
+    
     user_name = None
     if "User_name" in session:
         user_name = session["User_name"]
@@ -121,7 +124,7 @@ def change_favourite(game_id: str):
             )
     else:
         pass
-    # return redirect(url_for('game_search_bp.show_games', target=game_id,type="",reflesh=True))
-    return show_games(None,None,True)
+    return redirect(url_for('game_search_bp.show_games', reflesh=True))
+    # return show_games(None,None,True)
 
 
