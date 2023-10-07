@@ -246,8 +246,9 @@ class MemoryRepository(AbstractRepository):
     
     def get_publisher_list(self) -> List[Game]:
         return self.__publishers
-    
 
+    def commit_session(self):
+        pass
 
     
 # add all game data to the memory repo obj using datareader

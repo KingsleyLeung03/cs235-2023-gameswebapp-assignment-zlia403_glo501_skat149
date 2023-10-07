@@ -204,10 +204,7 @@ class AbstractRepository(abc.ABC):
     
     
     # about favourite
-    
-    
-    
 
-    
-    
-    
+    @abc.abstractmethod
+    def commit_session(self):
+        raise NotImplementedError

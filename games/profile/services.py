@@ -37,4 +37,6 @@ def remove_favourite(repo: AbstractRepository, username: str, game_id: int):
 
     user.remove_favourite_game(game)
 
+    repo.commit_session()
+
     return None
