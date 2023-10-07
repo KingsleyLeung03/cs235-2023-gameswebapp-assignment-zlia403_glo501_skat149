@@ -5,6 +5,7 @@ from games.authentication.authentication import login_required
 import games.adapters.repository as repo
 import games.favourites.services as services
 import games.authentication.authentication as authentication
+import games.utilities.services as util
 favourites_blueprint = Blueprint("favourites_bp", __name__)
 
 games_per_page = 10
@@ -66,7 +67,7 @@ def change_favourite(game_id: str):
     try:
         # check that recived value is integer
         game_id = int(game_id)
-        services.change_favourite(repo.repo_instance,(game_id),user_name)
+        util.change_favourite(repo.repo_instance,(game_id),user_name)
     except: # if game not found
         geners_list = services.get_genre_list(repo.repo_instance)
         authenticated = authentication.check_authenticated()
