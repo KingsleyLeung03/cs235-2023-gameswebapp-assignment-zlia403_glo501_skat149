@@ -211,16 +211,19 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
         """" get list of game by publisher. """
         raise NotImplementedError
     
-    def get_games_by_genre(self, genre: Genre) -> List[Game]:
+    def get_games_by_genre(self, genre: Genre) -> List[Game]: 
         """" get list of game by genre. """
-        game = self._session_cm.session.query(Game).filter(Game._Game__genres.in_(genre)).all()
-        return game
+        
+        games = self._session_cm.session.query(Game).filter(Game._Game__genres.contains(genre)).all()
+        self.__game_list = games
+
+        return games
     
     # about Search Function
     
     def get_game_search_list(self) -> List[Game]:
         """" Returns the list of games. """
-        raise NotImplementedError
+        return self.__game_list
 
     #implemented
     def get_number_of_search_games(self) -> int:
