@@ -20,7 +20,7 @@
             {% for option in order_options %}
             
             <div class="orders">
-                <a href="/search/{{target}}/{{type}}?page={{ page_info.current_page }}&order={{ option }}">{{ option }}</a>
+                <a href="{{ url_for('game_search_bp.show_games', target=target, type=type, page=page_info.current_page, order=option) }}">{{ option }}</a>
             </div>
             {% endfor %}
 
@@ -65,7 +65,7 @@
             <ul>
                 {% for page in pages %}
                 <li>
-                    <a href="/search/{{target}}/{{type}}?page={{ page }}&order={{ page_info.current_order }}">{{ page }}</a>
+                    <a href="{{ url_for('game_search_bp.show_games', target=target, type=type, page=page_info.current_page, order=option) }}">{{ page }}</a>
                 </li>
                 {% endfor %}
             </ul>
@@ -75,9 +75,9 @@
         function favourite(id) {
             let target = document.getElementById(id).innerHTML;
             let c = (target=="Add to favourite");
-            window.open("/search/change_favourite/"+id,"_parent")
+            window.open("/search/change_favourite?game_id=" +id,"_parent")
     
-            window.open("/search/change_favourite/"+id,"_parent")
+            window.open("/search/change_favourite?game_id="+id,"_parent")
     
             "/search?page={{ page }}&order={{ page_info.current_order }}"
         }
