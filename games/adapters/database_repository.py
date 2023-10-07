@@ -7,6 +7,7 @@ from sqlalchemy.orm.exc import NoResultFound
 from games.adapters.repository import AbstractRepository
 #from games.adapters.utils import search_string
 from games.domainmodel.model import *
+from games.domainmodel.model import Game, Review
 
 
 class SessionContextManager:
@@ -53,6 +54,9 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
 
     def reset_session(self):
         self._session_cm.reset_session()
+        
+    def commit_session(self):
+        self._session_cm.commit()
 
     #implemented
     def add_game(self, game: Game):
@@ -98,6 +102,32 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             
         else:
             raise TypeError
+    
+    def get_range_of_favourite_game_list(self, user: User, start: int, end: int, order: str = "game_id") -> List[Game]:
+        """" Returns the list of games. """
+        if isinstance(start, int) and isinstance(end, int) and isinstance(order, str):
+            gamelist = user.favourite_games
+            
+            if order == "game_id":
+                gamelist.sort(key= lambda game: game.game_id)
+            elif order == "title":
+                gamelist.sort(key=lambda game: game.title)
+            elif order == "publisher":
+                gamelist.sort(key=lambda game: game.publisher.publisher_name)
+            elif order == "release_date":
+                gamelist.sort(key=lambda game: game.release_date)
+            elif order == "price":
+                gamelist.sort(key=lambda game: game.price)
+            else: 
+                gamelist.sort(key= lambda game: game.game_id)
+            
+            
+            gamelist = gamelist[start:end]
+            return gamelist
+            
+        else:
+            raise TypeError
+    
     
     # game atritbutes 
     
@@ -167,10 +197,13 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     
     def get_game_reviews(self, game_obj: Game) -> List[Review]:
         """" get list of reviews of the game by id. """
-        result = None
-        if game_obj is not None:
-            result = game_obj.reviews
-        return result
+        # result = None
+        # if game_obj is not None:
+        #     result = game_obj.reviews
+        # return result
+        
+        reviews = self._session_cm.session.query(Review).filter(Review._Review__game > game_obj).all()
+        return reviews
     
     #get games by xxx 
     
@@ -323,3 +356,11 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
             games = self._session_cm.session.query(Game).filter(Game._Game__game_title.contains(title)).all()
             self.__game_list = games
             return games
+        
+
+     # about Review class 
+    def add_review(self, review: Review) -> None:
+        super().add_review(review)
+        with self._session_cm as scm:
+            scm.session.add(review)
+            scm.commit()

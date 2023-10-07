@@ -71,11 +71,13 @@ def change_favourite(repo: AbstractRepository, game_id: int, user_name: str) -> 
         user.add_favourite_game(game)
     else:
         user.remove_favourite_game(game)
+    repo.commit_session()
     return True
 
 def get_favourite_list(repo: AbstractRepository, user_name: str):
     favourite_list = []
     user = repo.get_user(user_name)
+    
     for i in user.favourite_games:
         favourite_list.append(i.game_id)
     return favourite_list

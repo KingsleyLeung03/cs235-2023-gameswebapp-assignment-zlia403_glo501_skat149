@@ -6,6 +6,7 @@ from flask import Blueprint, render_template, redirect, url_for, session, reques
 import games.adapters.repository as repo
 import games.authentication.authentication as authentication
 from games.authentication.authentication import login_required
+import games.utilities.utilities as util
 # ---------------------------------------
 
 import games.search.services as services
@@ -106,7 +107,7 @@ def change_favourite(game_id: str):
     if "User_name" in session:
         user_name = session["User_name"]
         try:
-            services.change_favourite(repo.repo_instance,(game_id),user_name)
+            util.change_favourite(repo.repo_instance,(game_id),user_name)
         except: # if game not found
             geners_list = services.get_genre_list(repo.repo_instance)
             publisher_list = services.get_publisher_list(repo.repo_instance)

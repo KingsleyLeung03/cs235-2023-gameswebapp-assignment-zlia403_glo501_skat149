@@ -66,6 +66,15 @@ def get_current_display(num_of_games:int, games_per_page:int, current_page: int)
 
         return (start, end)
 
+def change_favourite(repo: AbstractRepository, game_id: int, user_name: str) -> None:
+    game = repo.get_game_by_id(int(game_id))
+    user = repo.get_user(user_name)
+    if (game not in user.favourite_games):
+        user.add_favourite_game(game)
+    else:
+        user.remove_favourite_game(game)
+    repo.commit_session()
+    return True
 
 def get_number_of_games(repo: AbstractRepository) -> int:
     return repo.get_number_of_games()

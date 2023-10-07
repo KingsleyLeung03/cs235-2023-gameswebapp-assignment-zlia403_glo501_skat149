@@ -7,6 +7,7 @@ import games.adapters.repository as repo
 import games.profile.services as profile_services
 import games.utilities.services as utilities_services
 
+
 profile_blueprint = Blueprint("profile_bp", __name__)
 
 

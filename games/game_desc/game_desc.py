@@ -5,6 +5,7 @@ from flask import Blueprint, render_template, redirect, url_for, session, reques
 
 import games.adapters.repository as repo
 import games.authentication.authentication as authentication
+import games.utilities.services as util
 from games.authentication.authentication import login_required
 
 # ---------------------------------------
@@ -57,18 +58,23 @@ def review(game_id: int, rate: int, comment: str):
     user_name = None
     if "User_name" in session:
         user_name = session["User_name"]
+        
+        services.review(repo.repo_instance,int(game_id),int(rate),comment,user_name)
+        
+        # print(review)
         try:
             if (6> int(rate) > 0 and services.get_game(repo.repo_instance,int(game_id))!=None and comment!="style.css"):
                 #get game 
                 services.review(repo.repo_instance,int(game_id),int(rate),comment,user_name)
-                return game_description(game_id)
+                
+                return redirect(url_for('game_desc_bp.game_description', game_id=game_id))
             else:
-                return game_description(game_id)
+                return redirect(url_for('game_desc_bp.game_description', game_id=game_id))
         except:
-            return game_description(game_id)
+            return redirect(url_for('game_desc_bp.game_description', game_id=game_id))
         
     else :
-        return game_description(game_id)
+        return redirect(url_for('game_desc_bp.game_description', game_id=game_id))
 
 
 @game_desc_blueprint.route("/gameDescription/change_favourite/<game_id>")
@@ -89,7 +95,7 @@ def change_favourite(game_id: str):
                 genres=geners_list,
                 authenticated=authenticated
             )          
-    return game_description(game_id)
+    return redirect(url_for('game_desc_bp.game_description', game_id=game_id))
 
 class ReviewForm(FlaskForm):
     comment = TextAreaField('Comment', [
