@@ -247,6 +247,11 @@ class MemoryRepository(AbstractRepository):
     def get_publisher_list(self) -> List[Game]:
         return self.__publishers
     
+    def commit_session(self):
+        pass
+
+    def add_review(self, review: Review) -> None:
+        pass
 
 
     
