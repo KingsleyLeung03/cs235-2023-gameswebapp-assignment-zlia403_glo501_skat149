@@ -6,7 +6,7 @@ from flask import Flask, render_template, request
 from games.domainmodel.model import *
 
 import games.adapters.repository as repo
-from games.adapters.memory_repository import populate
+from games.adapters.repository_populate import populate
 from games.adapters.memory_repository import MemoryRepository
 from games.adapters.orm import metadata, map_model_to_tables
 
