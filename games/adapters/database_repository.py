@@ -207,9 +207,9 @@ class SqlAlchemyRepository(AbstractRepository, ABC):
     
     #get games by xxx 
     
-    def get_games_by_publisher(self, publisher: Publisher) -> List[Game]:
-        """" get list of game by publisher. """
-        raise NotImplementedError
+    # def get_games_by_publisher(self, publisher: Publisher) -> List[Game]:
+    #     """" get list of game by publisher. """
+    #     raise NotImplementedError
     
     def get_games_by_genre(self, genre: Genre) -> List[Game]:
         """" get list of game by genre. """

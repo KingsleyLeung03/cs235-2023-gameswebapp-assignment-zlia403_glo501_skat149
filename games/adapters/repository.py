@@ -94,10 +94,10 @@ class AbstractRepository(abc.ABC):
     
     #get games by xxx 
     
-    @abc.abstractmethod
-    def get_games_by_publisher(self, publisher: Publisher) -> List[Game]:
-        """" get list of game by publisher. """
-        raise NotImplementedError
+    # @abc.abstractmethod
+    # def get_games_by_publisher(self, publisher: Publisher) -> List[Game]:
+    #     """" get list of game by publisher. """
+    #     raise NotImplementedError
     
     @abc.abstractmethod
     def get_games_by_genre(self, genre: Genre) -> List[Game]:

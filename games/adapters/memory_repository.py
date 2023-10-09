@@ -134,17 +134,17 @@ class MemoryRepository(AbstractRepository):
             self.__game_list = game_list
             return self.__game_list
         
-    def get_games_by_publisher(self, publisher: Publisher) -> List[Game]:
-        if isinstance(publisher, Publisher):
-            game_list: List[Game] = list()
-            
-            # look for games that have same publisher form arg
-            for game in self.__games:
-                if publisher == game.publisher:
-                    insort_left(game_list, game)
-            
-            self.__game_list = game_list
-            return game_list
+    # def get_games_by_publisher(self, publisher: Publisher) -> List[Game]:
+    #     if isinstance(publisher, Publisher):
+    #         game_list: List[Game] = list()
+    #
+    #         # look for games that have same publisher form arg
+    #         for game in self.__games:
+    #             if publisher == game.publisher:
+    #                 insort_left(game_list, game)
+    #
+    #         self.__game_list = game_list
+    #         return game_list
         
     def get_games_by_genre_str(self, genre: str) -> List[Game]:
         

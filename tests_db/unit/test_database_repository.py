@@ -82,21 +82,21 @@ def test_repo_search_game_by_title(session_factory):
 
 
 # Test repository search games by publisher
-def test_repo_search_game_by_publisher(session_factory):
-    repo = SqlAlchemyRepository(session_factory)
-
-    # Set the publisher
-    publisher = Publisher("Boogygames Studios")
-
-    # Search all games from the publisher
-    search_result = repo.get_games_by_publisher(publisher)
-
-    # Check if the num of search results is matched
-    assert len(search_result) == 2
-
-    # Check the publisher of every game from the search results
-    for game in search_result:
-        assert game.publisher == publisher
+# def test_repo_search_game_by_publisher(session_factory):
+#     repo = SqlAlchemyRepository(session_factory)
+#
+#     # Set the publisher
+#     publisher = Publisher("Boogygames Studios")
+#
+#     # Search all games from the publisher
+#     search_result = repo.get_games_by_publisher(publisher)
+#
+#     # Check if the num of search results is matched
+#     assert len(search_result) == 2
+#
+#     # Check the publisher of every game from the search results
+#     for game in search_result:
+#         assert game.publisher == publisher
 
 
 # Test repository search games by genre
