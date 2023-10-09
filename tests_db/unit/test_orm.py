@@ -8,7 +8,7 @@ from games.domainmodel.model import *
 def insert_game(empty_session):
     empty_session.execute(
         'INSERT INTO game (id, title, price, release_date, description, image, website, publisher_name) VALUES '
-        '(897220, "Summer Pockets", 55.99, "29 Jun, 2018", "From the creators of Angel Beats! and CLANNAD, Key, comes their latest emotional, award-winning journey. Follow protagonist Takahara Hairi as he travels to the secluded island Torishirojima, where he rediscovers what it means to enjoy summer vacation.", "https://cdn.akamai.steamstatic.com/steam/apps/897220/header.jpg?t=1651130440", "http://key.visualarts.gr.jp/summer/", "VisualArts")'
+        '(897220, "Summer Pockets", 55.99, "Jun 29, 2018", "From the creators of Angel Beats! and CLANNAD, Key, comes their latest emotional, award-winning journey. Follow protagonist Takahara Hairi as he travels to the secluded island Torishirojima, where he rediscovers what it means to enjoy summer vacation.", "https://cdn.akamai.steamstatic.com/steam/apps/897220/header.jpg?t=1651130440", "http://key.visualarts.gr.jp/summer/", "VisualArts")'
     )
     row = empty_session.execute('SELECT id from game').fetchone()
     return row[0]
@@ -95,7 +95,7 @@ def make_game():
     game.description = "From the creators of Angel Beats! and CLANNAD, Key, comes their latest emotional, award-winning journey. Follow protagonist Takahara Hairi as he travels to the secluded island Torishirojima, where he rediscovers what it means to enjoy summer vacation."
     game.image_url = "https://cdn.akamai.steamstatic.com/steam/apps/897220/header.jpg?t=1651130440"
     game.publisher = "VisualArts"
-    game.release_date = "29 Jun, 2018"
+    game.release_date = "Jun 29, 2018"
     game.website_url = "http://key.visualarts.gr.jp/summer/"
 
     return game
@@ -115,4 +115,48 @@ def make_user():
     user = User("kingsley", "Test1234")
     return user
 
+
+def test_loading_of_game(empty_session):
+    game_key = insert_game(empty_session)
+    expected_game = make_game()
+    fetched_game = empty_session.query(Game).one()
+
+    assert expected_game == fetched_game
+    assert game_key == fetched_game.game_id
+
+
+
+
+def test_loading_of_users(empty_session):
+    users = list()
+    users.append(("kingsley", "Kingsley1111"))
+    users.append(("gordon", "Gordon2222"))
+    users.append(("shinnosuke", "Shinnosuke3333"))
+    insert_users(empty_session, users)
+
+    expected = [
+        User("kingsley", "Kingsley1111"),
+        User("gordon", "Gordon2222"),
+        User("shinnosuke", "Shinnosuke3333")
+    ]
+    assert empty_session.query(User).all() == expected
+
+
+def test_saving_of_users(empty_session):
+    user = make_user()
+    empty_session.add(user)
+    empty_session.commit()
+
+    rows = list(empty_session.execute('SELECT user_name, password FROM user'))
+    assert rows == [("kingsley", "Test1234")]
+
+
+def test_saving_of_users_with_common_user_name(empty_session):
+    insert_user(empty_session, ("kingsley", "Test5678"))
+    empty_session.commit()
+
+    with pytest.raises(IntegrityError):
+        user = User("kingsley", "Test114514")
+        empty_session.add(user)
+        empty_session.commit()
 
