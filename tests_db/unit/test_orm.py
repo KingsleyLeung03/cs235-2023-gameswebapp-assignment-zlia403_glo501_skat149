@@ -87,3 +87,32 @@ def insert_favourited_game(empty_session):
 
     row = empty_session.execute('SELECT id from game').fetchone()
     return row[0]
+
+
+def make_game():
+    game = Game(897220, "Summer Pockets")
+    game.price = 55.99
+    game.description = "From the creators of Angel Beats! and CLANNAD, Key, comes their latest emotional, award-winning journey. Follow protagonist Takahara Hairi as he travels to the secluded island Torishirojima, where he rediscovers what it means to enjoy summer vacation."
+    game.image_url = "https://cdn.akamai.steamstatic.com/steam/apps/897220/header.jpg?t=1651130440"
+    game.publisher = "VisualArts"
+    game.release_date = "29 Jun, 2018"
+    game.website_url = "http://key.visualarts.gr.jp/summer/"
+
+    return game
+
+
+def make_genre():
+    genre = Genre("Adventure")
+    return genre
+
+
+def make_publisher():
+    publisher = Publisher("VisualArts")
+    return publisher
+
+
+def make_user():
+    user = User("kingsley", "Test1234")
+    return user
+
+
