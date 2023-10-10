@@ -34,7 +34,6 @@ def get_games(repo: AbstractRepository, games_per_page: int,  pagenum: int, user
             "price": game.price
         }
         game_dicts.append(game_dict)
-    print(game_dicts)
     return game_dicts
   
 def get_max_page_num(number_of_games: int, games_per_page: int) -> int:
@@ -68,27 +67,18 @@ def get_current_display(num_of_games:int, games_per_page:int, current_page: int)
         return (start, end)
     
 def change_favourite(repo: AbstractRepository, game_id: int, user_name: str) -> None:
-    print(game_id)
     game = repo.get_game_by_id(int(game_id))
     user = repo.get_user(user_name)
-    print(user.favourite_games)
     if (game not in user.favourite_games):
         user.add_favourite_game(game)
     else:
         user.remove_favourite_game(game)
-    print(user.favourite_games)
-    print(game)
-    print("added")
     return None
 
 
 def get_number_of_games(repo: AbstractRepository, user_name: str) -> int:
     user = repo.get_user(user_name)
     return len(user.favourite_games)
-    #return repo.get_number_of_games()
 
 def get_genre_list(repo: AbstractRepository) -> list:
     return repo.get_genre_list()
-
-def get_publisher_list(repo: AbstractRepository) -> list:
-    return repo.get_publisher_list()

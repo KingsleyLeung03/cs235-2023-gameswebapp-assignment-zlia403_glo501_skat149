@@ -31,8 +31,8 @@ def test_game_desc_get_genre_list(in_memory_repo):
     assert services.get_genre_list(in_memory_repo) == in_memory_repo.get_genre_list()
 
 
-def test_game_desc_get_publisher_list(in_memory_repo):
-    assert services.get_publisher_list(in_memory_repo) == in_memory_repo.get_publisher_list()
+# def test_game_desc_get_publisher_list(in_memory_repo):
+    # assert services.get_publisher_list(in_memory_repo) == in_memory_repo.get_publisher_list()
 
 def test_get_favourite_list(in_memory_repo):
     user = User("root","Test1234")

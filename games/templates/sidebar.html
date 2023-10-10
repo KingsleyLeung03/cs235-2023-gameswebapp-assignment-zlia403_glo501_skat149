@@ -62,7 +62,7 @@
   function search_f() {
     var target = document.getElementById("target").value;
     if (target != "") {
-      window.open("/search/" + target + "/" + type, "_parent");
+      window.open("/search?target=" + target + "&type=" + type, "_parent");
     }
   }
 

@@ -5,7 +5,7 @@ from games.adapters import memory_repository
 from games.adapters.memory_repository import MemoryRepository
 from pathlib import Path
 
-TEST_DATA_PATH = Path('games') / 'adapters' / 'data'
+TEST_DATA_PATH = Path(__file__).parent.parent / "games" / 'adapters' / 'data'
 
 
 @pytest.fixture
@@ -19,6 +19,7 @@ def in_memory_repo():
 def client():
     my_app = create_app({
         'TESTING': True,                                # Set to True during testing.
+        'REPOSITORY': 'memory',
         'TEST_DATA_PATH': TEST_DATA_PATH,               # Path for loading test data into the repository.
         'WTF_CSRF_ENABLED': False                       # test_client will not send a CSRF token, so disable validation.
     })

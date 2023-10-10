@@ -177,14 +177,14 @@ def test_e2e_game_desc_page_favourite(client, auth):
 
     # Add favourite by the button in the game_desc page.
     response_add = client.get('/gameDescription/change_favourite/1002510')
-    assert response_add.status_code == 200
+    assert response_add.status_code == 302
     response_add_check = client.get('/favourites')
     assert response_add_check.status_code == 200
     assert b'The Spell - A Kinetic Novel' in response_add_check.data
 
     # Remove favourite by the button in the game_desc page.
     response_remove = client.get('/gameDescription/change_favourite/1002510')
-    assert response_remove.status_code == 200
+    assert response_remove.status_code == 302
     response_remove_check = client.get('/favourites')
     assert response_remove_check.status_code == 200
     assert b'The Spell - A Kinetic Novel' not in response_remove_check.data
@@ -198,7 +198,7 @@ def test_e2e_favourite_page_remove_favourite(client, auth):
 
     # Add favourite by the button in the game_desc page.
     response_add = client.get('/gameDescription/change_favourite/1002510')
-    assert response_add.status_code == 200
+    assert response_add.status_code == 302
     response_add_check = client.get('/favourites')
     assert response_add_check.status_code == 200
     assert b'The Spell - A Kinetic Novel' in response_add_check.data
@@ -220,7 +220,7 @@ def test_e2e_comment_and_profile(client, auth):
     # Write a comment and check if the game_desc page shows the comment.
     response_comment = client.get('/review/1002510/5/Good%20game!')
     response_game_desc = client.get('/gameDescription/1002510')
-    assert response_comment.status_code == 200
+    assert response_comment.status_code == 302
     assert response_game_desc.status_code == 200
     assert b'Good game!' in response_game_desc.data
 

@@ -28,7 +28,6 @@ def register():
     
     #data for sidebar 
     genres_list = utilities.get_genre_list(repo.repo_instance)
-    publisher_list = utilities.get_publisher_list(repo.repo_instance)
     
     if form.validate_on_submit():
         # Successful POST, i.e. the user name and password have passed validation checking.
@@ -44,7 +43,6 @@ def register():
         "authentication/credentials.html", 
         title="Register",
         genres=genres_list,
-        publishers=publisher_list,
         user_name_error_message=user_name_not_unique,
         form=form,
         handler_url=url_for('authentication_bp.register'),
@@ -62,7 +60,6 @@ def login():
     
     #data for sidebar 
     genres_list = utilities.get_genre_list(repo.repo_instance)
-    publisher_list = utilities.get_publisher_list(repo.repo_instance)
 
     if form.validate_on_submit():
         # Successful POST, i.e. the user name and password have passed validation checking.
@@ -88,7 +85,6 @@ def login():
         "authentication/credentials.html",
         title = "Login",
         genres=genres_list,
-        publishers=publisher_list,
         user_name_error_message=user_name_not_recognised,
         password_error_message=password_does_not_match_user_name,
         form=form,

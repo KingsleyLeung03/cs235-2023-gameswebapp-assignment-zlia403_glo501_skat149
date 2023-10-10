@@ -5,6 +5,7 @@ from games.authentication.authentication import login_required
 import games.adapters.repository as repo
 import games.favourites.services as services
 import games.authentication.authentication as authentication
+import games.utilities.services as util
 favourites_blueprint = Blueprint("favourites_bp", __name__)
 
 games_per_page = 10
@@ -47,8 +48,6 @@ def show_games(reflesh=None):
     pages = services.generate_page_list(pagenum, maxpage)
     option_of_order = ["game_id", "title", "publisher", "release_date", "price"]
     geners_list = services.get_genre_list(repo.repo_instance)
-    publisher_list = services.get_publisher_list(repo.repo_instance)
-    # print(games_per_page, pagenum, order,maxpage,num_games,pages) # I thing someone added for debag but I commented out to not confuse output from program
     
     page_info = {
         "number_of_games": num_games,
@@ -58,7 +57,7 @@ def show_games(reflesh=None):
         "current_order": order
     }
     
-    return render_template("favourites.html", games=games, num_game=num_games, page_info=page_info, pages=pages, order_options=option_of_order,genres=geners_list,publishers=publisher_list,authenticated=authenticated)
+    return render_template("favourites.html", games=games, num_game=num_games, page_info=page_info, pages=pages, order_options=option_of_order,genres=geners_list,authenticated=authenticated)
 
 @favourites_blueprint.route("/favourites/change_favourite/<game_id>")
 @login_required
@@ -68,16 +67,14 @@ def change_favourite(game_id: str):
     try:
         # check that recived value is integer
         game_id = int(game_id)
-        services.change_favourite(repo.repo_instance,(game_id),user_name)
+        util.change_favourite(repo.repo_instance,(game_id),user_name)
     except: # if game not found
         geners_list = services.get_genre_list(repo.repo_instance)
-        publisher_list = services.get_publisher_list(repo.repo_instance)
         authenticated = authentication.check_authenticated()
         return render_template(
             "notFound.html",
             message=f"game id: {game_id} is not found.",
             genres=geners_list,
-            publishers=publisher_list,
             authenticated=authenticated
         )
     return redirect(url_for("favourites_bp.show_games"))

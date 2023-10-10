@@ -7,6 +7,7 @@ import games.adapters.repository as repo
 import games.profile.services as profile_services
 import games.utilities.services as utilities_services
 
+
 profile_blueprint = Blueprint("profile_bp", __name__)
 
 
@@ -32,6 +33,6 @@ def remove_favourite(game_id):
     #    return redirect(url_for('home_bp.home'))
     user_name = session["User_name"]
 
-    profile_services.remove_favourite(repo.repo_instance, user_name, int(game_id))
+    utilities_services.remove_favourite(repo.repo_instance, user_name, int(game_id))
 
     return redirect(url_for("profile_bp.show_profile"))

@@ -134,17 +134,17 @@ class MemoryRepository(AbstractRepository):
             self.__game_list = game_list
             return self.__game_list
         
-    def get_games_by_publisher(self, publisher: Publisher) -> List[Game]:
-        if isinstance(publisher, Publisher):
-            game_list: List[Game] = list()
-            
-            # look for games that have same publisher form arg
-            for game in self.__games:
-                if publisher == game.publisher:
-                    insort_left(game_list, game)
-            
-            self.__game_list = game_list
-            return game_list
+    # def get_games_by_publisher(self, publisher: Publisher) -> List[Game]:
+    #     if isinstance(publisher, Publisher):
+    #         game_list: List[Game] = list()
+    #
+    #         # look for games that have same publisher form arg
+    #         for game in self.__games:
+    #             if publisher == game.publisher:
+    #                 insort_left(game_list, game)
+    #
+    #         self.__game_list = game_list
+    #         return game_list
         
     def get_games_by_genre_str(self, genre: str) -> List[Game]:
         
@@ -247,6 +247,11 @@ class MemoryRepository(AbstractRepository):
     def get_publisher_list(self) -> List[Game]:
         return self.__publishers
     
+    def commit_session(self):
+        pass
+
+    def add_review(self, review: Review) -> None:
+        pass
 
 
     
@@ -262,6 +267,9 @@ def populate(data_path: Path, repo: AbstractRepository):
     genres = reader.dataset_of_genres
     publishers = reader.dataset_of_publishers
     # reviews = reader.dataset
+    
+    for publisher in publishers:
+        repo.add_publisher(publisher)
 
     # Add games to the repo
     for game in games:
@@ -270,6 +278,4 @@ def populate(data_path: Path, repo: AbstractRepository):
     for genre in genres:
         repo.add_genre(genre)
         
-    for publisher in publishers:
-        repo.add_publisher(publisher)
         

@@ -6,6 +6,7 @@ from flask import Blueprint, render_template, redirect, url_for, session, reques
 import games.adapters.repository as repo
 import games.authentication.authentication as authentication
 from games.authentication.authentication import login_required
+import games.utilities.services as util
 
 # ---------------------------------------
 
@@ -56,8 +57,6 @@ def show_games(reflesh=None):
     pages = services.generate_page_list(pagenum, maxpage)
     option_of_order = ["game_id", "title", "publisher", "release_date", "price"]
     geners_list = services.get_genre_list(repo.repo_instance)
-    publisher_list = services.get_publisher_list(repo.repo_instance)
-    # print(games_per_page, pagenum, order,maxpage,num_games,pages) # I thing someone added for debag but I commented out to not confuse output from program
     
     page_info = {
         "number_of_games": num_games,
@@ -75,7 +74,6 @@ def show_games(reflesh=None):
         pages=pages,
         order_options=option_of_order,
         genres=geners_list,
-        publishers=publisher_list,
         authenticated=authenticated,
         favourite_list=favourite_list
     )
@@ -87,16 +85,14 @@ def change_favourite(game_id: str):
     if "User_name" in session:
         user_name = session["User_name"]
         try:
-            services.change_favourite(repo.repo_instance,(game_id),user_name)
+            util.change_favourite(repo.repo_instance,(game_id),user_name)
         except: # if game not found
             geners_list = services.get_genre_list(repo.repo_instance)
-            publisher_list = services.get_publisher_list(repo.repo_instance)
             authenticated = authentication.check_authenticated()
             return render_template(
                 "notFound.html",
                 message=f"game id: {game_id} is not found.",
                 genres=geners_list,
-                publishers=publisher_list,
                 authenticated=authenticated
             )
     else:
