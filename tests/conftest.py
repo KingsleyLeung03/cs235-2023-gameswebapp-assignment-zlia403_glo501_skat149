@@ -5,7 +5,7 @@ from games.adapters import memory_repository
 from games.adapters.memory_repository import MemoryRepository
 from pathlib import Path
 
-TEST_DATA_PATH = Path('games') / 'adapters' / 'data'
+TEST_DATA_PATH = Path(__file__).parent.parent / "games" / 'adapters' / 'data'
 
 
 @pytest.fixture

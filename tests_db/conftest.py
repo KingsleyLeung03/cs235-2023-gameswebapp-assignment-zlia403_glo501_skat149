@@ -8,7 +8,7 @@ from games.adapters.orm import metadata, map_model_to_tables
 
 from pathlib import Path
 
-TEST_DATA_PATH_DATABASE = Path('games') / "adapters" / "data"
+TEST_DATA_PATH_DATABASE = Path(__file__).parent.parent / "games" / 'adapters' / 'data'
 
 TEST_DATABASE_URI_IN_MEMORY = 'sqlite://'
 TEST_DATABASE_URI_FILE = 'sqlite:///games-test.db'
