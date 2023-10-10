@@ -6,9 +6,11 @@ from games.domainmodel.model import *
 
 
 def insert_game(empty_session):
+    publisher_name = insert_publisher(empty_session)
     empty_session.execute(
         'INSERT INTO game (id, title, price, release_date, description, image, website, publisher_name) VALUES '
-        '(897220, "Summer Pockets", 55.99, "Jun 29, 2018", "From the creators of Angel Beats! and CLANNAD, Key, comes their latest emotional, award-winning journey. Follow protagonist Takahara Hairi as he travels to the secluded island Torishirojima, where he rediscovers what it means to enjoy summer vacation.", "https://cdn.akamai.steamstatic.com/steam/apps/897220/header.jpg?t=1651130440", "http://key.visualarts.gr.jp/summer/", "VisualArts")'
+        '(897220, "Summer Pockets", 55.99, "Jun 29, 2018", "From the creators of Angel Beats! and CLANNAD, Key, comes their latest emotional, award-winning journey. Follow protagonist Takahara Hairi as he travels to the secluded island Torishirojima, where he rediscovers what it means to enjoy summer vacation.", "https://cdn.akamai.steamstatic.com/steam/apps/897220/header.jpg?t=1651130440", "http://key.visualarts.gr.jp/summer/", :publisher_name)',
+        {'publisher_name': publisher_name}
     )
     row = empty_session.execute('SELECT id from game').fetchone()
     return row[0]
