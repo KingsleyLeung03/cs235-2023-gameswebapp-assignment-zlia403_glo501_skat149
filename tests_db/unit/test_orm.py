@@ -56,9 +56,9 @@ def insert_users(empty_session, values):
 
 
 def insert_game_genre_associations(empty_session, game_key, genre_keys):
-    stmt = 'INSERT INTO article_tags (game_id, genre_name) VALUES (:game_id, :genre_name)'
+    stmt = 'INSERT INTO game_genre (game_id, genre_name) VALUES (:game_id, :genre_name)'
     for genre_key in genre_keys:
-        empty_session.execute(stmt, {'article_id': game_key, 'tag_id': genre_key})
+        empty_session.execute(stmt, {'game_id': game_key, 'genre_name': genre_key})
 
 
 def insert_reviewed_game(empty_session):
@@ -92,11 +92,11 @@ def insert_favourited_game(empty_session):
 def make_game():
     game = Game(897220, "Summer Pockets")
     game.price = 55.99
+    game.release_date = "Jun 29, 2018"
     game.description = "From the creators of Angel Beats! and CLANNAD, Key, comes their latest emotional, award-winning journey. Follow protagonist Takahara Hairi as he travels to the secluded island Torishirojima, where he rediscovers what it means to enjoy summer vacation."
     game.image_url = "https://cdn.akamai.steamstatic.com/steam/apps/897220/header.jpg?t=1651130440"
-    game.publisher = "VisualArts"
-    game.release_date = "Jun 29, 2018"
     game.website_url = "http://key.visualarts.gr.jp/summer/"
+    game.publisher = make_publisher()
 
     return game
 
@@ -125,6 +125,68 @@ def test_loading_of_game(empty_session):
     assert game_key == fetched_game.game_id
 
 
+def test_loading_of_game_with_genre(empty_session):
+    game_key = insert_game(empty_session)
+    genre_keys = insert_genres(empty_session)
+    insert_game_genre_associations(empty_session, game_key, genre_keys)
+
+    game = empty_session.query(Game).get(game_key)
+    genres = [empty_session.query(Genre).get(genre) for genre in genre_keys]
+
+    for genre in genres:
+        assert genre in game.genres
+
+
+def test_loading_of_reviewed_game(empty_session):
+    insert_reviewed_game(empty_session)
+
+    rows = empty_session.query(Game).all()
+    game = rows[0]
+
+    for review in game.reviews:
+        assert review.game == game
+
+
+def test_loading_of_favourite_game(empty_session):
+    game_id = insert_favourited_game(empty_session)
+
+    rows = empty_session.query(User).all()
+    user = rows[0]
+
+    for favourite_game in user.favourite_games:
+        assert favourite_game.game_id == game_id
+
+
+def test_saving_of_review(empty_session):
+    game_key = insert_game(empty_session)
+    user_key = insert_user(empty_session, ("kingsley", "Test1234"))
+
+    rows = empty_session.query(Game).all()
+    game = rows[0]
+    user = empty_session.query(User).filter(User._User__username == "kingsley").one()
+
+    # Create a new Review.
+    review_comment = "Great game!"
+    review_rating = 5
+    review = Review(user, game, review_rating, review_comment)
+    user.add_review(review)
+    game.add_review(review)
+
+    empty_session.add(review)
+    empty_session.commit()
+
+    rows = list(empty_session.execute('SELECT user_id, game_id, rating, comment FROM review'))
+
+    assert rows == [(user_key, game_key, review_rating, review_comment)]
+
+
+def test_saving_of_game(empty_session):
+    game = make_game()
+    empty_session.add(game)
+    empty_session.commit()
+
+    rows = list(empty_session.execute('SELECT id, title, price, release_date, description, image, website, publisher_name FROM game'))
+    assert rows == [(897220, "Summer Pockets", 55.99, "Jun 29, 2018", "From the creators of Angel Beats! and CLANNAD, Key, comes their latest emotional, award-winning journey. Follow protagonist Takahara Hairi as he travels to the secluded island Torishirojima, where he rediscovers what it means to enjoy summer vacation.", "https://cdn.akamai.steamstatic.com/steam/apps/897220/header.jpg?t=1651130440", "http://key.visualarts.gr.jp/summer/", "VisualArts")]
 
 
 def test_loading_of_users(empty_session):
